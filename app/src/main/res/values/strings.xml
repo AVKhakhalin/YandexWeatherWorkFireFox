@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">YandexWeatherWork</string>
+
+    <string name="result_current_constraint_layout_city_example_name">Москва</string>
+    <string name="result_current_constraint_layout_city_example_coordinates">lt/ln: 55.755826, 37.617299900000035</string>
+    <string name="result_current_constraint_layout_temperature_label_example_text">Температура:</string>
+    <string name="result_current_constraint_layout_temperature_value_example_text">+15</string>
+    <string name="result_current_constraint_layout_feelslike_label_example_text">Ощущается как:</string>
+    <string name="result_current_constraint_layout_feelslike_value_example_text">-23</string>
+    <string name="input_string_info_title_text">Введите данне о новом месте</string>
+    <string name="input_city_info_button_cancel_text">Отмена</string>
+    <string name="input_string_info_city_name_title_text">Название места</string>
+    <string name="input_string_info_city_field_example_text">Москва</string>
+    <string name="input_city_info_lat_title">Широта (Latitude), в десятичных долях</string>
+    <string name="input_city_info_lat_field_example_text">55.7522</string>
+    <string name="input_city_info_lon_title">Долгота (Longitude), в десятичных долях</string>
+    <string name="input_city_info_lon_lon_field_example_text">37.6156</string>
+    <string name="input_city_info_country_title">Страна</string>
+    <string name="input_city_info_country_field_text">Россия</string>
+    <string name="input_city_info_button_ok_text">Узнать погоду</string>
+    <string name="search_city_title_text">Найти место среди ранее заданных</string>
+    <string name="search_city_name_field_example_text">Москва</string>
+    <string name="search_city_country_title_text">Страна</string>
+    <string name="search_city_country_field_example_text">Россия</string>
+    <string name="search_city_button_cancel_text">Отмена</string>
+    <string name="search_city_button_ok_text">Найти место</string>
+    <string name="recycler_item_text_view_example_text">Москва</string>
+    <string name="result_current_down_help_text">Нажмите на экран для возврата к списку мест...</string>
+    <string name="error">ОШИБКА</string>
+    <string name="success">Данные УСПЕШНО загружены</string>
+    <string name="error_no_connection">Нет сети</string>
+    <string name="try_another">Попробовать ещё</string>
+</resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background_app_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/result_current_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/result_current_constraint_layout_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_current_constraint_layout_city_name_margin_top"
+            android:textSize="@dimen/result_current_constraint_layout_city_name_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/result_current_constraint_layout_city_example_name" />
+
+        <TextView
+            android:id="@+id/result_current_constraint_layout_city_coordinates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_current_constraint_layout_city_coordinates_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_city_name"
+            tools:text="@string/result_current_constraint_layout_city_example_coordinates" />
+
+        <TextView
+            android:id="@+id/result_current_constraint_layout_temperature_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_current_constraint_layout_temperature_label_margin_top"
+            android:text="@string/result_current_constraint_layout_temperature_label_example_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_city_coordinates" />
+
+        <TextView
+            android:id="@+id/result_current_constraint_layout_temperature_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_current_constraint_layout_temperature_value_margin_top"
+            android:textSize="@dimen/result_current_constraint_layout_temperature_value_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_temperature_label"
+            tools:text="@string/result_current_constraint_layout_temperature_value_example_text" />
+
+        <TextView
+            android:id="@+id/result_current_constraint_layout_feelslike_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_current_constraint_layout_feelslike_label_margin_top"
+            android:text="@string/result_current_constraint_layout_feelslike_label_example_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_temperature_value" />
+
+        <TextView
+            android:id="@+id/result_current_constraint_layout_feelslike_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/result_current_constraint_layout_feelslike_value_margin_top"
+            android:textSize="@dimen/result_current_constraint_layout_feelslike_value_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_feelslike_label"
+            tools:text="@string/result_current_constraint_layout_feelslike_value_example_text" />
+
+        <FrameLayout
+            android:id="@+id/result_current_constraint_layout_loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_app_menu"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            tools:visibility="visible">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <TextView
+            android:text="@string/result_current_down_help_text"
+            android:textSize="@dimen/result_current_down_help_text_size"
+            android:layout_marginBottom="@dimen/result_current_down_help_margin_bottom"
+            android:textStyle="italic"
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
