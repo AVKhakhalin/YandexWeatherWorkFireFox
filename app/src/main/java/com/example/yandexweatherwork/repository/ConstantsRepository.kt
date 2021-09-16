@@ -1,5 +1,7 @@
 package com.example.yandexweatherwork.repository
 
+import com.example.yandexweatherwork.BuildConfig
+
 class ConstantsRepository {
     companion object {
         // Константы для получения данных о погоде
@@ -10,6 +12,8 @@ class ConstantsRepository {
         @JvmField
         val YANDEX_KEY_TITLE : String = "X-Yandex-API-Key"
         @JvmField
+//        val YANDEX_KEY_VALUE : String = BuildConfig.WEATHER_API_KEY
+        // Оставил этот ключ как есть, чтобы Вы могли тестировать проект
         val YANDEX_KEY_VALUE : String = "ebbee072-d212-420e-9f62-4d716b0499e9"
         @JvmField
         val LATITUDE_NAME : String = "lat"
