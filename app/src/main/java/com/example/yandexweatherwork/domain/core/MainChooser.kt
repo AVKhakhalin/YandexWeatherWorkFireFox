@@ -14,7 +14,19 @@ class MainChooser() {
     private var defaultFilterCity: String = ""
     private var defaultFilterCountry: String = ""
     private var fact: Fact? = null
+
+    private var lat: Double = 0.0
+    private var lon: Double = 0.0
     //endregion
+
+    fun setLat(lat: Double) {
+        this.lat = lat
+    }
+    fun setLon(lon: Double) {
+        this.lon = lon
+    }
+    fun getLat(): Double = lat
+    fun getLon(): Double = lon
 
     // Установка начальных городов
     fun initKnownCities() {

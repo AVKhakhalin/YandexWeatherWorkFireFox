@@ -13,6 +13,9 @@ class MainChooserSetter(mainChooser: MainChooser) {
     private var dataModel: DataModel? = null
     //endregion
 
+    fun setLat(lat: Double) = mainChooser?.let{it.setLat(lat)}
+    fun setLon(lon: Double) = mainChooser?.let{it.setLon(lon)}
+
     //region Методы для Передачи полученных данных в MainChooser
     fun setDataModel(
         dataModel: DataModel?,

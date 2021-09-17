@@ -21,6 +21,8 @@ class ConstantsRepository {
         val LONGITUDE_NAME : String = "lon"
         @JvmField
         val LANGUAGE: String = "lang"
+        @JvmField
+        val INFO_RESPONSE: String = "response"
 
         // Константы для локальных настроек программы
     }
