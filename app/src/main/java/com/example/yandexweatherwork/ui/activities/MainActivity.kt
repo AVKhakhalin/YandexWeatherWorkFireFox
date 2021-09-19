@@ -120,6 +120,7 @@ class MainActivity:
             putInt(ConstantsUi.SHARED_POSITION_CURRENT_KNOWN_CITY, mainChooserGetter.getPositionCurrentKnownCity())
             putString(ConstantsUi.SHARED_DEFAULT_FILTER_CITY, mainChooserGetter.getDefaultFilterCity())
             putString(ConstantsUi.SHARED_DEFAULT_FILTER_COUNTRY, mainChooserGetter.getDefaultFilterCountry())
+            putBoolean(ConstantsUi.SHARED_USER_CORRECTED_CITY_LIST, mainChooserGetter.getUserCorrectedCityList())
             apply()
         }
     }
@@ -145,6 +146,7 @@ class MainActivity:
             it.setPositionCurrentKnownCity(sharedPreferences.getInt(ConstantsUi.SHARED_POSITION_CURRENT_KNOWN_CITY, -1))
             it.setDefaultFilterCity(sharedPreferences.getString(ConstantsUi.SHARED_DEFAULT_FILTER_CITY, "")!!)
             it.setDefaultFilterCountry(sharedPreferences.getString(ConstantsUi.SHARED_DEFAULT_FILTER_COUNTRY, "")!!)
+            it.setUserCorrectedCityList(sharedPreferences.getBoolean(ConstantsUi.SHARED_USER_CORRECTED_CITY_LIST, false))
         }
 
         // Установка известных городов по-умолчанию

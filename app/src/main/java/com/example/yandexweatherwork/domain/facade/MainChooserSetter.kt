@@ -55,4 +55,9 @@ class MainChooserSetter(mainChooser: MainChooser) {
 
     // Установка начальных городов
     fun initKnownCities() = mainChooser?.let {mainChooser?.initKnownCities()}
+
+    // Установка признака изменения пользователем списка мест (городов)
+    fun setUserCorrectedCityList(userCorrectedCityList: Boolean) =
+        mainChooser?.let{mainChooser?.setUserCorrectedCityList(userCorrectedCityList)}
+
 }

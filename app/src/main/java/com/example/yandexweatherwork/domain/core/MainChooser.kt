@@ -15,7 +15,9 @@ class MainChooser() {
     private var defaultFilterCity: String = ConstantsDomain.DEFAULT_FILTER_CITY
     private var defaultFilterCountry: String = ConstantsDomain.DEFAULT_FILTER_COUNTRY
     private var fact: Fact? = null
+    private var userCorrectedCityList: Boolean = false
 
+    // TODO: Доработать логику использования координат lat, lon
     private var lat: Double = 0.0
     private var lon: Double = 0.0
     //endregion
@@ -28,6 +30,16 @@ class MainChooser() {
     }
     fun getLat(): Double = lat
     fun getLon(): Double = lon
+
+    // Установка признака изменения пользователем списка мест (городов)
+    fun setUserCorrectedCityList(userCorrectedCityList: Boolean) {
+        this.userCorrectedCityList = userCorrectedCityList
+    }
+
+    // Получение значения признака изменения пользователем списка мест (городов)
+    fun getUserCorrectedCityList(): Boolean {
+        return userCorrectedCityList
+    }
 
     // Установка начальных городов
     fun initKnownCities() {

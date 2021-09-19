@@ -15,6 +15,8 @@ class ConstantsUi {
         @JvmField
         val SHARED_DEFAULT_FILTER_COUNTRY: String = "defaultFilterCountry"
         @JvmField
+        val SHARED_USER_CORRECTED_CITY_LIST: String = "userCorrectedCityList"
+        @JvmField
         val UNKNOWN_TEXT: String = "unknown"
         @JvmField
         val ZERO_FLOAT: Float = 0f

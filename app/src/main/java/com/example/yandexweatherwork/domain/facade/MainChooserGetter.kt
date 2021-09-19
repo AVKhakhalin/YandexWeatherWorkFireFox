@@ -33,4 +33,7 @@ class MainChooserGetter(mainChooser: MainChooser) {
 
     // Получение фильтра выбора страны по-умолчанию
     fun getDefaultFilterCountry(): String = mainChooser.getDefaultFilterCountry()
+
+    // Получение значения признака изменения пользователем списка мест (городов)
+    fun getUserCorrectedCityList(): Boolean = mainChooser.getUserCorrectedCityList()
 }
