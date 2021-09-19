@@ -79,7 +79,8 @@ class ResultCurrentFragment(//region ЗАДАНИЕ ПЕРЕМЕННЫХ
             // Отображение фрагмента со списком мест (city) для выбора погоды по другому интересующему месту
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(
-                    if (city.country.equals("Россия") == true) true else false))
+                    city.country == "Россия"
+                ))
                 .commit()
         })
     }

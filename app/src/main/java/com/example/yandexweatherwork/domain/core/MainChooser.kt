@@ -1,5 +1,6 @@
 package com.example.yandexweatherwork.domain.core
 
+import com.example.yandexweatherwork.domain.ConstantsDomain
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.DataSettings
 import com.example.yandexweatherwork.domain.data.DataWeather
@@ -10,9 +11,9 @@ class MainChooser() {
     private var dataWeather: DataWeather? = DataWeather()
     private var dataSettings: DataSettings? = null
     private var knownCities: MutableList<City>? = mutableListOf<City>()
-    private var positionCurrentKnownCity: Int = -1
-    private var defaultFilterCity: String = ""
-    private var defaultFilterCountry: String = ""
+    private var positionCurrentKnownCity: Int = ConstantsDomain.DEFAULT_POSITION_CURRENT_KNOWN_CITY
+    private var defaultFilterCity: String = ConstantsDomain.DEFAULT_FILTER_CITY
+    private var defaultFilterCountry: String = ConstantsDomain.DEFAULT_FILTER_COUNTRY
     private var fact: Fact? = null
 
     private var lat: Double = 0.0
@@ -79,7 +80,7 @@ class MainChooser() {
         if ((positionCurrentKnownCity > -1) && (knownCities != null)) {
             return knownCities?.get(positionCurrentKnownCity)!!
         } else {
-            return City("Москва(ERR)", 55.7522, 37.6156, "Россия(ERR)")
+            return City(ConstantsDomain.ERROR_NAME_CITY, ConstantsDomain.ERROR_CITY_LATIDUTE, ConstantsDomain.ERROR_CITY_LONGITUDE, ConstantsDomain.ERROR_COUNTRY)
         }
     }
 
@@ -105,16 +106,30 @@ class MainChooser() {
                     return
                 }
             }
+            // Установка начальных значений фильтров
+            defaultFilterCountry = ""
+            positionCurrentKnownCity = -1
+            if (defaultFilterCountry != ConstantsDomain.FILTER_RUSSIA) {
+                defaultFilterCountry = ConstantsDomain.FILTER_NOT_RUSSIA
+            }
         }
     }
     fun setPositionCurrentKnownCity(position: Int) {
-        if ((positionCurrentKnownCity > -1) && (knownCities != null)) {
-            knownCities?.let{
-                defaultFilterCity = it[positionCurrentKnownCity].name
-                defaultFilterCountry = it[positionCurrentKnownCity].country
+        if (knownCities != null) {
+            if (position > -1) {
+                knownCities?.let {
+                    defaultFilterCity = it[position].name
+                    defaultFilterCountry = it[position].country
+                }
+            } else {
+                // Установка начальных значений фильтров
+                defaultFilterCity = ConstantsDomain.DEFAULT_FILTER_CITY
+                if (defaultFilterCountry != ConstantsDomain.FILTER_RUSSIA) {
+                    defaultFilterCountry = ConstantsDomain.FILTER_NOT_RUSSIA
+                }
             }
+            positionCurrentKnownCity = position
         }
-        positionCurrentKnownCity = position
     }
     //endregion
 
@@ -129,7 +144,7 @@ class MainChooser() {
     }
     private fun analiseKnownCities(filterCity: String, filterCountry: String): MutableList<City>? {
         if ((filterCity == null) || (filterCountry == null)) {
-            return mutableListOf(City("Москва", 55.7522, 37.6156, "Россия"))
+            return mutableListOf(City(ConstantsDomain.ERROR_NAME_CITY, ConstantsDomain.ERROR_CITY_LATIDUTE, ConstantsDomain.ERROR_CITY_LONGITUDE, ConstantsDomain.ERROR_COUNTRY))
         } else {
             // Корректировка фильтров места (города) и страны
             val newFilterCountry = filterCountry
@@ -172,7 +187,7 @@ class MainChooser() {
                             newKnownCities
                         }
                     } else {
-                        return mutableListOf(City("Москва(ERR)", 55.7522, 37.6156, "Россия(ERR)"))
+                        return mutableListOf(City(ConstantsDomain.ERROR_NAME_CITY, ConstantsDomain.ERROR_CITY_LATIDUTE, ConstantsDomain.ERROR_CITY_LONGITUDE, ConstantsDomain.ERROR_COUNTRY))
                     }
                 } else {
                     // Фильтрация в случае поиска ПО НАЗВАНИЯМ СТРАНЫ И ГОРОДА
@@ -190,7 +205,7 @@ class MainChooser() {
                             newKnownCities
                         }
                     } else {
-                        return mutableListOf(City("Москва(ERR)", 55.7522, 37.6156, "Россия(ERR)"))
+                        return mutableListOf(City(ConstantsDomain.ERROR_NAME_CITY, ConstantsDomain.ERROR_CITY_LATIDUTE, ConstantsDomain.ERROR_CITY_LONGITUDE, ConstantsDomain.ERROR_COUNTRY))
                     }
                 }
             }

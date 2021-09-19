@@ -1,5 +1,7 @@
 package com.example.yandexweatherwork.ui
 
+import com.example.yandexweatherwork.domain.ConstantsDomain
+
 class ConstantsUi {
     companion object {
         @JvmField
@@ -17,10 +19,10 @@ class ConstantsUi {
         @JvmField
         val ZERO_FLOAT: Float = 0f
         @JvmField
-        val FILTER_RUSSIA: String = "Россия"
+        val FILTER_RUSSIA: String = ConstantsDomain.FILTER_RUSSIA
         @JvmField
-        val FILTER_NOT_RUSSIA: String = "-Россия"
+        val FILTER_NOT_RUSSIA: String = ConstantsDomain.FILTER_NOT_RUSSIA
         @JvmField
-        val DEFAULT_FILTER_CITY: String = ""
+        val DEFAULT_FILTER_CITY: String = ConstantsDomain.DEFAULT_FILTER_CITY
     }
 }
