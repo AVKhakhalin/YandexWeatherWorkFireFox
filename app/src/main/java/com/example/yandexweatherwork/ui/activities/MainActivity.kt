@@ -1,12 +1,7 @@
 package com.example.yandexweatherwork.ui.activities
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.observers.domain.*
@@ -18,16 +13,9 @@ import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
-import com.example.yandexweatherwork.repository.ConstantsRepository
-import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import javax.net.ssl.HttpsURLConnection
 
 
 class MainActivity:
@@ -73,9 +61,16 @@ class MainActivity:
             }
         }
 
+
 /*
-        val repositoryGetCoordinates: RepositoryGetCoordinates = RepositoryGetCoordinates("Москва", mainChooserSetter)
-        repositoryGetCoordinates.start()
+        val repositoryGetCitiInfo: RepositoryGetCitiInfo = RepositoryGetCitiInfo()
+        repositoryGetCitiInfo.getCityInfo()
+*/
+
+
+/*
+        val repositoryGetCityCoordinates: RepositoryGetCityCoordinates = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
+        repositoryGetCityCoordinates.start()
         Thread.sleep(2000)
         Toast.makeText(this, "${mainChooser.getLat()}; ${mainChooser.getLon()}", Toast.LENGTH_LONG).show()
 */
