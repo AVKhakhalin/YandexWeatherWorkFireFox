@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/context_menu_action_delete_city"
+        android:title="@string/context_menu_action_delete_city_text"
+        android:icon="@drawable/delete_city"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/context_menu_action_show_card"
+        android:title="@string/context_menu_action_show_card_text"
+        android:icon="@drawable/card_city"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/context_menu_action_return"
+        android:title="@string/context_menu_action_return_text"
+        android:icon="@drawable/return_to_list"
+        app:showAsAction="never"/>
+</menu>

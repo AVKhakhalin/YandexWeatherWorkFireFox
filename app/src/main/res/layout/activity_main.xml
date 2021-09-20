@@ -7,8 +7,8 @@
     android:background="@color/background_app_menu"
     tools:context=".ui.activities.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment_result_weather_container"
+    <include
+        layout="@layout/app_bar_menu_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -30,4 +30,11 @@
     <string name="success">Данные УСПЕШНО загружены</string>
     <string name="error_no_connection">Нет сети</string>
     <string name="try_another">Попробовать ещё</string>
+    <string name="app_menu_action_add_city_text">Добавить место</string>
+    <string name="app_menu_action_delete_city_text">Удалить место</string>
+    <string name="app_menu_action_show_card_city_text">Карточка места</string>
+    <string name="app_bar_title"></string>
+    <string name="context_menu_action_delete_city_text">Удалить место</string>
+    <string name="context_menu_action_show_card_text">Карточка места</string>
+    <string name="context_menu_action_return_text">Вернуться к списку</string>
 </resources>

@@ -2,9 +2,8 @@ package com.example.yandexweatherwork.ui.fragments.content.domain
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +25,7 @@ class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewCl
             return _binding!!
         }
     private var isDataSetRus: Boolean = isDataSetRusInitial
-    private var adapter = ListCitiesFragmentAdapter()
+    private var adapter = ListCitiesFragmentAdapter(this)
 
 
     // Ссылка на ResultCurrentViewModel
@@ -120,4 +119,24 @@ class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewCl
             .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(city))
             .commit()
     }
+
+    //region МЕТОДЫ ДЛЯ РАБОТЫ С КОНТЕКСТНЫМ МЕНЮ У ЭЛЕМЕНТОВ СПИСКА
+    // Создание контекстного меню для элемента списка
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        requireActivity().menuInflater.inflate(R.menu.menu_context, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.context_menu_action_delete_city -> {
+                Toast.makeText(context, "Удаление места", Toast.LENGTH_SHORT).show()
+            }
+            R.id.context_menu_action_show_card -> {
+                Toast.makeText(context, "Показать карточку места", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onContextItemSelected(item)
+    }
+    //endregion
 }

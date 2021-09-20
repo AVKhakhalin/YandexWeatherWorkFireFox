@@ -2,7 +2,12 @@ package com.example.yandexweatherwork.ui.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.observers.domain.*
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModel
@@ -13,6 +18,8 @@ import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCitiInfo
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
@@ -61,12 +68,14 @@ class MainActivity:
             }
         }
 
+        // Установка AppBarMenu
+        setupAppBarMenu()
+
 
 /*
         val repositoryGetCitiInfo: RepositoryGetCitiInfo = RepositoryGetCitiInfo()
         repositoryGetCitiInfo.getCityInfo()
 */
-
 
 /*
         val repositoryGetCityCoordinates: RepositoryGetCityCoordinates = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
@@ -74,6 +83,39 @@ class MainActivity:
         Thread.sleep(2000)
         Toast.makeText(this, "${mainChooser.getLat()}; ${mainChooser.getLon()}", Toast.LENGTH_LONG).show()
 */
+
+    }
+
+
+    // Установка меню AppBarMenu
+    private fun setupAppBarMenu() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    // Создание меню AppBarMenu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_appbar, menu)
+        return true
+    }
+
+    // Установка слушателя на меню AppBarMenu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.app_menu_action_add_city) {
+            // Добавить место
+            Toast.makeText(this, "Добавить место", Toast.LENGTH_SHORT).show()
+            return true
+        } else if (itemId == R.id.app_menu_action_delete) {
+            // Удаление места
+            Toast.makeText(this, "Удаление места", Toast.LENGTH_SHORT).show()
+            return true
+        } else if (itemId == R.id.app_menu_action_show_card) {
+            // Показать данные места
+            Toast.makeText(this, "Показать карточку места", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // Установка наблюдателя для обновления данных в ResultCurrentFragment
@@ -150,7 +192,7 @@ class MainActivity:
         }
 
         // Установка известных городов по-умолчанию
-        if (mainChooserGetter.getNumberKnownCites() == 0) {
+        if ((mainChooserGetter.getNumberKnownCites() == 0) && !mainChooserGetter.getUserCorrectedCityList()) {
             mainChooserSetter.initKnownCities()
             // Установка фильтра стран по-умолчанию
             mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
