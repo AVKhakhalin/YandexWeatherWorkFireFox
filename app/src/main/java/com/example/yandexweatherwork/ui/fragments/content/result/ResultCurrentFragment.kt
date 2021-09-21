@@ -16,16 +16,20 @@ import com.example.yandexweatherwork.controller.observers.viewmodels.ResultCurre
 import com.example.yandexweatherwork.controller.observers.viewmodels.UpdateState
 import com.example.yandexweatherwork.databinding.FragmentResultCurrentBinding
 import com.example.yandexweatherwork.domain.data.City
+import com.example.yandexweatherwork.domain.facade.MainChooserSetter
+import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
 class ResultCurrentFragment(//region ЗАДАНИЕ ПЕРЕМЕННЫХ
     // Данные о месте (городе)
-    private var city: City
+    private var city: City,
+    private val mainChooserSetter: MainChooserSetter
 ) : Fragment() {
+
     // Фабричный метод создания фрагмента
     companion object {
-        fun newInstance(city: City) = ResultCurrentFragment(city)
+        fun newInstance(city: City, mainChooserSetter: MainChooserSetter) = ResultCurrentFragment(city, mainChooserSetter)
     }
 
     // Ссылка на ResultCurrentViewModel
@@ -79,7 +83,7 @@ class ResultCurrentFragment(//region ЗАДАНИЕ ПЕРЕМЕННЫХ
             // Отображение фрагмента со списком мест (city) для выбора погоды по другому интересующему месту
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(
-                    city.country == "Россия"
+                    city.country == ConstantsUi.FILTER_RUSSIA, mainChooserSetter
                 ))
                 .commit()
         })

@@ -22,6 +22,7 @@ class MainChooser() {
     private var lon: Double = 0.0
     //endregion
 
+    //region ФУНКЦИИ ДЛЯ РАБОТЫ С КООРДИНАТАМИ МЕСТА
     fun setLat(lat: Double) {
         this.lat = lat
     }
@@ -30,6 +31,21 @@ class MainChooser() {
     }
     fun getLat(): Double = lat
     fun getLon(): Double = lon
+    //endregion
+
+    // Удаление места (города) из списка городов
+    fun removeCity(filterCity: String, filterCountry: String): Boolean {
+        setPositionCurrentKnownCity(filterCity, filterCountry)
+        if (positionCurrentKnownCity > -1) {
+            knownCities?.let { it.removeAt(positionCurrentKnownCity) }
+            defaultFilterCity = ConstantsDomain.DEFAULT_FILTER_CITY
+            defaultFilterCountry = filterCountry
+            positionCurrentKnownCity = -1
+            return true
+        } else {
+            return false
+        }
+    }
 
     // Установка признака изменения пользователем списка мест (городов)
     fun setUserCorrectedCityList(userCorrectedCityList: Boolean) {

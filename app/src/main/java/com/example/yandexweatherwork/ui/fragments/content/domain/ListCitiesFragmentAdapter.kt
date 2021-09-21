@@ -1,9 +1,7 @@
 package com.example.yandexweatherwork.ui.fragments.content.domain
 
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,14 +16,19 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
 
     // Переменные для контекстного меню
     private var fragment: Fragment? = null
+    private var positionChoosedElement = -1
 
     init {
         this.fragment = fragment
     }
 
-    fun setWeather(data:List<City>){
+    fun setWeather(data: List<City>){
         weatherData = data
         notifyDataSetChanged()
+    }
+    fun setWeather(data: List<City>, updatedPosition: Int){
+        weatherData = data
+        notifyItemRemoved(updatedPosition)
     }
 
     fun setOnItemViewClickListener(onItemViewClickListener:OnItemViewClickListener) {
@@ -38,15 +41,18 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
             .inflate(R.layout.fragment_list_cities_recycler_item,parent,false))
     }
 
-    override fun onBindViewHolder(holder: MainFragmentViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: MainFragmentViewHolder, position: Int) {
         holder.render(weatherData[position])
+    }
 
     override fun getItemCount() = weatherData.size
 
-    inner class MainFragmentViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class MainFragmentViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
         init {
             // Регистрация стартового элемента для контекстного меню
             fragment?.registerForContextMenu(view.findViewById(R.id.recycler_item_text_view))
+            // Регистрация метода onCreateContextMenu
+            view.setOnCreateContextMenuListener(this)
         }
 
         fun render(city: City){
@@ -55,11 +61,26 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
                 setOnClickListener{
                     listener.onItemClick(city)
                 }
-                // Создание контекстного меню по длительному клику
-                setOnLongClickListener{
-                    itemView.showContextMenu(0f, 0f)
-                }
             }
         }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            Toast.makeText(v?.context, "${getLayoutPosition()} ${weatherData.get(getLayoutPosition()).name}", Toast.LENGTH_SHORT).show()
+            setPositionChoosedElement(layoutPosition)
+        }
+    }
+
+    // Получение позиции выбранного элемента в списке
+    fun getPositionChoosedElement(): Int {
+        return positionChoosedElement
+    }
+
+    // Установка позиции выбранного элемента в списке
+    fun setPositionChoosedElement(position: Int) {
+        this.positionChoosedElement = position
     }
 }

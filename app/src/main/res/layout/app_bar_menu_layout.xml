@@ -22,6 +22,7 @@
     <FrameLayout
         android:id="@+id/fragment_result_weather_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/fragment_result_weather_container_margin_top"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

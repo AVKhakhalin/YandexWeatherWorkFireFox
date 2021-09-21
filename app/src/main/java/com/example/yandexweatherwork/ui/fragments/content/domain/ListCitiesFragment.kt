@@ -14,25 +14,28 @@ import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesV
 import com.example.yandexweatherwork.controller.observers.viewmodels.UpdateState
 import com.example.yandexweatherwork.databinding.FragmentListCitiesBinding
 import com.example.yandexweatherwork.domain.data.City
+import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
 
-class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewClickListener {
+class ListCitiesFragment(
+    private var isDataSetRusInitial: Boolean,
+    private var mainChooserSetter: MainChooserSetter
+): Fragment(), OnItemViewClickListener {
     private var _binding: FragmentListCitiesBinding? = null
     private val binding: FragmentListCitiesBinding
         get() {
             return _binding!!
         }
-    private var isDataSetRus: Boolean = isDataSetRusInitial
-    private var adapter = ListCitiesFragmentAdapter(this)
-
+    private var listCitiesFragmentAdapter = ListCitiesFragmentAdapter(this)
+    private var weather: MutableList<City>? = null
 
     // Ссылка на ResultCurrentViewModel
     private lateinit var listCitiesViewModel: ListCitiesViewModel
 
     companion object {
-        fun newInstance(isDataSetRusInitial: Boolean) = ListCitiesFragment(isDataSetRusInitial)
+        fun newInstance(isDataSetRusInitial: Boolean, mainChooserSetter: MainChooserSetter) = ListCitiesFragment(isDataSetRusInitial, mainChooserSetter)
     }
 
     // Создание наблюдателя в domain
@@ -61,18 +64,18 @@ class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewCl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Начальная установка вида кнопки переключения фильтра стран
-        if (isDataSetRus) {
+        if (isDataSetRusInitial) {
             binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_earth)
         } else {
             binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_russia)
         }
 
-        binding.fragmentListCitiesRecyclerView.adapter = adapter
-        adapter.setOnItemViewClickListener(this)
+        binding.fragmentListCitiesRecyclerView.adapter = listCitiesFragmentAdapter
+        listCitiesFragmentAdapter.setOnItemViewClickListener(this)
         binding.fragmentListCitiesFAB.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
-                isDataSetRus = !isDataSetRus
-                if(!isDataSetRus){
+                isDataSetRusInitial = !isDataSetRusInitial
+                if(!isDataSetRusInitial){
                     binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_russia)
                     with(listCitiesPublisherDomain) {
                         notifyDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
@@ -100,9 +103,10 @@ class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewCl
     private fun renderData(updateState: UpdateState) {
         when (updateState) {
             is UpdateState.ListCities -> {
-                val weather = updateState.mainChooserGetter.getKnownCites()
-                if (weather != null) {
-                    adapter.setWeather(weather)
+                weather = updateState.mainChooserGetter.getKnownCites()
+                weather?.let {
+                    // Передача в адаптер списка городов
+                    listCitiesFragmentAdapter.setWeather(weather!!)
                 }
             }
             //else -> //TODO: Добавить случай с неуспешной загрузкой списка
@@ -116,13 +120,14 @@ class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewCl
 
     override fun onItemClick(city: City) {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(city))
+            .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(city, mainChooserSetter))
             .commit()
     }
 
     //region МЕТОДЫ ДЛЯ РАБОТЫ С КОНТЕКСТНЫМ МЕНЮ У ЭЛЕМЕНТОВ СПИСКА
     // Создание контекстного меню для элемента списка
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+    override fun onCreateContextMenu(menu: ContextMenu, v: View,
+                                     menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         requireActivity().menuInflater.inflate(R.menu.menu_context, menu)
     }
@@ -130,10 +135,27 @@ class ListCitiesFragment(isDataSetRusInitial: Boolean): Fragment(), OnItemViewCl
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.context_menu_action_delete_city -> {
-                Toast.makeText(context, "Удаление места", Toast.LENGTH_SHORT).show()
+                // Удаление места (города) из списка
+//                Toast.makeText(context, "Удаление места ${listCitiesFragmentAdapter
+//                    .getPositionChoosedElement()}", Toast.LENGTH_SHORT).show()
+                val positionChoosedElement: Int = listCitiesFragmentAdapter
+                    .getPositionChoosedElement()
+                mainChooserSetter?.let{
+                    if (weather != null) {
+                        it.removeCity(weather?.get(positionChoosedElement)!!.name,
+                            weather?.get(positionChoosedElement)!!.country)
+                    }
+                }
+                listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
+                weather?.let{
+                    it.removeAt(positionChoosedElement)
+                    // Передача в адаптер обновлённого списка городов
+                    listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
+                }
             }
             R.id.context_menu_action_show_card -> {
-                Toast.makeText(context, "Показать карточку места", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Показать карточку места ${listCitiesFragmentAdapter
+                    .getPositionChoosedElement()}", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onContextItemSelected(item)

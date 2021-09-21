@@ -59,11 +59,15 @@ class MainActivity:
             if (mainChooserGetter.getPositionCurrentKnownCity() == -1) {
                 // Отображение фрагмента со списком мест (city) для выбора интересующего места
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(mainChooserGetter.getDefaultFilterCountry().equals("Россия") == true))
+                    .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(
+                        mainChooserGetter
+                            .getDefaultFilterCountry() == ConstantsUi.FILTER_RUSSIA,
+                        mainChooserSetter))
                     .commit()
             } else {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(mainChooserGetter.getCurrentKnownCity()!!))
+                    .replace(R.id.fragment_result_weather_container, ResultCurrentFragment
+                        .newInstance(mainChooserGetter.getCurrentKnownCity()!!, mainChooserSetter))
                     .commit()
             }
         }
@@ -71,52 +75,41 @@ class MainActivity:
         // Установка AppBarMenu
         setupAppBarMenu()
 
-
 /*
         val repositoryGetCitiInfo: RepositoryGetCitiInfo = RepositoryGetCitiInfo()
         repositoryGetCitiInfo.getCityInfo()
 */
-
 /*
         val repositoryGetCityCoordinates: RepositoryGetCityCoordinates = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
         repositoryGetCityCoordinates.start()
         Thread.sleep(2000)
         Toast.makeText(this, "${mainChooser.getLat()}; ${mainChooser.getLon()}", Toast.LENGTH_LONG).show()
 */
-
     }
 
-
+    //region ФУНКЦИИ ДЛЯ APPBARMENU
     // Установка меню AppBarMenu
     private fun setupAppBarMenu() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-
     // Создание меню AppBarMenu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_appbar, menu)
         return true
     }
-
     // Установка слушателя на меню AppBarMenu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.app_menu_action_add_city) {
-            // Добавить место
-            Toast.makeText(this, "Добавить место", Toast.LENGTH_SHORT).show()
-            return true
-        } else if (itemId == R.id.app_menu_action_delete) {
-            // Удаление места
-            Toast.makeText(this, "Удаление места", Toast.LENGTH_SHORT).show()
-            return true
-        } else if (itemId == R.id.app_menu_action_show_card) {
-            // Показать данные места
-            Toast.makeText(this, "Показать карточку места", Toast.LENGTH_SHORT).show()
-            return true
+        when (item.itemId) {
+            R.id.app_menu_action_add_city -> {
+                // Добавить место
+                Toast.makeText(this, "Добавить место", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
+    //endregion
 
     // Установка наблюдателя для обновления данных в ResultCurrentFragment
     override fun setResultCurrentViewModel(viewModel: ResultCurrentViewModel) {
@@ -159,10 +152,21 @@ class MainActivity:
             }
         }
         with(editor) {
-            putInt(ConstantsUi.SHARED_POSITION_CURRENT_KNOWN_CITY, mainChooserGetter.getPositionCurrentKnownCity())
-            putString(ConstantsUi.SHARED_DEFAULT_FILTER_CITY, mainChooserGetter.getDefaultFilterCity())
-            putString(ConstantsUi.SHARED_DEFAULT_FILTER_COUNTRY, mainChooserGetter.getDefaultFilterCountry())
-            putBoolean(ConstantsUi.SHARED_USER_CORRECTED_CITY_LIST, mainChooserGetter.getUserCorrectedCityList())
+            putInt(ConstantsUi.SHARED_POSITION_CURRENT_KNOWN_CITY, mainChooserGetter
+                .getPositionCurrentKnownCity())
+            putString(ConstantsUi.SHARED_DEFAULT_FILTER_CITY, mainChooserGetter
+                .getDefaultFilterCity())
+            if (mainChooserGetter.getDefaultFilterCountry() == ConstantsUi.FILTER_RUSSIA) {
+                putString(
+                    ConstantsUi.SHARED_DEFAULT_FILTER_COUNTRY,
+                    mainChooserGetter.getDefaultFilterCountry())
+            } else {
+                putString(
+                    ConstantsUi.SHARED_DEFAULT_FILTER_COUNTRY,
+                    ConstantsUi.FILTER_NOT_RUSSIA)
+            }
+            putBoolean(ConstantsUi.SHARED_USER_CORRECTED_CITY_LIST, mainChooserGetter
+                .getUserCorrectedCityList())
             apply()
         }
     }

@@ -7,16 +7,4 @@
         android:title="@string/app_menu_action_add_city_text"
         app:showAsAction="always"
         android:icon="@drawable/add_city" />
-
-    <item
-        android:id="@+id/app_menu_action_delete"
-        android:title="@string/app_menu_action_delete_city_text"
-        android:icon="@drawable/delete_city"
-        app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/app_menu_action_show_card"
-        android:title="@string/app_menu_action_show_card_city_text"
-        android:icon="@drawable/card_city"
-        app:showAsAction="always"/>
 </menu>
