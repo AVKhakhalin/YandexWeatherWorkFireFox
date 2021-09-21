@@ -14,14 +14,17 @@ import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesV
 import com.example.yandexweatherwork.controller.observers.viewmodels.UpdateState
 import com.example.yandexweatherwork.databinding.FragmentListCitiesBinding
 import com.example.yandexweatherwork.domain.data.City
+import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
+import com.google.android.material.snackbar.Snackbar
 
 class ListCitiesFragment(
     private var isDataSetRusInitial: Boolean,
-    private var mainChooserSetter: MainChooserSetter
+    private var mainChooserSetter: MainChooserSetter,
+    private var mainChooserGetter: MainChooserGetter
 ): Fragment(), OnItemViewClickListener {
     private var _binding: FragmentListCitiesBinding? = null
     private val binding: FragmentListCitiesBinding
@@ -35,7 +38,9 @@ class ListCitiesFragment(
     private lateinit var listCitiesViewModel: ListCitiesViewModel
 
     companion object {
-        fun newInstance(isDataSetRusInitial: Boolean, mainChooserSetter: MainChooserSetter) = ListCitiesFragment(isDataSetRusInitial, mainChooserSetter)
+        fun newInstance(isDataSetRusInitial: Boolean, mainChooserSetter: MainChooserSetter,
+                        mainChooserGetter: MainChooserGetter) =
+            ListCitiesFragment(isDataSetRusInitial, mainChooserSetter, mainChooserGetter)
     }
 
     // Создание наблюдателя в domain
@@ -74,21 +79,30 @@ class ListCitiesFragment(
         listCitiesFragmentAdapter.setOnItemViewClickListener(this)
         binding.fragmentListCitiesFAB.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
-                isDataSetRusInitial = !isDataSetRusInitial
-                if(!isDataSetRusInitial){
-                    binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_russia)
-                    with(listCitiesPublisherDomain) {
-                        notifyDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
-                        notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
+                mainChooserGetter?.let{
+                    val invertedFilterCountry: String = (if (it.getDefaultFilterCountry()
+                        == ConstantsUi.FILTER_RUSSIA) ConstantsUi.FILTER_NOT_RUSSIA
+                    else ConstantsUi.FILTER_RUSSIA)
+                    if (it.getKnownCites("", invertedFilterCountry)!!.size > 0) {
+                        isDataSetRusInitial = !isDataSetRusInitial
+                        if(!isDataSetRusInitial){
+                            binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_russia)
+                            with(listCitiesPublisherDomain) {
+                                notifyDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
+                                notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
+                            }
+                            listCitiesViewModel.getListCities()
+                        }else {
+                            binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_earth)
+                            with(listCitiesPublisherDomain) {
+                                notifyDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
+                                notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
+                            }
+                            listCitiesViewModel.getListCities()
+                        }
+                    } else {
+                        Snackbar.make(view, "${resources.getString(R.string.error)}: ${resources.getString(R.string.error_no_such_places)}", Snackbar.LENGTH_LONG).show()
                     }
-                    listCitiesViewModel.getListCities()
-                }else {
-                    binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_earth)
-                    with(listCitiesPublisherDomain) {
-                        notifyDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
-                        notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
-                    }
-                    listCitiesViewModel.getListCities()
                 }
             }
         })
@@ -120,7 +134,8 @@ class ListCitiesFragment(
 
     override fun onItemClick(city: City) {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(city, mainChooserSetter))
+            .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(city,
+                mainChooserSetter, mainChooserGetter))
             .commit()
     }
 
@@ -152,6 +167,8 @@ class ListCitiesFragment(
                     // Передача в адаптер обновлённого списка городов
                     listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
                 }
+                // Установка признака редактирования пользователем списка мест
+                mainChooserSetter.setUserCorrectedCityList(true)
             }
             R.id.context_menu_action_show_card -> {
                 Toast.makeText(context, "Показать карточку места ${listCitiesFragmentAdapter

@@ -16,6 +16,7 @@ import com.example.yandexweatherwork.controller.observers.viewmodels.ResultCurre
 import com.example.yandexweatherwork.controller.observers.viewmodels.UpdateState
 import com.example.yandexweatherwork.databinding.FragmentResultCurrentBinding
 import com.example.yandexweatherwork.domain.data.City
+import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
@@ -24,12 +25,15 @@ import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragm
 class ResultCurrentFragment(//region ЗАДАНИЕ ПЕРЕМЕННЫХ
     // Данные о месте (городе)
     private var city: City,
-    private val mainChooserSetter: MainChooserSetter
+    private val mainChooserSetter: MainChooserSetter,
+    private val mainChooserGetter: MainChooserGetter
 ) : Fragment() {
 
     // Фабричный метод создания фрагмента
     companion object {
-        fun newInstance(city: City, mainChooserSetter: MainChooserSetter) = ResultCurrentFragment(city, mainChooserSetter)
+        fun newInstance(city: City, mainChooserSetter: MainChooserSetter,
+                        mainChooserGetter: MainChooserGetter)
+        = ResultCurrentFragment(city, mainChooserSetter, mainChooserGetter)
     }
 
     // Ссылка на ResultCurrentViewModel
@@ -83,8 +87,8 @@ class ResultCurrentFragment(//region ЗАДАНИЕ ПЕРЕМЕННЫХ
             // Отображение фрагмента со списком мест (city) для выбора погоды по другому интересующему месту
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(
-                    city.country == ConstantsUi.FILTER_RUSSIA, mainChooserSetter
-                ))
+                    city.country == ConstantsUi.FILTER_RUSSIA, mainChooserSetter,
+                    mainChooserGetter))
                 .commit()
         })
     }

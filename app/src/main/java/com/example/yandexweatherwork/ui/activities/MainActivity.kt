@@ -62,12 +62,13 @@ class MainActivity:
                     .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(
                         mainChooserGetter
                             .getDefaultFilterCountry() == ConstantsUi.FILTER_RUSSIA,
-                        mainChooserSetter))
+                        mainChooserSetter, mainChooserGetter))
                     .commit()
             } else {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_result_weather_container, ResultCurrentFragment
-                        .newInstance(mainChooserGetter.getCurrentKnownCity()!!, mainChooserSetter))
+                        .newInstance(mainChooserGetter.getCurrentKnownCity()!!,
+                            mainChooserSetter, mainChooserGetter))
                     .commit()
             }
         }

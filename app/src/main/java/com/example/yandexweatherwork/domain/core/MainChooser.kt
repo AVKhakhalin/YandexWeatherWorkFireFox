@@ -176,7 +176,7 @@ class MainChooser() {
         } else {
             // Корректировка фильтров места (города) и страны
             val newFilterCountry = filterCountry
-            var newKnownCities: MutableList<City>? = null
+            var newKnownCities: MutableList<City>? = mutableListOf()
             // Фильтрация и построение списка мест (городов)
             if (newFilterCountry == "") {
                 // Фильтрация только ПО НАЗВАНИЮ ГОРОДА
