@@ -6,9 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.ConstantsController
+import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
+import com.example.yandexweatherwork.controller.navigations.content.NavigationGetterContent
 import com.example.yandexweatherwork.controller.observers.domain.*
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModel
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModelSetter
@@ -18,11 +20,7 @@ import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
-import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCitiInfo
-import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
-import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
-import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
 
 
 class MainActivity:
@@ -31,7 +29,8 @@ class MainActivity:
     ListCitiesViewModelSetter,
     PublisherGetterDomain,
     ListSitiesPublisherGetterDomain,
-    ObserverDomain {
+    ObserverDomain,
+    NavigationGetterContent {
 
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var resultCurrentViewModel: ResultCurrentViewModel = ResultCurrentViewModel()
@@ -41,6 +40,8 @@ class MainActivity:
     private val mainChooser: MainChooser = MainChooser()
     private val mainChooserSetter: MainChooserSetter = MainChooserSetter(mainChooser)
     private val mainChooserGetter: MainChooserGetter = MainChooserGetter(mainChooser)
+    private val navigationContent: NavigationContent = NavigationContent(supportFragmentManager,
+        mainChooserSetter, mainChooserGetter)
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,21 +57,14 @@ class MainActivity:
             // Получение известных городов
             getKnownCities()
             // Выбор
-            if (mainChooserGetter.getPositionCurrentKnownCity() == -1) {
+            if (mainChooserGetter.getPositionCurrentKnownCity() == -1)
                 // Отображение фрагмента со списком мест (city) для выбора интересующего места
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_result_weather_container, ListCitiesFragment.newInstance(
-                        mainChooserGetter
-                            .getDefaultFilterCountry() == ConstantsUi.FILTER_RUSSIA,
-                        mainChooserSetter, mainChooserGetter))
-                    .commit()
-            } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_result_weather_container, ResultCurrentFragment
-                        .newInstance(mainChooserGetter.getCurrentKnownCity()!!,
-                            mainChooserSetter, mainChooserGetter))
-                    .commit()
-            }
+                navigationContent.addListCitiesFragment(mainChooserGetter
+                    .getDefaultFilterCountry() == ConstantsController.FILTER_RUSSIA, false)
+            else
+                // Отображение фрагмента с прогнозом погоды по выбранному ранее месту
+                navigationContent.addResultCurrentFragment(mainChooserGetter.getCurrentKnownCity()!!
+                    , false)
         }
 
         // Установка AppBarMenu
@@ -231,4 +225,8 @@ class MainActivity:
         resultCurrentViewModel.getDataFromRemoteSource(mainChooserSetter, mainChooserGetter)
     }
     //endregion
+
+    override fun getNavigationContent(): NavigationContent {
+        return navigationContent
+    }
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.controller.observers.domain.ListCitiesPublisherDomain
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModel
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModelSetter
@@ -18,7 +19,6 @@ import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
-import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
 import com.google.android.material.snackbar.Snackbar
 
 class ListCitiesFragment(
@@ -33,6 +33,7 @@ class ListCitiesFragment(
         }
     private var listCitiesFragmentAdapter = ListCitiesFragmentAdapter(this)
     private var weather: MutableList<City>? = null
+    private var navigationContent: NavigationContent? = null
 
     // Ссылка на ResultCurrentViewModel
     private lateinit var listCitiesViewModel: ListCitiesViewModel
@@ -55,6 +56,8 @@ class ListCitiesFragment(
         (context as ListCitiesViewModelSetter).setListCitiesViewModel(listCitiesViewModel)
         // Получение наблюдателя для domain
         listCitiesPublisherDomain = (context as MainActivity).getListSitiesPublisherDomain()
+        // Получение навигатора для загрузки фрагментов с основным содержанием приложения (Content)
+        navigationContent = (context as MainActivity).getNavigationContent()
     }
 
     override fun onCreateView(
@@ -101,7 +104,9 @@ class ListCitiesFragment(
                             listCitiesViewModel.getListCities()
                         }
                     } else {
-                        Snackbar.make(view, "${resources.getString(R.string.error)}: ${resources.getString(R.string.error_no_such_places)}", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(view, "${resources.getString(R.string.error)}: " +
+                                "${resources.getString(R.string.error_no_such_places)}",
+                            Snackbar.LENGTH_LONG).show()
                     }
                 }
             }
@@ -133,10 +138,7 @@ class ListCitiesFragment(
     }
 
     override fun onItemClick(city: City) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_result_weather_container, ResultCurrentFragment.newInstance(city,
-                mainChooserSetter, mainChooserGetter))
-            .commit()
+        navigationContent?.let {it.addResultCurrentFragment(city, false)}
     }
 
     //region МЕТОДЫ ДЛЯ РАБОТЫ С КОНТЕКСТНЫМ МЕНЮ У ЭЛЕМЕНТОВ СПИСКА
