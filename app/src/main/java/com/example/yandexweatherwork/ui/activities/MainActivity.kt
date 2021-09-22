@@ -11,11 +11,10 @@ import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.controller.navigations.content.NavigationGetterContent
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationGetterDialogs
 import com.example.yandexweatherwork.controller.observers.domain.*
-import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModel
-import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModelSetter
-import com.example.yandexweatherwork.controller.observers.viewmodels.ResultCurrentViewModel
-import com.example.yandexweatherwork.controller.observers.viewmodels.ResultCurrentViewModelSetter
+import com.example.yandexweatherwork.controller.observers.viewmodels.*
 import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
@@ -30,7 +29,8 @@ class MainActivity:
     PublisherGetterDomain,
     ListSitiesPublisherGetterDomain,
     ObserverDomain,
-    NavigationGetterContent {
+    NavigationGetterContent,
+    NavigationGetterDialogs {
 
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var resultCurrentViewModel: ResultCurrentViewModel = ResultCurrentViewModel()
@@ -42,6 +42,7 @@ class MainActivity:
     private val mainChooserGetter: MainChooserGetter = MainChooserGetter(mainChooser)
     private val navigationContent: NavigationContent = NavigationContent(supportFragmentManager,
         mainChooserSetter, mainChooserGetter)
+    private val navigationDialogs: NavigationDialogs = NavigationDialogs()
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +60,11 @@ class MainActivity:
             // Выбор
             if (mainChooserGetter.getPositionCurrentKnownCity() == -1)
                 // Отображение фрагмента со списком мест (city) для выбора интересующего места
-                navigationContent.addListCitiesFragment(mainChooserGetter
+                navigationContent.showListCitiesFragment(mainChooserGetter
                     .getDefaultFilterCountry() == ConstantsController.FILTER_RUSSIA, false)
             else
                 // Отображение фрагмента с прогнозом погоды по выбранному ранее месту
-                navigationContent.addResultCurrentFragment(mainChooserGetter.getCurrentKnownCity()!!
+                navigationContent.showResultCurrentFragment(mainChooserGetter.getCurrentKnownCity()!!
                     , false)
         }
 
@@ -226,7 +227,13 @@ class MainActivity:
     }
     //endregion
 
+    //region МЕТОДЫ ДЛЯ НАВИГАЦИИ ПО ФРАГМЕНТАМ
     override fun getNavigationContent(): NavigationContent {
         return navigationContent
     }
+
+    override fun getNavigationDialogs(): NavigationDialogs {
+        return navigationDialogs
+    }
+    //endregion
 }

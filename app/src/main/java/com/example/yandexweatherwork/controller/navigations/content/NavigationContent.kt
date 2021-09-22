@@ -15,7 +15,7 @@ class NavigationContent(
     private val mainChooserGetter: MainChooserGetter
 ) {
 
-    fun addResultCurrentFragment(city: City, useBackStack: Boolean) {
+    fun showResultCurrentFragment(city: City, useBackStack: Boolean) {
         // Открыть транзакцию
         fragmentManager?.let {
             val fragmentTransaction = it.beginTransaction()
@@ -29,7 +29,7 @@ class NavigationContent(
         }
     }
 
-    fun addListCitiesFragment(isDataSetRusInitial: Boolean, useBackStack: Boolean) {
+    fun showListCitiesFragment(isDataSetRusInitial: Boolean, useBackStack: Boolean) {
         // Открыть транзакцию
         fragmentManager?.let {
             val fragmentTransaction = it.beginTransaction()

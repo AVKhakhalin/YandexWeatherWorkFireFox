@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
 import com.example.yandexweatherwork.controller.observers.domain.ListCitiesPublisherDomain
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModel
 import com.example.yandexweatherwork.controller.observers.viewmodels.ListCitiesViewModelSetter
@@ -19,6 +20,7 @@ import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
+import com.example.yandexweatherwork.ui.fragments.dialogs.DeleteConformationDialogFragment
 import com.google.android.material.snackbar.Snackbar
 
 class ListCitiesFragment(
@@ -34,6 +36,7 @@ class ListCitiesFragment(
     private var listCitiesFragmentAdapter = ListCitiesFragmentAdapter(this)
     private var weather: MutableList<City>? = null
     private var navigationContent: NavigationContent? = null
+    private var navigationDialogs: NavigationDialogs? = null
 
     // Ссылка на ResultCurrentViewModel
     private lateinit var listCitiesViewModel: ListCitiesViewModel
@@ -58,6 +61,8 @@ class ListCitiesFragment(
         listCitiesPublisherDomain = (context as MainActivity).getListSitiesPublisherDomain()
         // Получение навигатора для загрузки фрагментов с основным содержанием приложения (Content)
         navigationContent = (context as MainActivity).getNavigationContent()
+        // Получение навигатора для загрузки диалоговых фрагментов (Dialogs)
+        navigationDialogs = (context as MainActivity).getNavigationDialogs()
     }
 
     override fun onCreateView(
@@ -138,7 +143,7 @@ class ListCitiesFragment(
     }
 
     override fun onItemClick(city: City) {
-        navigationContent?.let {it.addResultCurrentFragment(city, false)}
+        navigationContent?.let {it.showResultCurrentFragment(city, false)}
     }
 
     //region МЕТОДЫ ДЛЯ РАБОТЫ С КОНТЕКСТНЫМ МЕНЮ У ЭЛЕМЕНТОВ СПИСКА
@@ -153,24 +158,18 @@ class ListCitiesFragment(
         when (item.itemId) {
             R.id.context_menu_action_delete_city -> {
                 // Удаление места (города) из списка
-//                Toast.makeText(context, "Удаление места ${listCitiesFragmentAdapter
-//                    .getPositionChoosedElement()}", Toast.LENGTH_SHORT).show()
                 val positionChoosedElement: Int = listCitiesFragmentAdapter
                     .getPositionChoosedElement()
-                mainChooserSetter?.let{
-                    if (weather != null) {
-                        it.removeCity(weather?.get(positionChoosedElement)!!.name,
-                            weather?.get(positionChoosedElement)!!.country)
+                // Отображение диалогового фрагмента DeleteFragment с подтверждением удаления места
+                // Удаление места через контекстное меню
+                weather?.let{
+                    if (navigationDialogs != null) {
+                        navigationDialogs?.showDeleteConformationDialogFragment(
+                            positionChoosedElement, it[positionChoosedElement]!!.name,
+                            it[positionChoosedElement]!!.country, this,
+                            requireActivity())
                     }
                 }
-                listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
-                weather?.let{
-                    it.removeAt(positionChoosedElement)
-                    // Передача в адаптер обновлённого списка городов
-                    listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
-                }
-                // Установка признака редактирования пользователем списка мест
-                mainChooserSetter.setUserCorrectedCityList(true)
             }
             R.id.context_menu_action_show_card -> {
                 Toast.makeText(context, "Показать карточку места ${listCitiesFragmentAdapter
@@ -180,4 +179,22 @@ class ListCitiesFragment(
         return super.onContextItemSelected(item)
     }
     //endregion
+
+    fun deleteCitiesAndUpdateList(positionChoosedElement: Int, filterCity: String,
+                                  filterCountry: String) {
+        mainChooserSetter?.let{
+            if (weather != null) {
+                it.removeCity(filterCity, filterCountry)
+            }
+        }
+
+        listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
+        weather?.let{
+            it.removeAt(positionChoosedElement)
+            // Передача в адаптер обновлённого списка городов
+            listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
+        }
+        // Установка признака редактирования пользователем списка мест
+        mainChooserSetter.setUserCorrectedCityList(true)
+    }
 }

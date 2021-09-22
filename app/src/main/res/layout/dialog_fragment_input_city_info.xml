@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/input_city_info_button_cancel_margin"
+            android:layout_margin="@dimen/button_cancel_margin"
             android:backgroundTint="@color/background_list_color"
             android:text="@string/input_city_info_button_cancel_text"
             android:textColor="@color/gray_text" />
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/input_city_info_button_ok_margin"
+            android:layout_margin="@dimen/button_ok_margin"
             android:backgroundTint="@color/background_list_color"
             android:text="@string/input_city_info_button_ok_text"
             android:textColor="@color/gray_text" />

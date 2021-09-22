@@ -84,7 +84,7 @@ class ResultCurrentFragment(
                 notifyPositionCurrentKnownCity(-1)
             }
             // Отображение фрагмента со списком мест (city) для выбора погоды по другому интересующему месту
-            navigationContent?.let{it.addListCitiesFragment(city.country
+            navigationContent?.let{it.showListCitiesFragment(city.country
                     == ConstantsUi.FILTER_RUSSIA, false)}
         })
     }

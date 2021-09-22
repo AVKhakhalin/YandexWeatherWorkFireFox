@@ -38,4 +38,7 @@
     <string name="context_menu_action_delete_city_text">Удалить место</string>
     <string name="context_menu_action_show_card_text">Карточка места</string>
     <string name="context_menu_action_return_text">Вернуться к списку</string>
+    <string name="dialog_fragment_delete_conformation_button_no_text">Нет</string>
+    <string name="dialog_fragment_delete_conformation_button_yes_text">Да</string>
+    <string name="dialog_fragment_delete_conformation_title_text">Подтвердите\nудаление места\n</string>
 </resources>
