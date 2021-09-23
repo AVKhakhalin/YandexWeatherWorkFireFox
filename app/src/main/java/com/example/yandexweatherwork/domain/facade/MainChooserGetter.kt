@@ -22,7 +22,8 @@ class MainChooserGetter(mainChooser: MainChooser) {
     fun getKnownCites(): MutableList<City>? = mainChooser.getKnownCities()
     //endregion
 
-    // Получение данных об известном городе, по которому последний раз запрошены погодные данные или который выбран в списке известных городов
+    // Получение данных об известном городе, по которому последний раз запрошены погодные данные
+    // или который выбран в списке известных городов
     fun getCurrentKnownCity(): City? = mainChooser.getCurrentKnownCity()
 
     // Получение позиции известного города, по которому последний раз запрошены погодные данные

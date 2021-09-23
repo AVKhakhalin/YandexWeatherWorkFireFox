@@ -6,40 +6,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
-class DeleteConformationDialogFragment(
+class CardCityDialogFragment(
     private val positionChoosedElement: Int,
-    private var filterCity: String,
-    private var filterCountry: String,
+    private var city: City,
     private val listCitiesFragment: ListCitiesFragment
 ): DialogFragment(), DialogInterface.OnClickListener {
     private var buttonYes: Button? = null
     private var buttonNo: Button? = null
-    private var titleTextDialogFragment: TextView? = null
+    private var inputCityNameField: EditText? = null
+    private var inputLatField: EditText? = null
+    private var inputLonField: EditText? = null
+    private var inputCountryField: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.dialog_fragment_delete_conformation, null)
+        val view: View = inflater.inflate(R.layout.dialog_fragment_card_city, null)
         initView(view)
-        titleTextDialogFragment = view.findViewById(R.id.dialog_fragment_delete_conformation_title)
-        titleTextDialogFragment?.let{
-            it.text = "${it.text}\"$filterCity\""
-        }
+        inputCityNameField = view.findViewById(R.id.input_city_info_city_field)
+        inputCityNameField?.let{it.setText("${city.name}")}
+        inputLatField = view.findViewById(R.id.input_city_info_lat_field)
+        inputLatField?.let{it.setText("${city.lat}")}
+        inputLonField = view.findViewById(R.id.input_city_info_lon_field)
+        inputLonField?.let{it.setText("${city.lon}")}
+        inputCountryField = view.findViewById(R.id.input_city_info_country_field)
+        inputCountryField?.let{it.setText("${city.country}")}
         return view
     }
 
     private fun initView(view: View) {
-        buttonYes = view.findViewById(R.id.way_input_button_ok)
+        buttonYes = view.findViewById(R.id.edit_city_info_button_ok)
         if (buttonYes != null) {
             buttonYes!!.setOnClickListener(View.OnClickListener { view: View ->
                 onYes(view)
             })
         }
-        buttonNo = view.findViewById(R.id.way_input_button_cancel)
+        buttonNo = view.findViewById(R.id.edit_city_info_button_cancel)
         if (buttonNo != null) {
             buttonNo!!.setOnClickListener(View.OnClickListener { view: View ->
                 onNo(view)
@@ -54,8 +60,11 @@ class DeleteConformationDialogFragment(
 
     // Результат нажатия на кнопку подтверждения действия
     private fun onYes(view: View) {
-        listCitiesFragment.deleteCitiesAndUpdateList(positionChoosedElement, filterCity, filterCountry)
-        Toast.makeText(context, "$filterCity; $filterCountry", Toast.LENGTH_LONG).show()
+        if ((inputCityNameField != null) && (inputLatField != null)
+            && (inputLonField  != null) && (inputCountryField != null))
+        listCitiesFragment.editCitiesAndUpdateList(positionChoosedElement,
+            City("${inputCityNameField!!.text}", "${inputLatField!!.text}".toDouble(),
+                "${inputLonField!!.text}".toDouble(), "${inputCountryField!!.text}"))
         dismiss()
     }
 

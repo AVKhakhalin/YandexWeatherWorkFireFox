@@ -42,15 +42,19 @@ class MainChooserSetter(mainChooser: MainChooser) {
     fun addKnownCities(city: City) = mainChooser?.let {it.addKnownCities(city)}
 
     // Установка фильтра выбора места (города) по-умолчанию
-    fun setDefaultFilterCity(defaultFilterCity: String) = mainChooser?.let {it.setDefaultFilterCity(defaultFilterCity)}
+    fun setDefaultFilterCity(defaultFilterCity: String) = mainChooser?.let {
+        it.setDefaultFilterCity(defaultFilterCity)}
 
     // Установка фильтра выбора страны по-умолчанию
-    fun setDefaultFilterCountry(defaultFilterCountry: String) = mainChooser?.let {it.setDefaultFilterCountry(defaultFilterCountry)}
+    fun setDefaultFilterCountry(defaultFilterCountry: String) = mainChooser?.let {
+        it.setDefaultFilterCountry(defaultFilterCountry)}
 
     //region Методы установки позиции известного города, по которому последний раз запрошены погодные данные
-    fun setPositionCurrentKnownCity(filterCity: String, filterCountry: String) = mainChooser?.let {it.setPositionCurrentKnownCity(filterCity, filterCountry)}
+    fun setPositionCurrentKnownCity(filterCity: String, filterCountry: String) = mainChooser?.let {
+        it.setPositionCurrentKnownCity(filterCity, filterCountry)}
 
-    fun setPositionCurrentKnownCity(position: Int) = mainChooser?.let {it.setPositionCurrentKnownCity(position)}
+    fun setPositionCurrentKnownCity(position: Int) = mainChooser?.let {
+        it.setPositionCurrentKnownCity(position)}
     //region
 
     // Установка начальных городов
@@ -65,6 +69,14 @@ class MainChooserSetter(mainChooser: MainChooser) {
         mainChooser?.let {
             if (it.removeCity(filterCity, filterCountry))
                 return true
+        }
+        return false
+    }
+
+    // Редактирование места (города) в списке
+    fun editCity(filterCity: String, filterCountry: String, city: City): Boolean {
+        mainChooser?.let {
+            return it.editCity(filterCity, filterCountry, city)
         }
         return false
     }

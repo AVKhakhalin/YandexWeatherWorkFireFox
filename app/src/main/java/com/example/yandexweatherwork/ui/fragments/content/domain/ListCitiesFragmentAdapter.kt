@@ -22,14 +22,23 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
         this.fragment = fragment
     }
 
+    //region МЕТОДЫ ДЛЯ ОБНОВЛЕНИЯ СПИСКА
+    // Метод для полного обновления списка
     fun setWeather(data: List<City>){
         weatherData = data
         notifyDataSetChanged()
     }
+    // Метод для обновления списка после удаления его элемента
     fun setWeather(data: List<City>, updatedPosition: Int){
         weatherData = data
         notifyItemRemoved(updatedPosition)
     }
+    // Метод для обновления списка после редактирования его элемента
+    fun setWeather(updatedPosition: Int, data: List<City>){
+        weatherData = data
+        notifyItemChanged(updatedPosition)
+    }
+    //endregion
 
     fun setOnItemViewClickListener(onItemViewClickListener:OnItemViewClickListener) {
         listener = onItemViewClickListener
@@ -69,7 +78,7 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            Toast.makeText(v?.context, "${getLayoutPosition()} ${weatherData.get(getLayoutPosition()).name}", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(v?.context, "${getLayoutPosition()} ${weatherData.get(getLayoutPosition()).name}", Toast.LENGTH_SHORT).show()
             setPositionChoosedElement(layoutPosition)
         }
     }

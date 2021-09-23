@@ -46,4 +46,21 @@
     <dimen name="fragment_result_weather_container_margin_top">55dp</dimen>
     <dimen name="dialog_fragment_delete_conformation_margin">20dp</dimen>
     <dimen name="dialog_fragment_delete_conformation_text_size">20sp</dimen>
+    <dimen name="card_city_title_margin">20dp</dimen>
+    <dimen name="card_city_title_text_size">20sp</dimen>
+    <dimen name="card_city_city_name_margin_start">10dp</dimen>
+    <dimen name="card_city_city_name_text_size">20sp</dimen>
+    <dimen name="card_city_city_name_field_text_size">20sp</dimen>
+    <dimen name="card_city_lan_margin_start">10dp</dimen>
+    <dimen name="card_city_lan_text_size">20sp</dimen>
+    <dimen name="card_city_lon_margin_start">10dp</dimen>
+    <dimen name="card_city_lon_text_size">20sp</dimen>
+    <dimen name="card_city_lon_field_text_size">20sp</dimen>
+    <dimen name="card_city_country_info_margin_start">10dp</dimen>
+    <dimen name="card_city_country_info_text_size">20sp</dimen>
+    <dimen name="card_city_country_info_field_text_size">20sp</dimen>
+    <dimen name="card_city_city_name_field_margin_end">10dp</dimen>
+    <dimen name="card_city_lan_margin_end">10dp</dimen>
+    <dimen name="card_city_lon_field_margin_end">10dp</dimen>
+    <dimen name="card_city_country_info_field_margin_end">10dp</dimen>
 </resources>

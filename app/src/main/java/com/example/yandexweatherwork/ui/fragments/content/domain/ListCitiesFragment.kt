@@ -20,7 +20,6 @@ import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
-import com.example.yandexweatherwork.ui.fragments.dialogs.DeleteConformationDialogFragment
 import com.google.android.material.snackbar.Snackbar
 
 class ListCitiesFragment(
@@ -48,7 +47,7 @@ class ListCitiesFragment(
     }
 
     // Создание наблюдателя в domain
-    var listCitiesPublisherDomain : ListCitiesPublisherDomain = ListCitiesPublisherDomain()
+    var listCitiesPublisherDomain: ListCitiesPublisherDomain = ListCitiesPublisherDomain()
     //endregion
 
     override fun onAttach(context: Context) {
@@ -87,33 +86,7 @@ class ListCitiesFragment(
         listCitiesFragmentAdapter.setOnItemViewClickListener(this)
         binding.fragmentListCitiesFAB.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
-                mainChooserGetter?.let{
-                    val invertedFilterCountry: String = (if (it.getDefaultFilterCountry()
-                        == ConstantsUi.FILTER_RUSSIA) ConstantsUi.FILTER_NOT_RUSSIA
-                    else ConstantsUi.FILTER_RUSSIA)
-                    if (it.getKnownCites("", invertedFilterCountry)!!.size > 0) {
-                        isDataSetRusInitial = !isDataSetRusInitial
-                        if(!isDataSetRusInitial){
-                            binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_russia)
-                            with(listCitiesPublisherDomain) {
-                                notifyDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
-                                notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
-                            }
-                            listCitiesViewModel.getListCities()
-                        }else {
-                            binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_earth)
-                            with(listCitiesPublisherDomain) {
-                                notifyDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
-                                notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
-                            }
-                            listCitiesViewModel.getListCities()
-                        }
-                    } else {
-                        Snackbar.make(view, "${resources.getString(R.string.error)}: " +
-                                "${resources.getString(R.string.error_no_such_places)}",
-                            Snackbar.LENGTH_LONG).show()
-                    }
-                }
+                checkAndCorrectCountryState()
             }
         })
         listCitiesViewModel = ViewModelProvider(this).get(ListCitiesViewModel::class.java)
@@ -155,11 +128,11 @@ class ListCitiesFragment(
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
+        val positionChoosedElement: Int = listCitiesFragmentAdapter
+            .getPositionChoosedElement()
         when (item.itemId) {
             R.id.context_menu_action_delete_city -> {
                 // Удаление места (города) из списка
-                val positionChoosedElement: Int = listCitiesFragmentAdapter
-                    .getPositionChoosedElement()
                 // Отображение диалогового фрагмента DeleteFragment с подтверждением удаления места
                 // Удаление места через контекстное меню
                 weather?.let{
@@ -174,12 +147,22 @@ class ListCitiesFragment(
             R.id.context_menu_action_show_card -> {
                 Toast.makeText(context, "Показать карточку места ${listCitiesFragmentAdapter
                     .getPositionChoosedElement()}", Toast.LENGTH_SHORT).show()
+                // Отображение диалогового фрагмента CardCity
+                // для редаткирования информации о месте (городе)
+                weather?.let{
+                    if (navigationDialogs != null) {
+                        navigationDialogs?.showCardCityDialogFragment(
+                            positionChoosedElement, it!![positionChoosedElement], this,
+                            requireActivity())
+                    }
+                }
             }
         }
         return super.onContextItemSelected(item)
     }
     //endregion
 
+    // Метод для удаления места из списка и его обновления
     fun deleteCitiesAndUpdateList(positionChoosedElement: Int, filterCity: String,
                                   filterCountry: String) {
         mainChooserSetter?.let{
@@ -196,5 +179,114 @@ class ListCitiesFragment(
         }
         // Установка признака редактирования пользователем списка мест
         mainChooserSetter.setUserCorrectedCityList(true)
+    }
+
+    // Метод для удаления места из списка и его обновления
+    fun editCitiesAndUpdateList(positionChoosedElement: Int, city: City) {
+        if (weather!![positionChoosedElement].country.lowercase() == city.country.lowercase()) {
+            // Случай, когда страна в карточке места не поменялась
+            changeWeather(city, positionChoosedElement)
+            // Изменение в текущем списке места
+            listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
+            weather?.let {
+                it[positionChoosedElement] = city
+                // Передача в адаптер обновлённого списка городов
+                listCitiesFragmentAdapter.setWeather(positionChoosedElement, weather!!)
+            }
+        } else {
+            // Случай, когда страна в карточке места поменялась
+            if (weather!![positionChoosedElement].country.lowercase()
+                == ConstantsUi.FILTER_RUSSIA.lowercase()) {
+                // Случай, когда изменённое место было в России
+                changeWeather(city, positionChoosedElement)
+                // Удаление места из текущего списка российских мест
+                listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
+                weather?.let {
+                    it.removeAt(positionChoosedElement)
+                    // Передача в адаптер обновлённого списка городов
+                    listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
+                    // Смена нового фильтра страны, когда НЕРОССИЙСКИХ мест больше не осталось
+                    if (it.size == 0) {
+                        mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
+                        checkAndCorrectCountryState()
+                    }
+
+                }
+            } else {
+                // Случай, когда изменённое место было НЕ в России
+                changeWeather(city, positionChoosedElement)
+                if (city.country.lowercase() == ConstantsUi.FILTER_RUSSIA.lowercase()) {
+                    // Удаление места из текущего списка российских мест
+                    listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
+                    weather?.let {
+                        it.removeAt(positionChoosedElement)
+                        // Передача в адаптер обновлённого списка городов
+                        listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
+                        // Смена нового фильтра страны, когда НЕРОССИЙСКИХ мест больше не осталось
+                        if (it.size == 0) {
+                            mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
+                            checkAndCorrectCountryState()
+                        }
+
+                    }
+                } else {
+                    // Изменение в текущем списке места
+                    listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
+                    weather?.let {
+                        it[positionChoosedElement] = city
+                        // Передача в адаптер обновлённого списка городов
+                        listCitiesFragmentAdapter.setWeather(positionChoosedElement, weather!!)
+                    }
+                }
+            }
+        }
+        // Установка признака редактирования пользователем списка мест
+        mainChooserSetter.setUserCorrectedCityList(true)
+    }
+
+    // Поменять значение в классе weather в определённой позиции на обновлённый city
+    private fun changeWeather(
+        city: City,
+        positionChoosedElement: Int
+    ) {
+        mainChooserSetter?.let {
+            if ((weather != null) && (city != null)) {
+                it.editCity(
+                    weather!![positionChoosedElement].name,
+                    weather!![positionChoosedElement].country, city
+                )
+            }
+        }
+    }
+
+    // Проверка и корректировка фильтра выводимых мест по стране (Россия или не Россия)
+    private fun checkAndCorrectCountryState() {
+        mainChooserGetter?.let{
+            val invertedFilterCountry: String = (if (it.getDefaultFilterCountry().lowercase()
+                == ConstantsUi.FILTER_RUSSIA.lowercase()) ConstantsUi.FILTER_NOT_RUSSIA
+            else ConstantsUi.FILTER_RUSSIA)
+            if (it.getKnownCites("", invertedFilterCountry)!!.size > 0) {
+                isDataSetRusInitial = !isDataSetRusInitial
+                if(!isDataSetRusInitial){
+                    binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_russia)
+                    with(listCitiesPublisherDomain) {
+                        notifyDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
+                        notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
+                    }
+                    listCitiesViewModel.getListCities()
+                }else {
+                    binding.fragmentListCitiesFAB.setImageResource(R.drawable.ic_earth)
+                    with(listCitiesPublisherDomain) {
+                        notifyDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
+                        notifyDefaultFilterCity(ConstantsUi.DEFAULT_FILTER_CITY)
+                    }
+                    listCitiesViewModel.getListCities()
+                }
+            } else {
+                Snackbar.make(requireView(), "${resources.getString(R.string.error)}: " +
+                        "${resources.getString(R.string.error_no_such_places)}",
+                    Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 }
