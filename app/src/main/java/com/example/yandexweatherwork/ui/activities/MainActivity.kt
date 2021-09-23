@@ -21,6 +21,8 @@ import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
+import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
+import java.security.AccessController.getContext
 
 
 class MainActivity:
@@ -75,8 +77,8 @@ class MainActivity:
         setupAppBarMenu()
 
 /*
-        val repositoryGetCitiInfo: RepositoryGetCitiInfo = RepositoryGetCitiInfo()
-        repositoryGetCitiInfo.getCityInfo()
+        val repositoryGetCityInfo: RepositoryGetCityInfo = RepositoryGetCityInfo()
+        repositoryGetCityInfo.getCityInfo()
 */
 
 /*
@@ -104,7 +106,10 @@ class MainActivity:
         when (item.itemId) {
             R.id.app_menu_action_add_city -> {
                 // Добавить место
-                Toast.makeText(this, "Добавить место", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Добавить место", Toast.LENGTH_SHORT).show()
+//                var listCitiesFragment: ListCitiesFragment? = null
+//                listCitiesFragment = this.baseContext.getListCitiesFragmentGetter()
+//                navigationDialogs.showInputCityDialogFragment(listCitiesFragment!!, fragmentManager)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

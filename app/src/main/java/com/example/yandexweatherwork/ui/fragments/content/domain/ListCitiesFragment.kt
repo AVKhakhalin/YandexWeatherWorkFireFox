@@ -29,7 +29,7 @@ class ListCitiesFragment(
     private var isDataSetRusInitial: Boolean,
     private var mainChooserSetter: MainChooserSetter,
     private var mainChooserGetter: MainChooserGetter
-): Fragment(), OnItemViewClickListener {
+): Fragment(), OnItemViewClickListener, ListCitiesFragmentGetter {
     private var _binding: FragmentListCitiesBinding? = null
     private val binding: FragmentListCitiesBinding
         get() {
@@ -313,5 +313,9 @@ class ListCitiesFragment(
                     Snackbar.LENGTH_LONG).show()
             }
         }
+    }
+
+    override fun getListCitiesFragment(): ListCitiesFragment {
+        return this
     }
 }

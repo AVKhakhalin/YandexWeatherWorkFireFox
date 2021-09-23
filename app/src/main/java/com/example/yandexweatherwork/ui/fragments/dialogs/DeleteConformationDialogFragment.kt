@@ -22,7 +22,8 @@ class DeleteConformationDialogFragment(
     private var buttonNo: Button? = null
     private var titleTextDialogFragment: TextView? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.dialog_fragment_delete_conformation, null)
         initView(view)
         titleTextDialogFragment = view.findViewById(R.id.dialog_fragment_delete_conformation_title)
@@ -54,7 +55,8 @@ class DeleteConformationDialogFragment(
 
     // Результат нажатия на кнопку подтверждения действия
     private fun onYes(view: View) {
-        listCitiesFragment.deleteCitiesAndUpdateList(positionChoosedElement, filterCity, filterCountry)
+        listCitiesFragment.deleteCitiesAndUpdateList(positionChoosedElement, filterCity,
+            filterCountry)
         Toast.makeText(context, "$filterCity; $filterCountry", Toast.LENGTH_LONG).show()
         dismiss()
     }

@@ -13,9 +13,7 @@ import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
-class CardCityDialogFragment(
-    private val positionChoosedElement: Int,
-    private var city: City,
+class InputCityDialogFragment(
     private val listCitiesFragment: ListCitiesFragment
 ): DialogFragment(), DialogInterface.OnClickListener {
     private var buttonYes: Button? = null
@@ -26,20 +24,16 @@ class CardCityDialogFragment(
     private var inputCountryField: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.dialog_fragment_card_city, null)
-        initView(view)
+        val view: View = inflater.inflate(R.layout.dialog_fragment_input_city, null)
+/*        initView(view)
         inputCityNameField = view.findViewById(R.id.input_city_info_city_field)
-        inputCityNameField?.let{it.setText("${city.name}")}
         inputLatField = view.findViewById(R.id.input_city_info_lat_field)
-        inputLatField?.let{it.setText("${city.lat}")}
         inputLonField = view.findViewById(R.id.input_city_info_lon_field)
-        inputLonField?.let{it.setText("${city.lon}")}
-        inputCountryField = view.findViewById(R.id.input_city_info_country_field)
-        inputCountryField?.let{it.setText("${city.country}")}
+        inputCountryField = view.findViewById(R.id.input_city_info_country_field)*/
         return view
     }
 
-    private fun initView(view: View) {
+/*    private fun initView(view: View) {
         buttonYes = view.findViewById(R.id.edit_city_info_button_ok)
         if (buttonYes != null) {
             buttonYes!!.setOnClickListener(View.OnClickListener { view: View ->
@@ -52,7 +46,7 @@ class CardCityDialogFragment(
                 onNo(view)
             })
         }
-    }
+    }*/
 
     // Результат нажатия на кнопку отмены действия
     private fun onNo(view: View) {
@@ -60,12 +54,11 @@ class CardCityDialogFragment(
     }
 
     // Результат нажатия на кнопку подтверждения действия
-    private fun onYes(view: View) {
+/*    private fun onYes(view: View) {
         if ((inputCityNameField != null) && (inputLatField != null)
             && (inputLonField  != null) && (inputCountryField != null))
                 if (inputLatField!!.text.isNotEmpty() && inputLonField!!.text.isNotEmpty()) {
                     listCitiesFragment.editCitiesAndUpdateList(
-                        positionChoosedElement,
                         City("${inputCityNameField!!.text}",
                             "${inputLatField!!.text}".toDouble(),
                             "${inputLonField!!.text}".toDouble(),
@@ -74,7 +67,6 @@ class CardCityDialogFragment(
                     )
                 } else {
                     listCitiesFragment.editCitiesAndUpdateList(
-                        positionChoosedElement,
                         City(
                             "${inputCityNameField!!.text}",
                             ConstantsUi.ERROR_COORDINATE,
@@ -84,7 +76,7 @@ class CardCityDialogFragment(
                     )
                 }
         dismiss()
-    }
+    }*/
 
     override fun onClick(dialog: DialogInterface?, which: Int) {}
 }

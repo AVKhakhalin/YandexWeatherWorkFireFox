@@ -65,4 +65,9 @@
     <dimen name="card_city_country_info_field_margin_end">10dp</dimen>
     <dimen name="card_city_lan_comments_text_size">15sp</dimen>
     <dimen name="card_city_lat_comments_text_size">15sp</dimen>
+    <dimen name="input_city_lan_comments_text_size">15sp</dimen>
+    <dimen name="input_city_info_country_field_margin_end">10dp</dimen>
+    <dimen name="input_city_info_lon_lon_field_example_margin_end">10dp</dimen>
+    <dimen name="input_city_info_lat_field_example_margin_end">10dp</dimen>
+    <dimen name="input_string_info_city_field_margin_end">10dp</dimen>
 </resources>

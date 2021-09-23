@@ -5,6 +5,7 @@ import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.CardCityDialogFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.DeleteConformationDialogFragment
+import com.example.yandexweatherwork.ui.fragments.dialogs.InputCityDialogFragment
 
 class NavigationDialogs{
     // Отображение диалога с подтверждением удаления фрагмента
@@ -28,5 +29,13 @@ class NavigationDialogs{
                 = CardCityDialogFragment(positionChoosedElement,
             city, listCitiesFragment)
         cardCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+    }
+
+    // Отображение диалога с карточкой места (города)
+    fun showInputCityDialogFragment(listCitiesFragment: ListCitiesFragment,
+                                   fragmentActivity: FragmentActivity) {
+        val inputCityDialogFragment: InputCityDialogFragment
+                = InputCityDialogFragment(listCitiesFragment)
+        inputCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
     }
 }

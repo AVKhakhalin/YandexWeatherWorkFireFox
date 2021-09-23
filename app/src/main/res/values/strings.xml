@@ -7,7 +7,7 @@
     <string name="result_current_constraint_layout_temperature_value_example_text">+15</string>
     <string name="result_current_constraint_layout_feelslike_label_example_text">Ощущается как:</string>
     <string name="result_current_constraint_layout_feelslike_value_example_text">-23</string>
-    <string name="input_string_info_title_text">Введите данне о новом месте</string>
+    <string name="input_string_info_title_text">Введите данные о новом месте</string>
     <string name="input_city_info_button_cancel_text">Отмена</string>
     <string name="input_string_info_city_name_title_text">Название места</string>
     <string name="input_string_info_city_field_example_text">Москва</string>
@@ -17,7 +17,7 @@
     <string name="input_city_info_lon_lon_field_example_text">37.6156</string>
     <string name="input_city_info_country_title">Страна</string>
     <string name="input_city_info_country_field_text">Россия</string>
-    <string name="input_city_info_button_ok_text">Узнать погоду</string>
+    <string name="input_city_info_button_ok_text">Сохранить</string>
     <string name="search_city_title_text">Найти место среди ранее заданных</string>
     <string name="search_city_name_field_example_text">Москва</string>
     <string name="search_city_country_title_text">Страна</string>
@@ -54,4 +54,5 @@
     <string name="card_city_info_button_ok_text">Сохранить</string>
     <string name="card_city_lat_comments_text">(можно не заполнять)</string>
     <string name="card_city_lon_comments_text">(можно не заполнять)</string>
+    <string name="input_city_lat_comments_text">(можно не заполнять)</string>
 </resources>

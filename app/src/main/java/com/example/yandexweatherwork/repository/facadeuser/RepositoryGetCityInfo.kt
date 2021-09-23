@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class RepositoryGetCitiInfo {
+class RepositoryGetCityInfo {
     fun getCityInfo() { // TODO: Доработать входные параметры
 //        val url = URL("https://nominatim.openstreetmap.org/search.php?q=Анкара&format=json&limit=1")
         val url = URL("https://nominatim.openstreetmap.org/search.php?q=Анкара&format=json")
@@ -25,8 +25,8 @@ class RepositoryGetCitiInfo {
             val country: String =
                 getCityDTOInfo[0].display_name.subSequence(indexLastZapity,
                     getCityDTOInfo[0].display_name.length) as String
-//            Log.d("mylogs", "$country ${getCityDTOInfo[0].lat}; " +
-//                    "${getCityDTOInfo[0].lon}")
+            Log.d("mylogs", "$country ${getCityDTOInfo[0].lat}; " +
+                   "${getCityDTOInfo[0].lon}")
             urlConnection.disconnect()
         }.start()
     }
