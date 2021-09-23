@@ -54,22 +54,35 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/card_city_lan_margin_start"
             android:ems="7"
-            android:text="@string/card_city_lan_text"
+            android:text="@string/card_city_lat_text"
             android:textColor="@color/gray_text"
             android:textSize="@dimen/card_city_lan_text_size" />
 
-        <EditText
-            android:id="@+id/input_city_info_lat_field"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:cursorVisible="true"
-            android:ems="8"
-            android:inputType="number"
-            android:text="@string/card_city_lan_field_example_text"
-            android:textColor="@color/gray_text"
-            android:textSize="@dimen/card_city_lan_text_size"
-            android:layout_marginEnd="@dimen/card_city_lan_margin_end"/>
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <EditText
+                android:id="@+id/input_city_info_lat_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:cursorVisible="true"
+                android:ems="8"
+                android:inputType="number"
+                android:text="@string/card_city_lat_field_example_text"
+                android:textColor="@color/gray_text"
+                android:textSize="@dimen/card_city_lan_text_size"
+                android:layout_marginEnd="@dimen/card_city_lan_margin_end"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/card_city_lat_comments_text"
+                android:textSize="@dimen/card_city_lan_comments_text_size"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -87,18 +100,30 @@
             android:textColor="@color/gray_text"
             android:textSize="@dimen/card_city_lon_text_size" />
 
-        <EditText
-            android:id="@+id/input_city_info_lon_field"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:cursorVisible="true"
-            android:ems="8"
-            android:inputType="number"
-            android:text="@string/card_city_lon_field_example_text"
-            android:textColor="@color/gray_text"
-            android:textSize="@dimen/card_city_lon_field_text_size"
-            android:layout_marginEnd="@dimen/card_city_lon_field_margin_end"/>
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <EditText
+                android:id="@+id/input_city_info_lon_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:cursorVisible="true"
+                android:ems="8"
+                android:inputType="number"
+                android:text="@string/card_city_lon_field_example_text"
+                android:textColor="@color/gray_text"
+                android:textSize="@dimen/card_city_lon_field_text_size"
+                android:layout_marginEnd="@dimen/card_city_lon_field_margin_end"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/card_city_lon_comments_text"
+                android:textSize="@dimen/card_city_lat_comments_text_size"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

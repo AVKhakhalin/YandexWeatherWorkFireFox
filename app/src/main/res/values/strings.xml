@@ -44,12 +44,14 @@
     <string name="card_city_title_text">Карточка места</string>
     <string name="card_city_city_name_text">Название места</string>
     <string name="card_city_city_name_field_example_text">Москва</string>
-    <string name="card_city_lan_text">Широта (Latitude), в десятичных долях</string>
-    <string name="card_city_lan_field_example_text">55.7522</string>
-    <string name="card_city_lon_text">Долгота (Latitude), в десятичных долях</string>
+    <string name="card_city_lat_text">Широта (Latitude),\nв десятичных долях</string>
+    <string name="card_city_lat_field_example_text">55.7522</string>
+    <string name="card_city_lon_text">Долгота (Latitude),\nв десятичных долях</string>
     <string name="card_city_lon_field_example_text">37.6156</string>
     <string name="card_city_country_info_text">Страна</string>
     <string name="card_city_country_info_field_example_text">Россия</string>
     <string name="card_city_info_button_cancel_text">Отмена</string>
     <string name="card_city_info_button_ok_text">Сохранить</string>
+    <string name="card_city_lat_comments_text">(можно не заполнять)</string>
+    <string name="card_city_lon_comments_text">(можно не заполнять)</string>
 </resources>

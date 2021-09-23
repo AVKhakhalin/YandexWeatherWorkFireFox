@@ -53,27 +53,6 @@ class RepositoryGetCityCoordinates(cityName: String, mainChooserSetter: MainChoo
                         mainChooserSetter.setLon(strLon.toDouble())
                 }
             }
-
-/*            if ((stringAnswer?.indexOf("\"lat\":") + 7 < stringAnswer.length)
-                && (stringAnswer?.indexOf("\"lat\":") + 7 < stringAnswer?.indexOf("\"lon\":") - 2)
-                && (stringAnswer?.indexOf("\"lon\":") + 8 < stringAnswer.length)) {
-                val strLat = stringAnswer?.subSequence(
-                    stringAnswer?.indexOf("\"lat\":") + 7,
-                    stringAnswer?.indexOf("\"lon\":") - 2
-                ) as String
-                val startIndex: Int = stringAnswer?.indexOf("\"lon\":") + 8
-                if ((startIndex < stringAnswer.length)
-                    && (stringAnswer?.indexOf("\",\"", startIndex) < stringAnswer.length)) {
-                    val strLon = stringAnswer?.subSequence(
-                        stringAnswer?.indexOf("\"lon\":") + 7,
-                        stringAnswer?.indexOf("\",\"", startIndex)
-                    ) as String
-                    val lat: Double = strLat.toDouble()
-                    val lon: Double = strLon.toDouble()
-                    mainChooserSetter.setLat(strLat.toDouble())
-                    mainChooserSetter.setLon(strLon.toDouble())
-                }
-            }*/
         }
         // Закрытие сессии
         urlConnection.disconnect()
