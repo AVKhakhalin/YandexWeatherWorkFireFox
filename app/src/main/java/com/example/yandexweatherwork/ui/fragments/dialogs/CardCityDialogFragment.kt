@@ -10,7 +10,11 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.domain.data.City
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCitiInfo
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
+import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
+import java.lang.Thread.sleep
 
 class CardCityDialogFragment(
     private val positionChoosedElement: Int,
@@ -62,9 +66,26 @@ class CardCityDialogFragment(
     private fun onYes(view: View) {
         if ((inputCityNameField != null) && (inputLatField != null)
             && (inputLonField  != null) && (inputCountryField != null))
-        listCitiesFragment.editCitiesAndUpdateList(positionChoosedElement,
-            City("${inputCityNameField!!.text}", "${inputLatField!!.text}".toDouble(),
-                "${inputLonField!!.text}".toDouble(), "${inputCountryField!!.text}"))
+                if (inputLatField!!.text.isNotEmpty() && inputLonField!!.text.isNotEmpty()) {
+                    listCitiesFragment.editCitiesAndUpdateList(
+                        positionChoosedElement,
+                        City("${inputCityNameField!!.text}",
+                            "${inputLatField!!.text}".toDouble(),
+                            "${inputLonField!!.text}".toDouble(),
+                            "${inputCountryField!!.text}"
+                        )
+                    )
+                } else {
+                    listCitiesFragment.editCitiesAndUpdateList(
+                        positionChoosedElement,
+                        City(
+                            "${inputCityNameField!!.text}",
+                            ConstantsUi.ERROR_COORDINATE,
+                            ConstantsUi.ERROR_COORDINATE,
+                            "${inputCountryField!!.text}"
+                        )
+                    )
+                }
         dismiss()
     }
 

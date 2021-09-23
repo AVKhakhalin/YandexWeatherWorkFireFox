@@ -26,5 +26,7 @@ class ConstantsUi {
         val FILTER_NOT_RUSSIA: String = ConstantsDomain.FILTER_NOT_RUSSIA
         @JvmField
         val DEFAULT_FILTER_CITY: String = ConstantsDomain.DEFAULT_FILTER_CITY
+        @JvmField
+        val ERROR_COORDINATE: Double = -9999999999999999.0
     }
 }

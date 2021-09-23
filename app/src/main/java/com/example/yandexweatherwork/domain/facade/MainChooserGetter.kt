@@ -37,4 +37,9 @@ class MainChooserGetter(mainChooser: MainChooser) {
 
     // Получение значения признака изменения пользователем списка мест (городов)
     fun getUserCorrectedCityList(): Boolean = mainChooser.getUserCorrectedCityList()
+
+    //region МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ СКОРРЕКТИРОВАННЫХ КООРДИНАТ
+    fun getLat(): Double = mainChooser.getLat()
+    fun getLon(): Double = mainChooser.getLon()
+    //endregion
 }

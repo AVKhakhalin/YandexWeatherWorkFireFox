@@ -13,8 +13,10 @@ class MainChooserSetter(mainChooser: MainChooser) {
     private var dataModel: DataModel? = null
     //endregion
 
+    //region МЕТОДЫ ДЛЯ УСТАНОВКИ СКОРРЕКТИРОВАННЫХ КООРДИНАТ
     fun setLat(lat: Double) = mainChooser?.let{it.setLat(lat)}
     fun setLon(lon: Double) = mainChooser?.let{it.setLon(lon)}
+    //endregion
 
     //region Методы для Передачи полученных данных в MainChooser
     fun setDataModel(

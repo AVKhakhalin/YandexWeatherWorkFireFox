@@ -18,9 +18,12 @@ import com.example.yandexweatherwork.databinding.FragmentListCitiesBinding
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
+import java.lang.Exception
+import java.lang.Thread.sleep
 
 class ListCitiesFragment(
     private var isDataSetRusInitial: Boolean,
@@ -152,8 +155,8 @@ class ListCitiesFragment(
                 weather?.let{
                     if (navigationDialogs != null) {
                         navigationDialogs?.showCardCityDialogFragment(
-                            positionChoosedElement, it!![positionChoosedElement], this,
-                            requireActivity())
+                            positionChoosedElement, it!![positionChoosedElement],
+                            this, requireActivity())
                     }
                 }
             }
@@ -183,13 +186,37 @@ class ListCitiesFragment(
 
     // Метод для удаления места из списка и его обновления
     fun editCitiesAndUpdateList(positionChoosedElement: Int, city: City) {
-        if (weather!![positionChoosedElement].country.lowercase() == city.country.lowercase()) {
+        var newCity: City = city
+
+        // Поиск координат места в случае, если их не заполнили для данного места
+        if ((newCity.lat == ConstantsUi.ERROR_COORDINATE)
+            && (newCity.lon == ConstantsUi.ERROR_COORDINATE)) {
+            val repositoryGetCityCoordinates: RepositoryGetCityCoordinates
+            = RepositoryGetCityCoordinates(newCity.name, mainChooserSetter)
+            // Запуск класса repositoryGetCityCoordinates в новом потоке
+            val thread = Thread {
+                try {
+                    repositoryGetCityCoordinates.run()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            thread.start()
+            // Остановка на 1 секунду основного потока для уточнения координат места
+            sleep(1000)
+            newCity?.let{
+                it.lat = mainChooserGetter.getLat()
+                it.lon = mainChooserGetter.getLon()
+            }
+        }
+
+        if (weather!![positionChoosedElement].country.lowercase() == newCity.country.lowercase()) {
             // Случай, когда страна в карточке места не поменялась
-            changeWeather(city, positionChoosedElement)
+            changeWeather(newCity, positionChoosedElement)
             // Изменение в текущем списке места
             listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
             weather?.let {
-                it[positionChoosedElement] = city
+                it[positionChoosedElement] = newCity
                 // Передача в адаптер обновлённого списка городов
                 listCitiesFragmentAdapter.setWeather(positionChoosedElement, weather!!)
             }
@@ -198,7 +225,7 @@ class ListCitiesFragment(
             if (weather!![positionChoosedElement].country.lowercase()
                 == ConstantsUi.FILTER_RUSSIA.lowercase()) {
                 // Случай, когда изменённое место было в России
-                changeWeather(city, positionChoosedElement)
+                changeWeather(newCity, positionChoosedElement)
                 // Удаление места из текущего списка российских мест
                 listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
                 weather?.let {
@@ -210,12 +237,11 @@ class ListCitiesFragment(
                         mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
                         checkAndCorrectCountryState()
                     }
-
                 }
             } else {
                 // Случай, когда изменённое место было НЕ в России
-                changeWeather(city, positionChoosedElement)
-                if (city.country.lowercase() == ConstantsUi.FILTER_RUSSIA.lowercase()) {
+                changeWeather(newCity, positionChoosedElement)
+                if (newCity.country.lowercase() == ConstantsUi.FILTER_RUSSIA.lowercase()) {
                     // Удаление места из текущего списка российских мест
                     listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
                     weather?.let {
@@ -227,13 +253,12 @@ class ListCitiesFragment(
                             mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
                             checkAndCorrectCountryState()
                         }
-
                     }
                 } else {
                     // Изменение в текущем списке места
                     listCitiesFragmentAdapter.notifyItemChanged(positionChoosedElement)
                     weather?.let {
-                        it[positionChoosedElement] = city
+                        it[positionChoosedElement] = newCity
                         // Передача в адаптер обновлённого списка городов
                         listCitiesFragmentAdapter.setWeather(positionChoosedElement, weather!!)
                     }

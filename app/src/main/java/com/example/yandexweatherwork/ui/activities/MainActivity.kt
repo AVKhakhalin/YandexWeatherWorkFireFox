@@ -19,6 +19,7 @@ import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
 
 
@@ -43,6 +44,8 @@ class MainActivity:
     private val navigationContent: NavigationContent = NavigationContent(supportFragmentManager,
         mainChooserSetter, mainChooserGetter)
     private val navigationDialogs: NavigationDialogs = NavigationDialogs()
+    private val repositoryGetCityCoordinates: RepositoryGetCityCoordinates
+    = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,12 +78,14 @@ class MainActivity:
         val repositoryGetCitiInfo: RepositoryGetCitiInfo = RepositoryGetCitiInfo()
         repositoryGetCitiInfo.getCityInfo()
 */
+
 /*
         val repositoryGetCityCoordinates: RepositoryGetCityCoordinates = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
         repositoryGetCityCoordinates.start()
         Thread.sleep(2000)
         Toast.makeText(this, "${mainChooser.getLat()}; ${mainChooser.getLon()}", Toast.LENGTH_LONG).show()
 */
+
     }
 
     //region ФУНКЦИИ ДЛЯ APPBARMENU
