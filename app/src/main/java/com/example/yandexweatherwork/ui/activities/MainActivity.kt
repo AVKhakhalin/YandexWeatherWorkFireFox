@@ -1,7 +1,11 @@
 package com.example.yandexweatherwork.ui.activities
 
-import android.content.SharedPreferences
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.*
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -19,10 +23,9 @@ import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
+import com.example.yandexweatherwork.repository.NetworkChangeReceiver
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
-import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
-import java.security.AccessController.getContext
 
 
 class MainActivity:
@@ -48,7 +51,12 @@ class MainActivity:
     private val navigationDialogs: NavigationDialogs = NavigationDialogs()
     private val repositoryGetCityCoordinates: RepositoryGetCityCoordinates
     = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
+    // Регистрация переменных для анализа связи (CONNECTIVITY_ACTION)
+    // СПОСОБ №2:
+    private var intentFilter = IntentFilter(ConstantsUi.BROADCAST_ACTION)
+    private var receiver: NetworkChangeReceiver = NetworkChangeReceiver()
     //endregion
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +84,14 @@ class MainActivity:
         // Установка AppBarMenu
         setupAppBarMenu()
 
+        //region ПОДПИСКИ НА СОБЫТИЕ ИЗМЕНЕНИЯ ИНТЕРНЕТ-СВЯЗИ (CONNECTIVITY_ACTION)
+        // СПОСОБ №1 (результат в тосте и в логе "mylogs"):
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(networkStateReceiver, filter)
+        // СПОСОБ №2 (результат в тосте и в логе "mylogs"):
+        registerReceiver(receiver, intentFilter)
+        //endregion
+
 /*
         val repositoryGetCityInfo: RepositoryGetCityInfo = RepositoryGetCityInfo()
         repositoryGetCityInfo.getCityInfo()
@@ -89,6 +105,40 @@ class MainActivity:
 */
 
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(receiver, intentFilter);
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(receiver);
+    }
+
+    //region МЕТОДЫ СПОСОБА №1 ДЛЯ ПОЛУЧЕНИЯ СОБЫТИЯ ИЗМЕНЕНИЯ ИНТЕРНЕТ-СВЯЗИ (CONNECTIVITY_ACTION)
+    // Создание BroadcastReceiver для получения события изменения Интернет-связи (CONNECTIVITY_ACTION)
+    private var networkStateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val noConnectivity =
+                intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)
+            if (!noConnectivity) {
+                onConnectionFound()
+            } else {
+                onConnectionLost()
+            }
+        }
+    }
+    fun onConnectionLost() {
+        Toast.makeText(this, "СПОСОБ №1: Связь ПОТЕРЯНА (но есть ли Интернет неизвестно)", Toast.LENGTH_LONG).show()
+        Log.d("mylogs", "СПОСОБ №1: Связь ПОТЕРЯНА (но есть ли Интернет неизвестно)")
+    }
+    fun onConnectionFound() {
+        Toast.makeText(this, "СПОСОБ №1: Связь ЕСТЬ (но есть ли Интернет неизвестно)", Toast.LENGTH_LONG).show()
+        Log.d("mylogs", "СПОСОБ №1: Связь ЕСТЬ (но есть ли Интернет неизвестно)")
+    }
+    //endregion
 
     //region ФУНКЦИИ ДЛЯ APPBARMENU
     // Установка меню AppBarMenu

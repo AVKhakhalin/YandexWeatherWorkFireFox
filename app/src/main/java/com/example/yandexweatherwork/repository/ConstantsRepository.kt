@@ -25,5 +25,9 @@ class ConstantsRepository {
         val INFO_RESPONSE: String = "response"
 
         // Константы для локальных настроек программы
+        @JvmField
+        val BROADCAST_ACTION: String = "android.net.conn.CONNECTIVITY_CHANGE"
+        @JvmField
+        val GOOGLE_URL_TO_PING: String = "https://google.com"
     }
 }

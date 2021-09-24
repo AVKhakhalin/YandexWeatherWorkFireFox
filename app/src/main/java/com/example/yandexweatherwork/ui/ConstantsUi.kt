@@ -1,6 +1,7 @@
 package com.example.yandexweatherwork.ui
 
 import com.example.yandexweatherwork.domain.ConstantsDomain
+import com.example.yandexweatherwork.repository.ConstantsRepository
 
 class ConstantsUi {
     companion object {
@@ -28,5 +29,7 @@ class ConstantsUi {
         val DEFAULT_FILTER_CITY: String = ConstantsDomain.DEFAULT_FILTER_CITY
         @JvmField
         val ERROR_COORDINATE: Double = -9999999999999999.0
+        @JvmField
+        val BROADCAST_ACTION: String = ConstantsRepository.BROADCAST_ACTION
     }
 }
