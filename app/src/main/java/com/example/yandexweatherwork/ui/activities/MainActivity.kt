@@ -1,7 +1,11 @@
 package com.example.yandexweatherwork.ui.activities
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.*
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -95,6 +99,9 @@ class MainActivity:
         registerReceiver(receiver, intentFilter)
         //endregion
 
+        // Установка приёмника сообщения о получении нового места
+        initNotificationChannel()
+
 /*        // Работа с сервисом
         this?.let{
             val intent = Intent(it, GetDataFromInternetService::class.java)
@@ -114,6 +121,18 @@ class MainActivity:
         Toast.makeText(this, "${mainChooser.getLat()}; ${mainChooser.getLon()}", Toast.LENGTH_LONG).show()
 */
 
+    }
+
+    @SuppressLint("ServiceCast")
+    private fun initNotificationChannel() {
+        // Инициализация канала нотификаций
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager;
+            val importance: Int = NotificationManager.IMPORTANCE_LOW;
+            val channel  =  NotificationChannel("2", "name", importance);
+            notificationManager.let { channel }
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
 

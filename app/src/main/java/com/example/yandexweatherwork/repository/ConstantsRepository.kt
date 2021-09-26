@@ -1,7 +1,9 @@
 package com.example.yandexweatherwork.repository
 
+import android.provider.SyncStateContract
 import com.example.yandexweatherwork.BuildConfig
 import com.example.yandexweatherwork.controller.ConstantsController
+import com.example.yandexweatherwork.ui.ConstantsUi
 
 class ConstantsRepository {
     companion object {
@@ -40,6 +42,22 @@ class ConstantsRepository {
         val WEATHER_DATA: String = "WEATHER_DATA"
         @JvmField
         val DATES_LOADED: String = ConstantsController.DATES_LOADED
+
+        // Константы для приёмника внешних сообщний о новом месте
+        @JvmField
+        val NAME_MSG_CITY_NAME = "MSG_CITY_NAME"
+        @JvmField
+        val NAME_MSG_CITY_LAT = "MSG_CITY_LAT"
+        @JvmField
+        val NAME_MSG_CITY_LON = "MSG_CITY_LON"
+        @JvmField
+        val NAME_MSG_CITY_COUNTRY = "MSG_CITY_COUNTRY"
+        @JvmField
+        val TAG = "MessageBroadcastReceiver"
+        @JvmField
+        val BROADCAST_ACTION_NEW_CITY: String = "broadcastsender.city"
+        @JvmField
+        val ERROR_COORDINATE: Double = ConstantsUi.ERROR_COORDINATE
 
         // Константы для локальных настроек программы
 

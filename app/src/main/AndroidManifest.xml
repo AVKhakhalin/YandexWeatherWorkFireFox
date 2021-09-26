@@ -15,17 +15,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YandexWeatherWork">
-        <activity android:name=".ui.activities.MainActivity">
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Добавление BroadcastReceiver -->
-        <receiver android:name=".repository.NetworkChangeBroadcastReceiver"
-            tools:ignore="Instantiatable">
+        <!-- Добавление BroadcastReceiver и установка полей:
+         android:exported="true",
+         <action android:name="broadcastsender.city" /> -->
+        <receiver
+            android:name=".repository.NetworkChangeBroadcastReceiver"
+            tools:ignore="Instantiatable"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="broadcastsender.city" />
             </intent-filter>
         </receiver>
         <!-- Добавление Service -->
