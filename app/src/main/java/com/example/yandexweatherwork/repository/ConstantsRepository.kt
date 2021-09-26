@@ -1,6 +1,7 @@
 package com.example.yandexweatherwork.repository
 
 import com.example.yandexweatherwork.BuildConfig
+import com.example.yandexweatherwork.controller.ConstantsController
 
 class ConstantsRepository {
     companion object {
@@ -23,11 +24,24 @@ class ConstantsRepository {
         val LANGUAGE: String = "lang"
         @JvmField
         val INFO_RESPONSE: String = "response"
-
-        // Константы для локальных настроек программы
         @JvmField
         val BROADCAST_ACTION: String = "android.net.conn.CONNECTIVITY_CHANGE"
         @JvmField
         val GOOGLE_URL_TO_PING: String = "https://google.com"
+        @JvmField
+        val INTERNET_SERVICE_STRING_KEY = "internetServiceStringKey"
+        @JvmField
+        val MAIN_CHOOSER_GETTER: String = ConstantsController.MAIN_CHOOSER_GETTER
+        @JvmField
+        val MAIN_CHOOSER_SETTER: String = ConstantsController.MAIN_CHOOSER_SETTER
+        @JvmField
+        val WEATHER_DATA_INTENT_FILTER: String = ConstantsController.WEATHER_DATA_INTENT_FILTER
+        @JvmField
+        val WEATHER_DATA: String = "WEATHER_DATA"
+        @JvmField
+        val DATES_LOADED: String = ConstantsController.DATES_LOADED
+
+        // Константы для локальных настроек программы
+
     }
 }

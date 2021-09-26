@@ -1,12 +1,15 @@
 package com.example.yandexweatherwork.domain.core
 
+import android.os.Parcelable
 import com.example.yandexweatherwork.domain.ConstantsDomain
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.DataSettings
 import com.example.yandexweatherwork.domain.data.DataWeather
 import com.example.yandexweatherwork.domain.data.Fact
+import kotlinx.android.parcel.Parcelize
 
-class MainChooser() {
+@Parcelize
+class MainChooser() : Parcelable {
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var dataWeather: DataWeather? = DataWeather()
     private var dataSettings: DataSettings? = null
@@ -17,9 +20,17 @@ class MainChooser() {
     private var fact: Fact? = null
     private var userCorrectedCityList: Boolean = false
 
-    // TODO: Доработать логику использования координат lat, lon
     private var lat: Double = 0.0
     private var lon: Double = 0.0
+
+    private var existInternet: Boolean = false
+    //endregion
+
+    //region ФУНКЦИИ ДЛЯ УСТАНОВКИ ПРИЗНАКА НАЛИЧИЯ ИНТЕРНЕТА
+    fun setExistInternet(existInternet: Boolean) {
+        this.existInternet = existInternet
+    }
+    fun getExistInternet(): Boolean = existInternet
     //endregion
 
     //region ФУНКЦИИ ДЛЯ РАБОТЫ С КООРДИНАТАМИ МЕСТА

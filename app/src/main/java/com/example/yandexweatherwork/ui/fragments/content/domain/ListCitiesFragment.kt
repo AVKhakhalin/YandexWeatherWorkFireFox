@@ -118,7 +118,13 @@ class ListCitiesFragment(
     }
 
     override fun onItemClick(city: City) {
-        navigationContent?.let {it.showResultCurrentFragment(city, false)}
+        if (mainChooserGetter.getExistInternet()) {
+            navigationContent?.let { it.showResultCurrentFragment(city, false) }
+        } else {
+            Snackbar.make(requireView(), "${resources.getString(R.string.error)}: " +
+                    "${resources.getString(R.string.error_no_connection)}",
+                Snackbar.LENGTH_LONG).show()
+        }
     }
 
     //region МЕТОДЫ ДЛЯ РАБОТЫ С КОНТЕКСТНЫМ МЕНЮ У ЭЛЕМЕНТОВ СПИСКА

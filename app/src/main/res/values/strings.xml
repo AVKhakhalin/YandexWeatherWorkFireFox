@@ -29,7 +29,8 @@
     <string name="error">ОШИБКА</string>
     <string name="error_no_such_places">НЕТ КАРТОЧЕК ТАКИХ МЕСТ.\nДобавьте их через ВЕРХНЕЕ МЕНЮ</string>
     <string name="success">Данные УСПЕШНО загружены</string>
-    <string name="error_no_connection">Нет сети</string>
+    <string name="error_no_connection">Сеть Интернет недоступна</string>
+    <string name="error_dataweather_null">Данные не загружены</string>
     <string name="try_another">Попробовать ещё</string>
     <string name="app_menu_action_add_city_text">Добавить место</string>
     <string name="app_menu_action_delete_city_text">Удалить место</string>

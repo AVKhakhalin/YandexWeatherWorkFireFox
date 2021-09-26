@@ -1,5 +1,9 @@
 package com.example.yandexweatherwork.domain.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class DataForecastWeather (
     val city: City = getDefaultCity(),
     val date: String,           // date	Дата прогноза в формате ГГГГ-ММ-ДД.	Строка
@@ -54,6 +58,6 @@ data class DataForecastWeather (
     //  prec_prob
     //Все прогнозы погоды на время суток имеют одинаковый набор полей.
     //Ответ содержит прогноз на 2 ближайших периода.	Объект
-)
+) : Parcelable
 
 private fun getDefaultCity() = City("Москва", 55.0, 37.0, "Россия")

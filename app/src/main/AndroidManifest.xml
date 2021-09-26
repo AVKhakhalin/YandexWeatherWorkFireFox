@@ -21,12 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".repository.NetworkChangeReceiver"
+        <!-- Добавление BroadcastReceiver -->
+        <receiver android:name=".repository.NetworkChangeBroadcastReceiver"
             tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <!-- Добавление Service -->
+        <service android:name=".repository.facadeuser.GetDataFromInternetService"/>
     </application>
 
 </manifest>

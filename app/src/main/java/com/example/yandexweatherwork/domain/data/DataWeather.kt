@@ -1,5 +1,9 @@
 package com.example.yandexweatherwork.domain.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class DataWeather(
     var city: City? = null,
     var temperature: Float? = null, //temp	Температура (°C).	Число
@@ -50,5 +54,5 @@ data class DataWeather(
     //    «autumn» — осень.
     //    «winter» — зима.
     //    «spring» — весна.	Строка
-    var error: Throwable? = null //   Информация об ошибке загрузки пгододных данных с сервера Yandex
-)
+    var error: Throwable? = null //   Информация об ошибке загрузки погододных данных с сервера Yandex
+) : Parcelable

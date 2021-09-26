@@ -1,7 +1,5 @@
 package com.example.yandexweatherwork.ui.activities
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.*
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -22,8 +20,10 @@ import com.example.yandexweatherwork.controller.observers.viewmodels.*
 import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
+import com.example.yandexweatherwork.domain.facade.MainChooserGetterGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
-import com.example.yandexweatherwork.repository.NetworkChangeReceiver
+import com.example.yandexweatherwork.domain.facade.MainChooserSetterGetter
+import com.example.yandexweatherwork.repository.NetworkChangeBroadcastReceiver
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
 
@@ -36,7 +36,9 @@ class MainActivity:
     ListSitiesPublisherGetterDomain,
     ObserverDomain,
     NavigationGetterContent,
-    NavigationGetterDialogs {
+    NavigationGetterDialogs,
+    MainChooserGetterGetter,
+    MainChooserSetterGetter {
 
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var resultCurrentViewModel: ResultCurrentViewModel = ResultCurrentViewModel()
@@ -54,13 +56,14 @@ class MainActivity:
     // Регистрация переменных для анализа связи (CONNECTIVITY_ACTION)
     // СПОСОБ №2:
     private var intentFilter = IntentFilter(ConstantsUi.BROADCAST_ACTION)
-    private var receiver: NetworkChangeReceiver = NetworkChangeReceiver()
+    private var receiver: NetworkChangeBroadcastReceiver = NetworkChangeBroadcastReceiver()
     //endregion
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d("mylogs", "MainChooserSetter name: ${mainChooserSetter}")
 
         // Подключение наблюдателей за domain к MainActivity
         publisherDomain.subscribe(this)
@@ -91,6 +94,13 @@ class MainActivity:
         // СПОСОБ №2 (результат в тосте и в логе "mylogs"):
         registerReceiver(receiver, intentFilter)
         //endregion
+
+/*        // Работа с сервисом
+        this?.let{
+            val intent = Intent(it, GetDataFromInternetService::class.java)
+            intent.putExtra(ConstantsUi.INTERNET_SERVICE_STRING_KEY,"привет сервис, я фрагмент")
+            it.startService(intent)
+        }*/
 
 /*
         val repositoryGetCityInfo: RepositoryGetCityInfo = RepositoryGetCityInfo()
@@ -279,11 +289,9 @@ class MainActivity:
         mainChooserSetter.setPositionCurrentKnownCity(positionCurrentKnownCity)
     }
 
-    // Установка наблюдателя для domain
+    // Установка наблюдателя для domain (обновление погодных данных)
     override fun updateCity(city: City) {
         mainChooserSetter.setPositionCurrentKnownCity(city.name, city.country)
-        // Получение данных в resultCurrentViewModel
-        resultCurrentViewModel.getDataFromRemoteSource(mainChooserSetter, mainChooserGetter)
     }
     //endregion
 
@@ -291,9 +299,18 @@ class MainActivity:
     override fun getNavigationContent(): NavigationContent {
         return navigationContent
     }
-
     override fun getNavigationDialogs(): NavigationDialogs {
         return navigationDialogs
+    }
+    //endregion
+
+    //region МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ ГЕТТЕРОВА И СЕТТЕРОВ ЯДРА (MainChooser)
+    // (mainChooserGetter и mainChooserSetter)
+    override fun getMainChooserGetter(): MainChooserGetter {
+        return mainChooserGetter
+    }
+    override fun getMainChooserSetter(): MainChooserSetter {
+        return mainChooserSetter
     }
     //endregion
 }

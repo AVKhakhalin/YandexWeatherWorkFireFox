@@ -1,5 +1,10 @@
 package com.example.yandexweatherwork.domain.data
 
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 class Fact (
     val temp: Float?,           // temp	Температура (°C).	Число
     val feels_like: Float?,     // feels_like	Ощущаемая температура (°C).	Число
@@ -15,4 +20,4 @@ class Fact (
     val daytime: String?,       // daytime	Светлое или темное время суток. Строка
     val polar: Boolean?,        // polar	Признак того, что время суток, указанное в поле daytime, является полярным.	Логический
     val season: String?        // season	Время года в данном населенном пункте. Строка
-)
+): Parcelable

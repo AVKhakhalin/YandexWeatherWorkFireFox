@@ -1,5 +1,9 @@
 package com.example.yandexweatherwork.domain.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 // Класс для получения информации о месте (координаты, название страны)
 data class CityDTO(
     val place_id: Long,
@@ -15,4 +19,4 @@ data class CityDTO(
     val type: String,
     val importance: Double,
     val icon: String
-)
+) : Parcelable

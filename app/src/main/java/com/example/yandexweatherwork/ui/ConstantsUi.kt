@@ -1,5 +1,6 @@
 package com.example.yandexweatherwork.ui
 
+import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.domain.ConstantsDomain
 import com.example.yandexweatherwork.repository.ConstantsRepository
 
@@ -31,5 +32,17 @@ class ConstantsUi {
         val ERROR_COORDINATE: Double = -9999999999999999.0
         @JvmField
         val BROADCAST_ACTION: String = ConstantsRepository.BROADCAST_ACTION
+        @JvmField
+        val INTERNET_SERVICE_STRING_KEY = ConstantsRepository.INTERNET_SERVICE_STRING_KEY
+        @JvmField
+        val WEATHER_DATA_INTENT_FILTER: String = ConstantsController.WEATHER_DATA_INTENT_FILTER
+        @JvmField
+        val LATITUDE_NAME : String = ConstantsRepository.LATITUDE_NAME
+        @JvmField
+        val LONGITUDE_NAME : String = ConstantsRepository.LONGITUDE_NAME
+        @JvmField
+        val MAIN_CHOOSER_GETTER: String = ConstantsController.MAIN_CHOOSER_GETTER
+        @JvmField
+        val MAIN_CHOOSER_SETTER: String = ConstantsController.MAIN_CHOOSER_SETTER
     }
 }

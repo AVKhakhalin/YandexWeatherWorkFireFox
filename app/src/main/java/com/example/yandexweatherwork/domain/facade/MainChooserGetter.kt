@@ -1,14 +1,13 @@
 package com.example.yandexweatherwork.domain.facade
 
+import android.os.Parcelable
 import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.DataWeather
+import kotlinx.android.parcel.Parcelize
 
-class MainChooserGetter(mainChooser: MainChooser) {
-    //region ЗАДАНИЕ ПЕРЕМЕННЫХ
-    private var mainChooser: MainChooser = mainChooser
-    //endregion
-
+@Parcelize
+class MainChooserGetter(private val mainChooser: MainChooser): Parcelable {
     // Получение данных о погоде
     fun getDataWeather(): DataWeather? = mainChooser.getDataWeather()
 
@@ -42,4 +41,7 @@ class MainChooserGetter(mainChooser: MainChooser) {
     fun getLat(): Double = mainChooser.getLat()
     fun getLon(): Double = mainChooser.getLon()
     //endregion
+
+    //Функция для получения признака наличия Интернета
+    fun getExistInternet(): Boolean = mainChooser.getExistInternet()
 }

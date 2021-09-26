@@ -1,15 +1,17 @@
 package com.example.yandexweatherwork.domain.facade
 
+import android.os.Parcelable
 import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.DataModel
 import com.example.yandexweatherwork.domain.data.Fact
 import com.example.yandexweatherwork.repository.facadesettings.RepositorySettingsImpl
+import kotlinx.android.parcel.Parcelize
 
-class MainChooserSetter(mainChooser: MainChooser) {
+@Parcelize
+class MainChooserSetter(private val mainChooser: MainChooser): Parcelable {
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private val repositorySettingsImpl: RepositorySettingsImpl = RepositorySettingsImpl()
-    private var mainChooser: MainChooser? = mainChooser
     private var dataModel: DataModel? = null
     //endregion
 
@@ -81,5 +83,12 @@ class MainChooserSetter(mainChooser: MainChooser) {
             return it.editCity(filterCity, filterCountry, city)
         }
         return false
+    }
+
+    //Функция для установки признака наличия Интернета
+    fun setExistInternet(existInternet: Boolean) {
+        mainChooser?.let {
+            it.setExistInternet(existInternet)
+        }
     }
 }
