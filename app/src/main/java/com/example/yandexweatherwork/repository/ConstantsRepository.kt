@@ -58,6 +58,8 @@ class ConstantsRepository {
         val BROADCAST_ACTION_NEW_CITY: String = "broadcastsender.city"
         @JvmField
         val ERROR_COORDINATE: Double = ConstantsUi.ERROR_COORDINATE
+        @JvmField
+        val CITY_IMAGE_LINK: String = "https://freepngimg.com/thumb/city/36275-3-city-hd.png"
 
         // Константы для локальных настроек программы
 

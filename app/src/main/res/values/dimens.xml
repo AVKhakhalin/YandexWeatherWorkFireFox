@@ -70,4 +70,8 @@
     <dimen name="input_city_info_lon_lon_field_example_margin_end">10dp</dimen>
     <dimen name="input_city_info_lat_field_example_margin_end">10dp</dimen>
     <dimen name="input_string_info_city_field_margin_end">10dp</dimen>
+    <dimen name="result_image_header_height">100dp</dimen>
+    <dimen name="result_image_feels_width">150dp</dimen>
+    <dimen name="result_image_feels_height">150dp</dimen>
+    <dimen name="click_field_toReturn_to_list_fragment_height">80dp</dimen>
 </resources>

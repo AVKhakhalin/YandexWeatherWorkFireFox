@@ -25,6 +25,7 @@ import com.example.yandexweatherwork.domain.data.Fact
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.repository.ConstantsRepository
+import com.example.yandexweatherwork.repository.facadeuser.GetAndSetImage
 import com.example.yandexweatherwork.repository.facadeuser.GetDataFromInternetService
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
@@ -44,8 +45,10 @@ class ResultCurrentFragment(
     // Ссылка на ResultCurrentViewModel
     private lateinit var resultCurrentViewModel: ResultCurrentViewModel
 
-    // Создание binding с возможностью удаления (имя класса FragmentResultCurrentBinding формируется из класса ResultCurrentFragment)
-    // Класс FragmentResultCurrentBinding - представление макета fragment_result_current.xml в виде кода
+    // Создание binding с возможностью удаления (имя класса FragmentResultCurrentBinding
+    // формируется из класса ResultCurrentFragment)
+    // Класс FragmentResultCurrentBinding -
+    // представление макета fragment_result_current.xml в виде кода
     private var bindingReal: FragmentResultCurrentBinding? = null
     private val bindingNotReal: FragmentResultCurrentBinding
         get() {
@@ -62,6 +65,8 @@ class ResultCurrentFragment(
     // Погодные данные
     private var dataWeather: DataWeather? = null
     private var fact: Fact? = null
+    // Переменная для отображения картинки погоды и города
+    var GetAndSetImage: GetAndSetImage? = GetAndSetImage()
     //endregion
 
 
@@ -69,8 +74,10 @@ class ResultCurrentFragment(
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.let { it ->
                     // Отслеживание состояния загрузки погодных данных
-                    dataWeather = it.getParcelableExtra<DataWeather>(ConstantsRepository.WEATHER_DATA)
+                    dataWeather =
+                        it.getParcelableExtra<DataWeather>(ConstantsRepository.WEATHER_DATA)
                     resultCurrentViewModel.getDataFromRemoteSource(dataWeather, city)
+                val a: String = "debugger stop this"
             }
         }
     }
@@ -78,7 +85,8 @@ class ResultCurrentFragment(
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Создание viewModel
-        resultCurrentViewModel = ViewModelProvider(this).get(ResultCurrentViewModel::class.java)
+        resultCurrentViewModel = ViewModelProvider(this)
+            .get(ResultCurrentViewModel::class.java)
         resultCurrentViewModel.setActivityContext(context)
         // Задание наблюдателя для данного фрагмента (viewModel)
         (context as ResultCurrentViewModelSetter).setResultCurrentViewModel(resultCurrentViewModel)
@@ -107,16 +115,19 @@ class ResultCurrentFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Создание observer во vieModel
-        resultCurrentViewModel.getLiveData().observe(viewLifecycleOwner, Observer<UpdateState> { updateState: UpdateState ->
+        resultCurrentViewModel.getLiveData().observe(viewLifecycleOwner, Observer<UpdateState> {
+                updateState: UpdateState ->
             renderData(updateState)
         })
-        bindingReal?.resultCurrentConstraintLayout?.setOnClickListener(View.OnClickListener {
+//        bindingReal?.resultCurrentConstraintLayout?.setOnClickListener(View.OnClickListener {
+        bindingReal?.clickFieldToReturnToListFragment?.setOnClickListener(View.OnClickListener {
             // Сброс фильтра места (города)
             with(publisherDomain) {
                 notifyDefaultFilterCity("")
                 notifyPositionCurrentKnownCity(-1)
             }
-            // Отображение фрагмента со списком мест (city) для выбора погоды по другому интересующему месту
+            // Отображение фрагмента со списком мест (city) для выбора погоды по другому
+            // интересующему месту
             navigationContent?.let{it.showListCitiesFragment(city.country
                     == ConstantsUi.FILTER_RUSSIA, false)}
         })
@@ -141,14 +152,20 @@ class ResultCurrentFragment(
                         it.resultCurrentConstraintLayoutCityName?.text = updateState.city?.name
                         it.resultCurrentConstraintLayoutCityCoordinates?.text =
                             "${updateState.city?.lat}; ${updateState.city?.lon}"
+                        val icon: String? = updateState.dataWeather.iconCode
                         it.resultCurrentConstraintLayoutTemperatureValue?.text =
                             "${updateState.dataWeather?.temperature}"
                         it.resultCurrentConstraintLayoutFeelslikeValue?.text =
                             "${updateState.dataWeather?.feelsLike}"
+                        GetAndSetImage?.let { GASI ->
+                            GASI.inflateImage(it.resultsImageHeader)
+                            GASI.inflateImage(it.resultImageFeels, dataWeather?.iconCode)
+                        }
                     }
                 }
                 bindingReal?.let {
-                    it.root.showSnackBarWithoutAction(it.root, resources.getString(R.string.success), Snackbar.LENGTH_SHORT)
+                    it.root.showSnackBarWithoutAction(it.root,
+                        resources.getString(R.string.success), Snackbar.LENGTH_SHORT)
                 }
             }
             UpdateState.Loading -> {
@@ -158,22 +175,31 @@ class ResultCurrentFragment(
                 bindingReal?.resultCurrentConstraintLayoutLoadingLayout?.visibility = View.GONE
                 val throwable = updateState.error
                 bindingReal?.let {
-                    it.root.showSnackBarWithAction(it.root, stickStringsValues()(resources.getString(R.string.error), throwable, resources.getString(R.string.error_no_connection)), resources.getString(R.string.try_another), Snackbar.LENGTH_LONG)
+                    it.root.showSnackBarWithAction(it.root, stickStringsValues()(
+                        resources.getString(R.string.error),
+                        throwable,
+                        resources.getString(R.string.error_no_connection)),
+                        resources.getString(R.string.try_another), Snackbar.LENGTH_LONG)
                 }
             }
         }
     }
 
     // Установка SnackBar с действием (В случае ошибки при загрузке погодных данных)
-    fun View.showSnackBarWithAction(view: View, messageText: String, actionText: String, showTime: Int) {
-        Snackbar.make(view, messageText, showTime).setAction(actionText, View.OnClickListener {
-            // Установка выбранного места (города) как текущего известного места (города) и обновление погодных данных о нём. Теперь при обращении к классу MainChooser он будет выбираться во всех запросах
+    fun View.showSnackBarWithAction(view: View, messageText: String, actionText: String,
+                                    showTime: Int) {
+        Snackbar.make(view, messageText, showTime)
+            .setAction(actionText, View.OnClickListener {
+            // Установка выбранного места (города) как текущего известного места (города)
+            // и обновление погодных данных о нём. Теперь при обращении к классу MainChooser
+            // он будет выбираться во всех запросах
             publisherDomain.notifyCity(city)
         }).show()
     }
 
     // Пример функции, которая возвращает другую функцию
-    fun stickStringsValues() : (errorValue: String, throwable: Throwable?, noConnectionValue: String) -> String {
+    fun stickStringsValues() : (errorValue: String, throwable: Throwable?,
+                                noConnectionValue: String) -> String {
         return {errorValue, throwable, noConnectionValue ->
             "$errorValue: " + (throwable ?: noConnectionValue)
         }

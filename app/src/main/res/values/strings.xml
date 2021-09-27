@@ -25,7 +25,7 @@
     <string name="search_city_button_cancel_text">Отмена</string>
     <string name="search_city_button_ok_text">Найти место</string>
     <string name="recycler_item_text_view_example_text">Москва</string>
-    <string name="result_current_down_help_text">Нажмите на экран для возврата к списку мест...</string>
+    <string name="result_current_down_help_text">Нажмите сюда для возврата к списку мест...</string>
     <string name="error">ОШИБКА</string>
     <string name="error_no_such_places">НЕТ КАРТОЧЕК ТАКИХ МЕСТ.\nДобавьте их через ВЕРХНЕЕ МЕНЮ</string>
     <string name="success">Данные УСПЕШНО загружены</string>

@@ -26,8 +26,9 @@ class GetDataFromInternetService(key: String = ConstantsRepository.WEATHER_DATA_
                 RepositoryWeatherImpl(mainChooserSetter, applicationContext)
                 repositoryWeatherImpl?.let {repositoryWeatherImpl ->
                     repositoryWeatherImpl.getWeatherFromRemoteSource(
-                        mainChooserGetter?.getCurrentKnownCity()!!.lat,
-                        mainChooserGetter?.getCurrentKnownCity()!!.lon, ConstantsRepository.LANGUAGE
+                        lat,
+                        lon,
+                        ConstantsRepository.LANGUAGE
                     )
                 }
             }
