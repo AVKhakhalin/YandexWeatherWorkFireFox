@@ -1,7 +1,5 @@
 package com.example.yandexweatherwork.repository
 
-import android.provider.SyncStateContract
-import com.example.yandexweatherwork.BuildConfig
 import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.ui.ConstantsUi
 
@@ -9,19 +7,20 @@ class ConstantsRepository {
     companion object {
         // Константы для получения данных о погоде
         @JvmField
-        val BASE_URL : String = "https://api.weather.yandex.ru/"
+        val BASE_URL: String = "https://api.weather.yandex.ru/"
         @JvmField
-        val END_POINT : String = "v2/informers"
+        val END_POINT: String = "v2/informers"
         @JvmField
-        val YANDEX_KEY_TITLE : String = "X-Yandex-API-Key"
+        val YANDEX_KEY_TITLE: String = "X-Yandex-API-Key"
         @JvmField
 //        val YANDEX_KEY_VALUE : String = BuildConfig.WEATHER_API_KEY
         // Оставил этот ключ как есть, чтобы Вы могли тестировать проект
-        val YANDEX_KEY_VALUE : String = "ebbee072-d212-420e-9f62-4d716b0499e9"
+//        val YANDEX_KEY_VALUE : String = "ebbee072-d212-420e-9f62-4d716b0499e9"
+        val YANDEX_KEY_VALUE: String = "ZWJiZ WUwN zItZ DIxM i00M jBlL TlmN jItN GQ3M TZiM DQ5O WU5${Char(10)} "
         @JvmField
-        val LATITUDE_NAME : String = "lat"
+        val LATITUDE_NAME: String = "lat"
         @JvmField
-        val LONGITUDE_NAME : String = "lon"
+        val LONGITUDE_NAME: String = "lon"
         @JvmField
         val LANGUAGE: String = "lang"
         @JvmField
@@ -45,15 +44,15 @@ class ConstantsRepository {
 
         // Константы для приёмника внешних сообщний о новом месте
         @JvmField
-        val NAME_MSG_CITY_NAME = "MSG_CITY_NAME"
+        val NAME_MSG_CITY_NAME: String = "MSG_CITY_NAME"
         @JvmField
-        val NAME_MSG_CITY_LAT = "MSG_CITY_LAT"
+        val NAME_MSG_CITY_LAT: String = "MSG_CITY_LAT"
         @JvmField
-        val NAME_MSG_CITY_LON = "MSG_CITY_LON"
+        val NAME_MSG_CITY_LON: String = "MSG_CITY_LON"
         @JvmField
-        val NAME_MSG_CITY_COUNTRY = "MSG_CITY_COUNTRY"
+        val NAME_MSG_CITY_COUNTRY: String = "MSG_CITY_COUNTRY"
         @JvmField
-        val TAG = "MessageBroadcastReceiver"
+        val TAG: String = "MessageBroadcastReceiver"
         @JvmField
         val BROADCAST_ACTION_NEW_CITY: String = "broadcastsender.city"
         @JvmField

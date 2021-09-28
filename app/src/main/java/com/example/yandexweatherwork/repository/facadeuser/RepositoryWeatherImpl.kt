@@ -9,6 +9,7 @@ import com.example.yandexweatherwork.domain.data.DataWeather
 import com.example.yandexweatherwork.domain.data.Fact
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.repository.ConstantsRepository
+import com.example.yandexweatherwork.repository.DecoderYandexKey
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +25,7 @@ class RepositoryWeatherImpl(
     private val contextToBroadcastReceiver: Context?
     ) : RepositoryWeather {
     private val retrofitImpl: RetrofitImpl = RetrofitImpl()
+    private val decoderYandexKey: DecoderYandexKey = DecoderYandexKey(ConstantsRepository.YANDEX_KEY_VALUE)
 
     // Получение данных с сервера Yandex
     override fun getWeatherFromRemoteSource(lat: Double, lon: Double, lang: String) = sendServerRequest(lat, lon, lang)
@@ -34,7 +36,8 @@ class RepositoryWeatherImpl(
     //region МЕТОДЫ ПОЛУЧЕНИЯ ДАННЫХ С СЕРВЕРА YANDEX
     private fun sendServerRequest(lat: Double, lon: Double, lang: String) {
         retrofitImpl.getWeatherApi()
-            .getWeather(ConstantsRepository.YANDEX_KEY_VALUE, lat, lon, lang)
+//            .getWeather(ConstantsRepository.YANDEX_KEY_VALUE, lat, lon, lang)
+            .getWeather(decoderYandexKey?.decodedKey(), lat, lon, lang)
             .enqueue(object : Callback<DataModel> {
                 override fun onResponse(
                     call: Call<DataModel>,
