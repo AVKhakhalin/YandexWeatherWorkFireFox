@@ -301,6 +301,14 @@ class ListCitiesFragment(
             }
         } else {
             mainChooserSetter.addKnownCities(newCity)
+            // Смена фильтра страны
+            if (mainChooserGetter.getDefaultFilterCountry().lowercase()
+                == ConstantsUi.FILTER_RUSSIA) {
+                mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
+            } else {
+                mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
+            }
+            checkAndCorrectCountryState()
         }
         // Установка признака редактирования пользователем списка мест
         mainChooserSetter.setUserCorrectedCityList(true)
