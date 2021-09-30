@@ -13,40 +13,40 @@ import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
-class InputCityDialogFragment(
+class AddCityDialogFragment(
     private val listCitiesFragment: ListCitiesFragment
 ): DialogFragment(), DialogInterface.OnClickListener {
     private var buttonYes: Button? = null
     private var buttonNo: Button? = null
-    private var inputCityNameField: EditText? = null
-    private var inputLatField: EditText? = null
-    private var inputLonField: EditText? = null
-    private var inputCountryField: EditText? = null
+    private var addCityNameField: EditText? = null
+    private var addLatField: EditText? = null
+    private var addLonField: EditText? = null
+    private var addCountryField: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.dialog_fragment_input_city, null)
-/*        initView(view)
-        inputCityNameField = view.findViewById(R.id.input_city_info_city_field)
-        inputLatField = view.findViewById(R.id.input_city_info_lat_field)
-        inputLonField = view.findViewById(R.id.input_city_info_lon_field)
-        inputCountryField = view.findViewById(R.id.input_city_info_country_field)*/
+        val view: View = inflater.inflate(R.layout.dialog_fragment_add_city, null)
+        initView(view)
+        addCityNameField = view.findViewById(R.id.add_city_info_city_field)
+        addLatField = view.findViewById(R.id.add_city_info_lat_field)
+        addLonField = view.findViewById(R.id.add_city_info_lon_field)
+        addCountryField = view.findViewById(R.id.add_city_info_country_field)
         return view
     }
 
-/*    private fun initView(view: View) {
-        buttonYes = view.findViewById(R.id.edit_city_info_button_ok)
+    private fun initView(view: View) {
+        buttonYes = view.findViewById(R.id.add_city_info_button_ok)
         if (buttonYes != null) {
             buttonYes!!.setOnClickListener(View.OnClickListener { view: View ->
                 onYes(view)
             })
         }
-        buttonNo = view.findViewById(R.id.edit_city_info_button_cancel)
+        buttonNo = view.findViewById(R.id.add_city_info_button_cancel)
         if (buttonNo != null) {
             buttonNo!!.setOnClickListener(View.OnClickListener { view: View ->
                 onNo(view)
             })
         }
-    }*/
+    }
 
     // Результат нажатия на кнопку отмены действия
     private fun onNo(view: View) {
@@ -54,29 +54,30 @@ class InputCityDialogFragment(
     }
 
     // Результат нажатия на кнопку подтверждения действия
-/*    private fun onYes(view: View) {
-        if ((inputCityNameField != null) && (inputLatField != null)
-            && (inputLonField  != null) && (inputCountryField != null))
-                if (inputLatField!!.text.isNotEmpty() && inputLonField!!.text.isNotEmpty()) {
-                    listCitiesFragment.editCitiesAndUpdateList(
-                        City("${inputCityNameField!!.text}",
-                            "${inputLatField!!.text}".toDouble(),
-                            "${inputLonField!!.text}".toDouble(),
-                            "${inputCountryField!!.text}"
+    private fun onYes(view: View) {
+        if ((addCityNameField != null) && (addLatField != null)
+            && (addLonField  != null) && (addCountryField != null))
+                if (addLatField!!.text.isNotEmpty() && addLonField!!.text.isNotEmpty()) {
+
+                    listCitiesFragment.addCitiesAndUpdateList(
+                        City("${addCityNameField!!.text}",
+                            "${addLatField!!.text}".toDouble(),
+                            "${addLonField!!.text}".toDouble(),
+                            "${addCountryField!!.text}"
                         )
                     )
                 } else {
-                    listCitiesFragment.editCitiesAndUpdateList(
+                    listCitiesFragment.addCitiesAndUpdateList(
                         City(
-                            "${inputCityNameField!!.text}",
+                            "${addCityNameField!!.text}",
                             ConstantsUi.ERROR_COORDINATE,
                             ConstantsUi.ERROR_COORDINATE,
-                            "${inputCountryField!!.text}"
+                            "${addCountryField!!.text}"
                         )
                     )
                 }
         dismiss()
-    }*/
+    }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {}
 }

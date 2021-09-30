@@ -35,7 +35,7 @@ class ListCitiesFragment(
             return _binding!!
         }
     private var listCitiesFragmentAdapter = ListCitiesFragmentAdapter(this)
-    private var weather: MutableList<City>? = null
+    private var weather: MutableList<City>? = mutableListOf()
     private var navigationContent: NavigationContent? = null
     private var navigationDialogs: NavigationDialogs? = null
 
@@ -49,7 +49,7 @@ class ListCitiesFragment(
     }
 
     // Создание наблюдателя в domain
-    var listCitiesPublisherDomain: ListCitiesPublisherDomain = ListCitiesPublisherDomain()
+    private var listCitiesPublisherDomain: ListCitiesPublisherDomain = ListCitiesPublisherDomain()
     //endregion
 
     override fun onAttach(context: Context) {
@@ -64,6 +64,7 @@ class ListCitiesFragment(
         navigationContent = (context as MainActivity).getNavigationContent()
         // Получение навигатора для загрузки диалоговых фрагментов (Dialogs)
         navigationDialogs = (context as MainActivity).getNavigationDialogs()
+        navigationDialogs?.let { it.setListCitiesFragment(this) }
     }
 
     override fun onCreateView(
@@ -189,7 +190,7 @@ class ListCitiesFragment(
         mainChooserSetter.setUserCorrectedCityList(true)
     }
 
-    // Метод для удаления места из списка и его обновления
+    // Метод для обновления информации о месте из списка и его обновления
     fun editCitiesAndUpdateList(positionChoosedElement: Int, city: City) {
         var newCity: City = city
 
@@ -275,6 +276,26 @@ class ListCitiesFragment(
         mainChooserSetter.setUserCorrectedCityList(true)
     }
 
+    // Метод для обновления информации о месте из списка и его обновления
+    fun addCitiesAndUpdateList(city: City) {
+        var newCity: City = city
+        if ((mainChooserGetter.getDefaultFilterCountry().lowercase() == newCity.country.lowercase())
+            || ((mainChooserGetter.getDefaultFilterCountry().lowercase()
+                    == ConstantsUi.FILTER_NOT_RUSSIA.lowercase())
+                    && (newCity.country.lowercase() != ConstantsUi.FILTER_RUSSIA.lowercase()))){
+            // Изменение в текущем списке места и в основном списке класса mainChooser
+            changeWeather(newCity)
+            weather?.let {
+                // Передача в адаптер обновлённого списка городов
+                listCitiesFragmentAdapter.addWeather(weather!!)
+            }
+        } else {
+            mainChooserSetter.addKnownCities(newCity)
+        }
+        // Установка признака редактирования пользователем списка мест
+        mainChooserSetter.setUserCorrectedCityList(true)
+    }
+
     // Поменять значение в классе weather в определённой позиции на обновлённый city
     private fun changeWeather(
         city: City,
@@ -286,6 +307,17 @@ class ListCitiesFragment(
                     weather!![positionChoosedElement].name,
                     weather!![positionChoosedElement].country, city
                 )
+            }
+        }
+    }
+
+    // Добавить новое city в класс weather
+    private fun changeWeather(
+        city: City) {
+        mainChooserSetter?.let {
+            it.addKnownCities(city)
+            if (weather != null) {
+                weather!!.add(city)
             }
         }
     }

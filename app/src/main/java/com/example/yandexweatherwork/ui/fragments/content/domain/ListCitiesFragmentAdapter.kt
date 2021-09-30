@@ -23,7 +23,7 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
     }
 
     //region МЕТОДЫ ДЛЯ ОБНОВЛЕНИЯ СПИСКА
-    // Метод для полного обновления списка
+    // Метод для обновления списка
     fun setWeather(data: List<City>){
         weatherData = data
         notifyDataSetChanged()
@@ -37,6 +37,16 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
     fun setWeather(updatedPosition: Int, data: List<City>){
         weatherData = data
         notifyItemChanged(updatedPosition)
+    }
+    // Метод для обновления списка после добавления нового элемента
+    fun addWeather(data: List<City>){
+        weatherData = data
+        val lastIndex = weatherData!!.size - 1
+        if (lastIndex > 0) {
+            notifyItemInserted(weatherData!!.size - 1)
+        } else {
+            notifyItemInserted(0)
+        }
     }
     //endregion
 

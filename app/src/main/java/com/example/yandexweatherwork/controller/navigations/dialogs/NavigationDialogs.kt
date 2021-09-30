@@ -5,9 +5,16 @@ import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.CardCityDialogFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.DeleteConformationDialogFragment
-import com.example.yandexweatherwork.ui.fragments.dialogs.InputCityDialogFragment
+import com.example.yandexweatherwork.ui.fragments.dialogs.AddCityDialogFragment
 
 class NavigationDialogs{
+    private var listCitiesFragment: ListCitiesFragment? = null
+
+    // Установка класса ListCitiesFragment
+    fun setListCitiesFragment(listCitiesFragment: ListCitiesFragment) {
+        this.listCitiesFragment = listCitiesFragment
+    }
+
     // Отображение диалога с подтверждением удаления фрагмента
     fun showDeleteConformationDialogFragment(positionChoosedElement: Int,
                                              filterCity: String,
@@ -18,6 +25,8 @@ class NavigationDialogs{
                 = DeleteConformationDialogFragment(positionChoosedElement,
             filterCity, filterCountry, listCitiesFragment)
         deleteConformationDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+        // Сохранение класса listCitiesFragment
+        this.listCitiesFragment = listCitiesFragment
     }
 
     // Отображение диалога с карточкой места (города)
@@ -29,13 +38,15 @@ class NavigationDialogs{
                 = CardCityDialogFragment(positionChoosedElement,
             city, listCitiesFragment)
         cardCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+        // Сохранение класса listCitiesFragment
+        this.listCitiesFragment = listCitiesFragment
     }
 
     // Отображение диалога с карточкой места (города)
-    fun showInputCityDialogFragment(listCitiesFragment: ListCitiesFragment,
-                                   fragmentActivity: FragmentActivity) {
-        val inputCityDialogFragment: InputCityDialogFragment
-                = InputCityDialogFragment(listCitiesFragment)
-        inputCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+    fun showAddCityDialogFragment(fragmentActivity: FragmentActivity) {
+        listCitiesFragment?.let {
+            val addCityDialogFragment: AddCityDialogFragment = AddCityDialogFragment(listCitiesFragment!!)
+            addCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+        }
     }
 }

@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/search_city_name_margin_start"
             android:ems="7"
-            android:text="@string/input_string_info_city_name_title_text"
+            android:text="@string/add_string_info_city_name_title_text"
             android:textColor="@color/gray_text"
             android:textSize="@dimen/search_city_name_text_size" />
 

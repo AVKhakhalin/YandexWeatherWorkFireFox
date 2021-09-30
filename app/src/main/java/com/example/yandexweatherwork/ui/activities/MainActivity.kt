@@ -30,6 +30,7 @@ import com.example.yandexweatherwork.domain.facade.MainChooserSetterGetter
 import com.example.yandexweatherwork.repository.NetworkChangeBroadcastReceiver
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
+import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
 
 class MainActivity:
@@ -185,10 +186,7 @@ class MainActivity:
         when (item.itemId) {
             R.id.app_menu_action_add_city -> {
                 // Добавить место
-//                Toast.makeText(this, "Добавить место", Toast.LENGTH_SHORT).show()
-//                var listCitiesFragment: ListCitiesFragment? = null
-//                listCitiesFragment = this.baseContext.getListCitiesFragmentGetter()
-//                navigationDialogs.showInputCityDialogFragment(listCitiesFragment!!, fragmentManager)
+                navigationDialogs.showAddCityDialogFragment(this)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
