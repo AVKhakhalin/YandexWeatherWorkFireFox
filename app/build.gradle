@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     // Подключение плагина для удобной парселизации
     id 'kotlin-parcelize'
+    // Подключение плагина для работы с аннотациями (нужно для Room)
+    id 'kotlin-kapt'
 }
 
 android {
@@ -88,4 +90,8 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     //endregion
+
+    // Библиотека Room для работы с базами данных
+    implementation 'androidx.room:room-runtime:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
 }
