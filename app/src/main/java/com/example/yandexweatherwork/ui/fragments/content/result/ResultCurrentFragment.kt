@@ -152,7 +152,6 @@ class ResultCurrentFragment(
                         it.resultCurrentConstraintLayoutCityName?.text = updateState.city?.name
                         it.resultCurrentConstraintLayoutCityCoordinates?.text =
                             "${updateState.city?.lat}; ${updateState.city?.lon}"
-                        val icon: String? = updateState.dataWeather.iconCode
                         it.resultCurrentConstraintLayoutTemperatureValue?.text =
                             "${updateState.dataWeather?.temperature}"
                         it.resultCurrentConstraintLayoutFeelslikeValue?.text =
@@ -161,6 +160,8 @@ class ResultCurrentFragment(
                             GASI.inflateImage(it.resultsImageHeader)
                             GASI.inflateImage(it.resultImageFeels, dataWeather?.iconCode)
                         }
+                        it.resultCurrentConstraintLayoutConditionLabel?.text =
+                            "${conditionConvert(updateState.dataWeather?.conditionCode)}"
                     }
                 }
                 bindingReal?.let {
@@ -182,6 +183,31 @@ class ResultCurrentFragment(
                         resources.getString(R.string.try_another), Snackbar.LENGTH_LONG)
                 }
             }
+        }
+    }
+
+    // Перевод погодных условий на текущий язык
+    private fun conditionConvert(conditionCode: String?): String {
+        when (conditionCode) {
+            "clear" -> return resources.getString(R.string.clear)
+            "partly-cloudy" -> return resources.getString(R.string.partly_cloudy)
+            "cloudy" -> return resources.getString(R.string.cloudy)
+            "overcast" -> return resources.getString(R.string.overcast)
+            "partly-cloudy-and-light-rain" -> return resources.getString(R.string.partly_cloudy_and_light_rain)
+            "cloudy-and-light-rain" -> return resources.getString(R.string.cloudy_and_light_rain)
+            "overcast-and-light-rain" -> return resources.getString(R.string.overcast_and_light_rain)
+            "partly-cloudy-and-rain" -> return resources.getString(R.string.partly_cloudy_and_rain)
+            "overcast-and-rain" -> return resources.getString(R.string.overcast_and_rain)
+            "cloudy-and-rain" -> return resources.getString(R.string.cloudy_and_rain)
+            "overcast-thunderstorms-with-rain" -> return resources.getString(R.string.overcast_thunderstorms_with_rain)
+            "overcast-and-wet-snow" -> return resources.getString(R.string.overcast_and_wet_snow)
+            "partly-cloudy-and-light-snow" -> return resources.getString(R.string.partly_cloudy_and_light_snow)
+            "partly-cloudy-and-snow" -> return resources.getString(R.string.partly_cloudy_and_snow)
+            "overcast-and-snow" -> return resources.getString(R.string.overcast_and_snow)
+            "cloudy-and-light-snow" -> return resources.getString(R.string.cloudy_and_light_snow)
+            "overcast-and-light-snow" -> return resources.getString(R.string.overcast_and_light_snow)
+            "cloudy-and-snow" -> return resources.getString(R.string.cloudy_and_snow)
+            else -> return resources.getString(R.string.clear)
         }
     }
 

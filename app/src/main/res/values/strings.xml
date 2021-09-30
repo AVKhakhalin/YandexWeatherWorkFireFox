@@ -56,4 +56,25 @@
     <string name="card_city_lat_comments_text">(можно не заполнять)</string>
     <string name="card_city_lon_comments_text">(можно не заполнять)</string>
     <string name="input_city_lat_comments_text">(можно не заполнять)</string>
+    <string name="result_current_constraint_layout_condition_label_example_text">Условия</string>
+
+    <!-- Погодные условия -->
+    <string name="clear">Ясно</string>
+    <string name="partly_cloudy">Редкие облака</string>
+    <string name="cloudy">Облачно</string>
+    <string name="overcast">Пасмурно</string>
+    <string name="partly_cloudy_and_light_rain">Редкие облака и лёгкий дождь</string>
+    <string name="cloudy_and_light_rain">Облачно и лёгкий дождь</string>
+    <string name="overcast_and_light_rain">Пасмурно и лёгкий дождь</string>
+    <string name="partly_cloudy_and_rain">Редкие облака и дождь</string>
+    <string name="overcast_and_rain">Пасмурно и дождь</string>
+    <string name="cloudy_and_rain">Облачно и дождь</string>
+    <string name="overcast_thunderstorms_with_rain">Пасмурно, гром и дождь</string>
+    <string name="overcast_and_wet_snow">Пасмурно и мокрый снег</string>
+    <string name="partly_cloudy_and_light_snow">Редкие облака и лёгкий снег</string>
+    <string name="partly_cloudy_and_snow">Редкие облака и снег</string>
+    <string name="overcast_and_snow">Пасмурно и снег</string>
+    <string name="cloudy_and_light_snow">Облачно и лёгкий снег</string>
+    <string name="overcast_and_light_snow">Пасмурно и лёгкий снег</string>
+    <string name="cloudy_and_snow">Облачно и снег</string>
 </resources>
