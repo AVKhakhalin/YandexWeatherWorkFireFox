@@ -187,12 +187,6 @@ class ListCitiesFragment(
             listCitiesFragmentAdapter.setWeather(weather!!, positionChoosedElement)
             // Смена фильтра страны
             if ((it.size == 0) && (mainChooserGetter.getNumberKnownCites() > 0)) {
-                if (mainChooserGetter.getDefaultFilterCountry().lowercase()
-                    == ConstantsUi.FILTER_RUSSIA) {
-                    mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_NOT_RUSSIA)
-                } else {
-                    mainChooserSetter.setDefaultFilterCountry(ConstantsUi.FILTER_RUSSIA)
-                }
                 checkAndCorrectCountryState()
             }
         }
