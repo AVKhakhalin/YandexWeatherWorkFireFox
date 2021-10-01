@@ -1,5 +1,6 @@
 package com.example.yandexweatherwork.ui.fragments.dialogs
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
 import com.example.yandexweatherwork.domain.data.City
-import com.example.yandexweatherwork.ui.ConstantsUi
+import com.example.yandexweatherwork.domain.data.CityDTO
+import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityInfo
+import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
 class AddCityDialogFragment(
@@ -22,6 +27,14 @@ class AddCityDialogFragment(
     private var addLatField: EditText? = null
     private var addLonField: EditText? = null
     private var addCountryField: EditText? = null
+
+    private var navigationDialogs: NavigationDialogs? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // Получение навигатора для загрузки диалоговых фрагментов (Dialogs)
+        navigationDialogs = (context as MainActivity).getNavigationDialogs()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.dialog_fragment_add_city, null)
@@ -58,7 +71,6 @@ class AddCityDialogFragment(
         if ((addCityNameField != null) && (addLatField != null)
             && (addLonField  != null) && (addCountryField != null))
                 if (addLatField!!.text.isNotEmpty() && addLonField!!.text.isNotEmpty()) {
-
                     listCitiesFragment.addCitiesAndUpdateList(
                         City("${addCityNameField!!.text}",
                             "${addLatField!!.text}".toDouble(),
@@ -67,14 +79,16 @@ class AddCityDialogFragment(
                         )
                     )
                 } else {
-                    listCitiesFragment.addCitiesAndUpdateList(
-                        City(
-                            "${addCityNameField!!.text}",
-                            ConstantsUi.ERROR_COORDINATE,
-                            ConstantsUi.ERROR_COORDINATE,
-                            "${addCountryField!!.text}"
-                        )
-                    )
+                    val repositoryGetCityInfo: RepositoryGetCityInfo = RepositoryGetCityInfo()
+                    val newCitiesInfoFiltred: MutableList<CityDTO>? = repositoryGetCityInfo
+                        .getCityInfo(addCityNameField!!.text.toString(),
+                            addCountryField!!.text.toString())
+                    Toast.makeText(context, "${newCitiesInfoFiltred!!.size}",
+                        Toast.LENGTH_LONG).show()
+                    navigationDialogs?.let {
+                        it.showListFoundedCitiesDialogFragment(newCitiesInfoFiltred,
+                            requireActivity())
+                    }
                 }
         dismiss()
     }

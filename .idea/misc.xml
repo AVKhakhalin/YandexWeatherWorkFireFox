@@ -5,11 +5,15 @@
       <map>
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/activity_main.xml" value="0.303125" />
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/app_bar_menu_layout.xml" value="0.303125" />
+        <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_add_city.xml" value="0.303125" />
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_card_city.xml" value="0.1921875" />
+        <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_delete_conformation.xml" value="0.303125" />
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_input_city.xml" value="0.23294118300441247" />
+        <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_list_founded_cities.xml" value="0.303125" />
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_search_city.xml" value="0.1921875" />
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/dialog_fragment_way_input.xml" value="0.1921875" />
-        <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/fragment_list_cities_recycler_item.xml" value="0.303125" />
+        <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/fragment_list_cities.xml" value="0.303125" />
+        <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/fragment_list_cities_recycler_item.xml" value="0.17647059318516095" />
         <entry key="..\:/Android/Projects/Kotlin_Les6_YandexWeatherWork_FireFox/app/src/main/res/layout/fragment_result_current.xml" value="0.303125" />
         <entry key="..\:/Android/Projects/Kotlin_YandexWeatherWork_FireFox/app/src/main/res/drawable/card_note.xml" value="0.328125" />
         <entry key="..\:/Android/Projects/Kotlin_YandexWeatherWork_FireFox/app/src/main/res/drawable/delete_city.xml" value="0.3202846975088968" />

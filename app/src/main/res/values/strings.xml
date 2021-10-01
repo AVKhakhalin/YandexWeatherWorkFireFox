@@ -77,4 +77,6 @@
     <string name="cloudy_and_light_snow">Облачно и лёгкий снег</string>
     <string name="overcast_and_light_snow">Пасмурно и лёгкий снег</string>
     <string name="cloudy_and_snow">Облачно и снег</string>
+    <string name="founded_city_button_cancel_text">Отмена</string>
+    <string name="founded_city_title_text">Какое\nиз найденных мест\nВам интересно:</string>
 </resources>
