@@ -40,8 +40,12 @@ class ListFoundedCitiesDialogFragmentAdapter(
                 val country: String =
                     newCitiesInfoFiltred[position].display_name.subSequence(indexLastZapity,
                         newCitiesInfoFiltred[position].display_name.length) as String
+//                val indexFirstZapity: Int = newCitiesInfoFiltred[position]
+//                    .display_name.indexOf(",")
+//                val cityName: String = newCitiesInfoFiltred[position].display_name
+//                    .subSequence(0, indexFirstZapity) as String
                 val indexFirstZapity: Int = newCitiesInfoFiltred[position]
-                    .display_name.indexOf(",")
+                    .display_name.lastIndexOf(",")
                 val cityName: String = newCitiesInfoFiltred[position].display_name
                     .subSequence(0, indexFirstZapity) as String
 

@@ -27,6 +27,7 @@
             android:layout_marginTop="@dimen/result_current_constraint_layout_city_name_margin_top"
             android:textSize="@dimen/result_current_constraint_layout_city_name_text_size"
             android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/results_image_header"
