@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.yandexweatherwork.MyApp.Companion.getHistoryDAO
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.domain.data.City
@@ -15,16 +16,26 @@ import com.example.yandexweatherwork.domain.data.DataWeather
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.repository.ConstantsRepository
+import com.example.yandexweatherwork.repository.facadesettings.RepositorySettingsImpl
 import com.example.yandexweatherwork.repository.facadeuser.GetDataFromInternetService
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryWeatherImpl
 import kotlin.coroutines.coroutineContext
 
 class ResultCurrentViewModel(
-    private val liveDataToObserve: MutableLiveData<UpdateState> = MutableLiveData()
+    private val liveDataToObserve: MutableLiveData<UpdateState> = MutableLiveData(),
+    // Добавление переменных для сохранения и получения погодных данных из базы данных Room
+    private val repositorySettingsImpl: RepositorySettingsImpl =
+        RepositorySettingsImpl(getHistoryDAO())
+
 ): ViewModel() {
     private var repositoryWeatherImpl: RepositoryWeatherImpl? = null
 
     private var activityContext: Context? = null
+
+    // Функция для сохранения погодны данных
+    fun saveDataWeather(dataWeather: DataWeather) {
+        repositorySettingsImpl.saveEntity(dataWeather)
+    }
 
     fun setActivityContext(activityContext: Context) {
         this.activityContext = activityContext
@@ -41,8 +52,12 @@ class ResultCurrentViewModel(
                 Thread.sleep(ConstantsController.TIME_TO_WAIT_LOADING)
                 if ((dataWeather != null) && (city != null) && (dataWeather.error == null)
                     && (dataWeather.temperature != null)) {
-                    // УСПЕШНАЯ ПЕРЕДАЧА погодных данных в основном потоке через postValue (postValue два раза подряд использовать нельзя)
+                    // УСПЕШНАЯ ПЕРЕДАЧА погодных данных в основном потоке через postValue
+                        // (postValue два раза подряд использовать нельзя)
                     postValue(UpdateState.Success(dataWeather, city))
+                    // Сохранение погодных данных в базу данных Room
+                    dataWeather.city = city
+                    saveDataWeather(dataWeather)
                 } else {
                     // Передача СООБЩЕНИЯ ОБ ОШИБКЕ при получении погодных данных с сервера Yandex
                     if (dataWeather != null) {

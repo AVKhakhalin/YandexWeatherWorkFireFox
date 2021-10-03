@@ -30,7 +30,7 @@ import com.example.yandexweatherwork.domain.facade.MainChooserSetterGetter
 import com.example.yandexweatherwork.repository.NetworkChangeBroadcastReceiver
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
-import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
+import com.example.yandexweatherwork.ui.fragments.content.result.ResultWeatherHistoryFragment
 
 
 class MainActivity:
@@ -184,9 +184,14 @@ class MainActivity:
     // Установка слушателя на меню AppBarMenu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_menu_action_add_city -> {
+            R.id.action_app_menu_action_add_city -> {
                 // Добавить место
                 navigationDialogs.showAddCityDialogFragment(this)
+                return true
+            }
+            R.id.action_open_weather_history -> {
+                // Получить историю погодных данных из базы данных через Room
+                navigationContent.showResultWeatherHistoryFragment(false)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

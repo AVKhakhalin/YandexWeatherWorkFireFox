@@ -1,6 +1,7 @@
 package com.example.yandexweatherwork.repository
 
 import com.example.yandexweatherwork.controller.ConstantsController
+import com.example.yandexweatherwork.domain.ConstantsDomain
 import com.example.yandexweatherwork.ui.ConstantsUi
 
 class ConstantsRepository {
@@ -59,6 +60,17 @@ class ConstantsRepository {
         val ERROR_COORDINATE: Double = ConstantsUi.ERROR_COORDINATE
         @JvmField
         val CITY_IMAGE_LINK: String = "https://freepngimg.com/thumb/city/36275-3-city-hd.png"
+        @JvmField
+        val ERROR_NAME_CITY: String = ConstantsDomain.ERROR_NAME_CITY
+        @JvmField
+        val ERROR_CITY_LATIDUTE: Double = ConstantsDomain.ERROR_CITY_LATIDUTE
+        @JvmField
+        val ERROR_CITY_LONGITUDE: Double = ConstantsDomain.ERROR_CITY_LONGITUDE
+        @JvmField
+        val ERROR_COUNTRY: String = ConstantsDomain.ERROR_COUNTRY
+        @JvmField
+        val ERROR_STRING: String = "Error_Database_Data"
+
 
         // Константы для локальных настроек программы
 

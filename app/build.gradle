@@ -2,7 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     // Подключение плагина для удобной парселизации
-    id 'kotlin-parcelize'
+//    id 'kotlin-parcelize'
+    id 'kotlin-android-extensions'
     // Подключение плагина для работы с аннотациями (нужно для Room)
     id 'kotlin-kapt'
 }
@@ -92,6 +93,9 @@ dependencies {
     //endregion
 
     // Библиотека Room для работы с базами данных
-    implementation 'androidx.room:room-runtime:2.2.5'
-    kapt 'androidx.room:room-compiler:2.2.5'
+    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
+
+    // Добавление библиотеки для устранения ошибки компиляции
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.4"
 }

@@ -55,4 +55,4 @@ data class DataWeather(
     //    «winter» — зима.
     //    «spring» — весна.	Строка
     var error: Throwable? = null //   Информация об ошибке загрузки погододных данных с сервера Yandex
-) : Parcelable
+): Parcelable

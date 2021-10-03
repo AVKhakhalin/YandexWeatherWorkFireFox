@@ -79,4 +79,5 @@
     <string name="cloudy_and_snow">Облачно и снег</string>
     <string name="founded_city_button_cancel_text">Отмена</string>
     <string name="founded_city_title_text">Какое\nиз найденных мест\nВам интересно:</string>
+    <string name="action_open_weather_history_text">История погоды</string>
 </resources>

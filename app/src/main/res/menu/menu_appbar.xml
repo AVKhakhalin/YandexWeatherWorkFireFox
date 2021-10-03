@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/app_menu_action_add_city"
+        android:id="@+id/action_app_menu_action_add_city"
         android:title="@string/app_menu_action_add_city_text"
         app:showAsAction="always"
         android:icon="@drawable/add_city" />
+
+    <item
+        android:id="@+id/action_open_weather_history"
+        android:title="@string/action_open_weather_history_text"
+        app:showAsAction="always"
+        android:icon="@drawable/get_weather_history" />
 </menu>

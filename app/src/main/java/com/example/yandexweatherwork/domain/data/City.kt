@@ -1,6 +1,5 @@
 package com.example.yandexweatherwork.domain.data
 
-import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -10,4 +9,4 @@ class City (
     var lat: Double,
     var lon: Double,
     val country: String
-) : Parcelable
+): Parcelable

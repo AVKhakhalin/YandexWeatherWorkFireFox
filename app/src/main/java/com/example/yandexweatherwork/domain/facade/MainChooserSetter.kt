@@ -11,7 +11,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class MainChooserSetter(private val mainChooser: MainChooser): Parcelable {
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
-    private val repositorySettingsImpl: RepositorySettingsImpl = RepositorySettingsImpl()
     private var dataModel: DataModel? = null
     //endregion
 
