@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.observers.viewmodels.UpdateState
 import com.example.yandexweatherwork.controller.observers.viewmodels.WeatherHistoryViewModel
 import com.example.yandexweatherwork.databinding.FragmentResultWeatherHistoryBinding
@@ -51,7 +52,7 @@ class ResultWeatherHistoryFragment: Fragment() {
             is UpdateState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
                 val throwable = updateState.error
-                Snackbar.make(binding.root, "ERROR $throwable", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, "${R.string.success_load_from_database}: $throwable", Snackbar.LENGTH_LONG).show()
             }
             UpdateState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
@@ -59,9 +60,11 @@ class ResultWeatherHistoryFragment: Fragment() {
             is UpdateState.SuccessWeatherHistory -> {
                 binding.weatherHistoryFragmentRecyclerView.adapter = adapter
                 binding.loadingLayout.visibility = View.GONE
-                val dataWeather = updateState.weatherData
-                adapter.setWeather(dataWeather)
-                Snackbar.make(binding.root, "Success", Snackbar.LENGTH_LONG).show()
+//                val dataWeather = updateState.weatherData
+                val listUniqueCities = updateState.listUniqueCities
+//                adapter.setWeather(dataWeather)
+                adapter.setUniqueListCities(listUniqueCities)
+                Snackbar.make(binding.root, resources.getString(R.string.success_load_from_database), Snackbar.LENGTH_LONG).show()
             }
         }
     }

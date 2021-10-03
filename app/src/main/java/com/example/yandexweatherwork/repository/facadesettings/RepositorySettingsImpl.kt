@@ -29,4 +29,8 @@ class RepositorySettingsImpl (private val localDataSource: HistoryDAO): Reposito
     override fun updateNameById(idForUpdate: Long, newName: String) {
         localDataSource.updateDataById(idForUpdate, newName)
     }
+
+    override fun getUniqueListCities(): List<String> {
+        return localDataSource.getUniqueListCities()
+    }
 }

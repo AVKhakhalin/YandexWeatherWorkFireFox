@@ -8,11 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.domain.data.DataWeather
 
-class ResultWeatherHistoryFragmentAdapter: RecyclerView.Adapter<ResultWeatherHistoryFragmentAdapter
-.HistoryViewHolder>() {
-    private var weatherData: List<DataWeather> = listOf()
-    fun setWeather(data:List<DataWeather>){
+class ResultWeatherHistoryFragmentAdapter: RecyclerView.
+Adapter<ResultWeatherHistoryFragmentAdapter.HistoryViewHolder>() {
+//    private var weatherData: List<DataWeather> = listOf()
+    private var uniqueCitiesNames: List<String> = listOf()
+/*    fun setWeather(data: List<DataWeather>){
         weatherData = data
+        notifyDataSetChanged()
+    }*/
+    fun setUniqueListCities(uniqueCitiesNames: List<String>){
+        this.uniqueCitiesNames = uniqueCitiesNames
         notifyDataSetChanged()
     }
 
@@ -25,17 +30,22 @@ class ResultWeatherHistoryFragmentAdapter: RecyclerView.Adapter<ResultWeatherHis
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.render(weatherData[position])
+//        holder.render(weatherData[position])
+        holder.render(uniqueCitiesNames[position])
     }
 
-    override fun getItemCount() = weatherData.size
+//    override fun getItemCount() = weatherData.size
+    override fun getItemCount() = uniqueCitiesNames.size
 
     inner class HistoryViewHolder(view: View): RecyclerView.ViewHolder(view){
-        fun render(dataWeather: DataWeather){
+/*    fun render(dataWeather: DataWeather){
             dataWeather.city?.let {
                 itemView.findViewById<TextView>(R.id.recycler_item_text_view)
                     .text = it.name
             }
+        }*/
+        fun render(uniqueCityName: String){
+            itemView.findViewById<TextView>(R.id.recycler_item_text_view).text = uniqueCityName
         }
     }
 }

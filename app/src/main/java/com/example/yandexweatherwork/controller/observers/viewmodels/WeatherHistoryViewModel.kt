@@ -12,7 +12,8 @@ class WeatherHistoryViewModel (
     ViewModel() {
     fun getAllHistory() {
         historyLiveDataToObserve.value = UpdateState.Loading
-        historyLiveDataToObserve.postValue(UpdateState.SuccessWeatherHistory(historyRepositoryImpl.getAllHistory()))
+//        historyLiveDataToObserve.postValue(UpdateState.SuccessWeatherHistory(historyRepositoryImpl.getAllHistory()))
+        historyLiveDataToObserve.postValue(UpdateState.SuccessWeatherHistory(historyRepositoryImpl.getUniqueListCities()))
     }
     fun getLiveData() = historyLiveDataToObserve
 }

@@ -57,6 +57,8 @@
     <string name="card_city_lon_comments_text">(можно не заполнять)</string>
     <string name="input_city_lat_comments_text">(можно не заполнять)</string>
     <string name="result_current_constraint_layout_condition_label_example_text">Условия</string>
+    <string name="success_load_from_database">Данные из базы данных успешно загружены</string>
+
 
     <!-- Погодные условия -->
     <string name="clear">Ясно</string>

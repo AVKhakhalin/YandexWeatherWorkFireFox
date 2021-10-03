@@ -29,4 +29,8 @@ interface HistoryDAO {
 //    fun update(entity: HistoryEntity)
     @Query("UPDATE HistoryEntity SET name=:newName WHERE id=:idForUpdate")
     fun updateDataById(idForUpdate: Long, newName: String)
+
+    // Получение списка уникальных мест, по которым есть записи
+    @Query("SELECT DISTINCT name FROM HistoryEntity")
+    fun getUniqueListCities(): List<String>
 }

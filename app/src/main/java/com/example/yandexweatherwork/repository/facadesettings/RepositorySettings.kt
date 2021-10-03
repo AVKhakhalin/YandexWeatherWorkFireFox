@@ -9,4 +9,5 @@ interface RepositorySettings {
     fun getDataInHistory(name: String): List<DataWeather>
     fun deleteAll()
     fun updateNameById(idForUpdate: Long, newName: String)
+    fun getUniqueListCities(): List<String>
 }
