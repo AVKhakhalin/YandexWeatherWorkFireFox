@@ -77,17 +77,20 @@ class ResultCurrentFragment(
                     dataWeather =
                         it.getParcelableExtra<DataWeather>(ConstantsRepository.WEATHER_DATA)
                     resultCurrentViewModel.getDataFromRemoteSource(dataWeather, city)
-                val a: String = "debugger stop this"
             }
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        // Получение геттерова и сеттерова на класс MainChooser
+        mainChooserGetter = (context as MainActivity).getMainChooserGetter()
+        mainChooserSetter = (context as MainActivity).getMainChooserSetter()
         // Создание viewModel
         resultCurrentViewModel = ViewModelProvider(this)
             .get(ResultCurrentViewModel::class.java)
         resultCurrentViewModel.setActivityContext(context)
+        mainChooserGetter?.let {resultCurrentViewModel.setMainChooserGetter(it)}
         // Задание наблюдателя для данного фрагмента (viewModel)
         (context as ResultCurrentViewModelSetter).setResultCurrentViewModel(resultCurrentViewModel)
         // Получение наблюдателя для domain
@@ -98,9 +101,6 @@ class ResultCurrentFragment(
         publisherDomain.notifyCity(city)
         // Установка навигатора для создания фрагментов с основной информацией приложения (Content)
         navigationContent = (context as MainActivity).getNavigationContent()
-        // Получение геттерова и сеттерова на класс MainChooser
-        mainChooserGetter = (context as MainActivity).getMainChooserGetter()
-        mainChooserSetter = (context as MainActivity).getMainChooserSetter()
     }
 
     override fun onCreateView(

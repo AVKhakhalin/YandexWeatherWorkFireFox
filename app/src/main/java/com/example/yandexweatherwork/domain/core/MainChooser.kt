@@ -13,6 +13,7 @@ import java.util.*
 class MainChooser() : Parcelable {
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var dataWeather: DataWeather? = DataWeather()
+    private var isDataWeatherFromLocalBase: Boolean = false
     private var dataSettings: DataSettings? = null
     private var knownCities: MutableList<City>? = mutableListOf<City>()
     private var positionCurrentKnownCity: Int = ConstantsDomain.DEFAULT_POSITION_CURRENT_KNOWN_CITY
@@ -319,8 +320,22 @@ class MainChooser() : Parcelable {
         return dataWeather
     }
 
+    // Установить данные о погоде сейчас (полученные из базы данных Room)
+    fun setDataWeather(dataWeather: DataWeather) {
+        this.dataWeather = dataWeather
+        isDataWeatherFromLocalBase = true
+    }
+
+    // Установить признак считывания погодных данных из базы данных
+    fun setIsDataWeatherFromLocalBase(isDataWeatherFromLocalBase: Boolean) {
+        this.isDataWeatherFromLocalBase = isDataWeatherFromLocalBase
+    }
+    // Получить признак считывания погодных данных из базы данных
+    fun getIsDataWeatherFromLocalBase(): Boolean = isDataWeatherFromLocalBase
+
     // Установить фактические данные о погоде
     fun setFact(fact: Fact?, lat: Double, lon: Double, error: Throwable?) {
+        isDataWeatherFromLocalBase = false
         this.fact = fact
         if (fact != null) {
             dataWeather?.let{

@@ -1,5 +1,6 @@
 package com.example.yandexweatherwork.ui.fragments.content.result
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,19 +8,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.controller.observers.viewmodels.UpdateState
 import com.example.yandexweatherwork.controller.observers.viewmodels.WeatherHistoryViewModel
 import com.example.yandexweatherwork.databinding.FragmentResultWeatherHistoryBinding
+import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 
 class ResultWeatherHistoryFragment: Fragment() {
+    private var navigationContent: NavigationContent? = null
+
     private var _binding: FragmentResultWeatherHistoryBinding? = null
     private val binding: FragmentResultWeatherHistoryBinding
         get() {
             return _binding!!
         }
     private val adapter: ResultWeatherHistoryFragmentAdapter by lazy {
-        ResultWeatherHistoryFragmentAdapter(this)
+        ResultWeatherHistoryFragmentAdapter(this, navigationContent)
     }
 
     private val viewModel: WeatherHistoryViewModel by lazy {
@@ -30,6 +35,12 @@ class ResultWeatherHistoryFragment: Fragment() {
 
     companion object {
         fun newInstance() = ResultWeatherHistoryFragment()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // Установка навигатора для создания фрагментов с основной информацией приложения (Content)
+        navigationContent = (context as MainActivity).getNavigationContent()
     }
 
     override fun onCreateView(

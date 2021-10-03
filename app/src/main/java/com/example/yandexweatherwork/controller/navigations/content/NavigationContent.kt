@@ -15,7 +15,11 @@ class NavigationContent(
     private val mainChooserSetter: MainChooserSetter,
     private val mainChooserGetter: MainChooserGetter
 ) {
+    // Установка геттеров для MainChooserSetter и MainChooserGetter
+    fun getMainChooserSetter(): MainChooserSetter = mainChooserSetter
+    fun getMainChooserGetter(): MainChooserGetter = mainChooserGetter
 
+    // Отображение фрагмента с погодными результатами ResultCurrentFragment
     fun showResultCurrentFragment(city: City, useBackStack: Boolean) {
         // Открыть транзакцию
         fragmentManager?.let {
@@ -30,6 +34,7 @@ class NavigationContent(
         }
     }
 
+    // Отображение фрагмента со списком мест ListCitiesFragment
     fun showListCitiesFragment(isDataSetRusInitial: Boolean, useBackStack: Boolean) {
         // Открыть транзакцию
         fragmentManager?.let {
@@ -45,6 +50,7 @@ class NavigationContent(
         }
     }
 
+    // Отображение фрагмента с историей погодных данных ResultWeatherHistoryFragment
     fun showResultWeatherHistoryFragment(useBackStack: Boolean) {
         // Открыть транзакцию
         fragmentManager?.let{

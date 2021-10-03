@@ -8,6 +8,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class MainChooserGetter(private val mainChooser: MainChooser): Parcelable {
+    // Получить признак считывания погодных данных из базы данных
+    fun getIsDataWeatherFromLocalBase(): Boolean = mainChooser.getIsDataWeatherFromLocalBase()
+
     // Получение данных о погоде
     fun getDataWeather(): DataWeather? = mainChooser.getDataWeather()
 

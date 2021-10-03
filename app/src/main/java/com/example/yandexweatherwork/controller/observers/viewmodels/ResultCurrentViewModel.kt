@@ -25,16 +25,27 @@ class ResultCurrentViewModel(
     private val liveDataToObserve: MutableLiveData<UpdateState> = MutableLiveData(),
     // Добавление переменных для сохранения и получения погодных данных из базы данных Room
     private val repositorySettingsImpl: RepositorySettingsImpl =
-        RepositorySettingsImpl(getHistoryDAO())
-
+        RepositorySettingsImpl(getHistoryDAO()),
 ): ViewModel() {
     private var repositoryWeatherImpl: RepositoryWeatherImpl? = null
 
     private var activityContext: Context? = null
+    private var mainChooserGetter: MainChooserGetter? = null
+
+    // Функция для установки mainChooserGetter
+    fun setMainChooserGetter(mainChooserGetter: MainChooserGetter) {
+        this.mainChooserGetter = mainChooserGetter
+    }
 
     // Функция для сохранения погодны данных
     fun saveDataWeather(dataWeather: DataWeather) {
-        repositorySettingsImpl.saveEntity(dataWeather)
+        if (mainChooserGetter != null) {
+            if (!mainChooserGetter!!.getIsDataWeatherFromLocalBase()) {
+                repositorySettingsImpl.saveEntity(dataWeather)
+            }
+        } else {
+            repositorySettingsImpl.saveEntity(dataWeather)
+        }
     }
 
     fun setActivityContext(activityContext: Context) {

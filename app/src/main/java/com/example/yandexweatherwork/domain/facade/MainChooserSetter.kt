@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.example.yandexweatherwork.domain.core.MainChooser
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.DataModel
+import com.example.yandexweatherwork.domain.data.DataWeather
 import com.example.yandexweatherwork.domain.data.Fact
 import com.example.yandexweatherwork.repository.facadesettings.RepositorySettingsImpl
 import kotlinx.android.parcel.Parcelize
@@ -18,6 +19,13 @@ class MainChooserSetter(private val mainChooser: MainChooser): Parcelable {
     fun setLat(lat: Double) = mainChooser?.let{it.setLat(lat)}
     fun setLon(lon: Double) = mainChooser?.let{it.setLon(lon)}
     //endregion
+
+    // Установить данные о погоде сейчас (полученные из базы данных Room)
+    fun setDataWeather(dataWeather: DataWeather) = mainChooser?.let{it.setDataWeather(dataWeather)}
+
+    // Установить признак считывания погодных данных из базы данных
+    fun setIsDataWeatherFromLocalBase(isDataWeatherFromLocalBase: Boolean) =
+        mainChooser?.let {it.setIsDataWeatherFromLocalBase(isDataWeatherFromLocalBase)}
 
     //region Методы для Передачи полученных данных в MainChooser
     fun setDataModel(
