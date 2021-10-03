@@ -2,15 +2,17 @@ package com.example.yandexweatherwork.repository.facadesettings.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class HistoryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
-    val name: String,
+    var id: Long,
+    var name: String,
     var lat: Double,
     var lon: Double,
-    val country: String,
+    var country: String,
+    var time: String,
     var temperature: Float,
     var feelsLike: Float,
     var tempWater: Float,

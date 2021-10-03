@@ -16,7 +16,8 @@ interface HistoryDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(entity: HistoryEntity)
 
-    // Получение записей по имени города
+    // Получение всей погодной истории данного места (города)
+    // Получение всех полей таблицы из записи, у которых заданное поле name
     @Query("SELECT * FROM HistoryEntity WHERE name LIKE :name")
     fun getDataByWord(name: String): List<HistoryEntity>
 
@@ -30,7 +31,7 @@ interface HistoryDAO {
     @Query("UPDATE HistoryEntity SET name=:newName WHERE id=:idForUpdate")
     fun updateDataById(idForUpdate: Long, newName: String)
 
-    // Получение списка уникальных мест, по которым есть записи
+    // Получение списка уникальных мест, по которым есть записи погоды
     @Query("SELECT DISTINCT name FROM HistoryEntity")
     fun getUniqueListCities(): List<String>
 }

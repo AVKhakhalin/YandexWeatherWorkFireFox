@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
+import java.util.*
 
 class RepositoryWeatherImpl(
     private val mainChooserSetter: MainChooserSetter,
@@ -81,6 +82,7 @@ class RepositoryWeatherImpl(
             dataWeather = DataWeather()
                 .apply{
                     this.city = City("", lat, lon, "")
+                    this.time = Date().toString()
                     this.temperature = fact.temp
                     this.feelsLike = fact.feels_like
                     this.tempWater = fact.temp_water
@@ -101,6 +103,7 @@ class RepositoryWeatherImpl(
             dataWeather = DataWeather()
                 .apply {
                     this.city = null
+                    this.time = null
                     this.temperature = null
                     this.feelsLike = null
                     this.tempWater = null

@@ -19,12 +19,14 @@ class ResultWeatherHistoryFragment: Fragment() {
             return _binding!!
         }
     private val adapter: ResultWeatherHistoryFragmentAdapter by lazy {
-        ResultWeatherHistoryFragmentAdapter()
+        ResultWeatherHistoryFragmentAdapter(this)
     }
 
     private val viewModel: WeatherHistoryViewModel by lazy {
         ViewModelProvider(this).get(WeatherHistoryViewModel::class.java)
     }
+
+    fun getFragmentViewModel(): WeatherHistoryViewModel = viewModel
 
     companion object {
         fun newInstance() = ResultWeatherHistoryFragment()
@@ -44,7 +46,8 @@ class ResultWeatherHistoryFragment: Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner, {
             renderData(it)
         })
-        viewModel.getAllHistory()
+//        viewModel.getAllHistory()
+        viewModel.getUniqueCitiesNames()
     }
 
     private fun renderData(updateState: UpdateState) {
@@ -57,13 +60,20 @@ class ResultWeatherHistoryFragment: Fragment() {
             UpdateState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
-            is UpdateState.SuccessWeatherHistory -> {
+            is UpdateState.SuccessGetUniqueCitiesWithWeatherHistory -> {
                 binding.weatherHistoryFragmentRecyclerView.adapter = adapter
                 binding.loadingLayout.visibility = View.GONE
 //                val dataWeather = updateState.weatherData
                 val listUniqueCities = updateState.listUniqueCities
 //                adapter.setWeather(dataWeather)
                 adapter.setUniqueListCities(listUniqueCities)
+                Snackbar.make(binding.root, resources.getString(R.string.success_load_from_database), Snackbar.LENGTH_LONG).show()
+            }
+            is UpdateState.SuccessGetCityWeatherHistory -> {
+                binding.weatherHistoryFragmentRecyclerView.adapter = adapter
+                binding.loadingLayout.visibility = View.GONE
+                val dataWeather = updateState.weatherData
+                adapter.setWeather(dataWeather)
                 Snackbar.make(binding.root, resources.getString(R.string.success_load_from_database), Snackbar.LENGTH_LONG).show()
             }
         }

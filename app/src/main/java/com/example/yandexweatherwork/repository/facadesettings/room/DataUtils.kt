@@ -3,11 +3,13 @@ package com.example.yandexweatherwork.repository.facadesettings.room
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.DataWeather
 import com.example.yandexweatherwork.repository.ConstantsRepository
+import java.util.*
 
 fun convertHistoryEntityToDataWeather(entityList: List<HistoryEntity>): List<DataWeather>{
     return entityList.map {
         DataWeather(
             City(it.name,it.lat,it.lon, it.country),
+            it.time,
             it.temperature,
             it.feelsLike,
             it.tempWater,
@@ -37,6 +39,8 @@ fun convertDataWeatherToHistoryEntity(dataWeather: DataWeather): HistoryEntity{
         else ConstantsRepository.ERROR_CITY_LONGITUDE,
         if (dataWeather.city != null) dataWeather.city!!.country
         else ConstantsRepository.ERROR_COUNTRY,
+        if (dataWeather.time != null) dataWeather.time!!
+        else ConstantsRepository.ERROR_TIME,
         if (dataWeather.temperature != null) dataWeather.temperature!!
         else 0f,
         if (dataWeather.feelsLike != null) dataWeather.feelsLike!!

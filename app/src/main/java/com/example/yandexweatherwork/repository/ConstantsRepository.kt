@@ -70,7 +70,8 @@ class ConstantsRepository {
         val ERROR_COUNTRY: String = ConstantsDomain.ERROR_COUNTRY
         @JvmField
         val ERROR_STRING: String = "Error_Database_Data"
-
+        @JvmField
+        val ERROR_TIME: String = "Error_time"
 
         // Константы для локальных настроек программы
 

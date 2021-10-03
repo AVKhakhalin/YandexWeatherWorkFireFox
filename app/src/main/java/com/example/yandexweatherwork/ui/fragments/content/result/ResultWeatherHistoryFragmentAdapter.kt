@@ -4,18 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.domain.data.DataWeather
 
-class ResultWeatherHistoryFragmentAdapter: RecyclerView.
-Adapter<ResultWeatherHistoryFragmentAdapter.HistoryViewHolder>() {
-//    private var weatherData: List<DataWeather> = listOf()
+class ResultWeatherHistoryFragmentAdapter(
+    private val resultWeatherHistoryFragment: ResultWeatherHistoryFragment
+): RecyclerView.Adapter<ResultWeatherHistoryFragmentAdapter.HistoryViewHolder>() {
+    private var weatherData: List<DataWeather> = listOf()
     private var uniqueCitiesNames: List<String> = listOf()
-/*    fun setWeather(data: List<DataWeather>){
+    fun setWeather(data: List<DataWeather>){
         weatherData = data
+        var tempListOfDates: MutableList<String> = mutableListOf()
+        weatherData.forEach {
+            tempListOfDates.add(it.time.toString())
+        }
+        uniqueCitiesNames = tempListOfDates
         notifyDataSetChanged()
-    }*/
+    }
     fun setUniqueListCities(uniqueCitiesNames: List<String>){
         this.uniqueCitiesNames = uniqueCitiesNames
         notifyDataSetChanged()
@@ -38,14 +45,27 @@ Adapter<ResultWeatherHistoryFragmentAdapter.HistoryViewHolder>() {
     override fun getItemCount() = uniqueCitiesNames.size
 
     inner class HistoryViewHolder(view: View): RecyclerView.ViewHolder(view){
-/*    fun render(dataWeather: DataWeather){
+/*       fun render(dataWeather: DataWeather){
             dataWeather.city?.let {
                 itemView.findViewById<TextView>(R.id.recycler_item_text_view)
                     .text = it.name
             }
         }*/
+        // Отображение во фрагменте ResultWeatherHistoryFragment списка уникальных мест
+        // с погодными данными
         fun render(uniqueCityName: String){
             itemView.findViewById<TextView>(R.id.recycler_item_text_view).text = uniqueCityName
+            itemView.setOnClickListener{
+                resultWeatherHistoryFragment.getFragmentViewModel()
+                    .getHistoryCityDataWeather(uniqueCityName)
+                Toast.makeText(itemView.context, "$position = $uniqueCityName"
+                    , Toast.LENGTH_LONG).show()
+            }
+        }
+        // Оторажение во фрагменте ResultWeatherHistoryFragment перечня погодных данных
+        // по заданному месту
+        fun render(dataWeather: DataWeather){
+            itemView.findViewById<TextView>(R.id.recycler_item_text_view).text = dataWeather.dayTime
         }
     }
 }

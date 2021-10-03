@@ -7,6 +7,7 @@ import com.example.yandexweatherwork.domain.data.DataSettings
 import com.example.yandexweatherwork.domain.data.DataWeather
 import com.example.yandexweatherwork.domain.data.Fact
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Parcelize
 class MainChooser() : Parcelable {
@@ -325,6 +326,7 @@ class MainChooser() : Parcelable {
             dataWeather?.let{
                 it.city = City(getCurrentKnownCity()!!.name, lat, lon,
                     getCurrentKnownCity()!!.country)
+                it.time = Date().toString()
                 it.temperature = fact.temp
                 it.feelsLike = fact.feels_like
                 it.tempWater = fact.temp_water
@@ -344,6 +346,7 @@ class MainChooser() : Parcelable {
         } else {
             dataWeather?.let{
                 it.city = null
+                it.time = null
                 it.temperature = null
                 it.feelsLike = null
                 it.tempWater = null

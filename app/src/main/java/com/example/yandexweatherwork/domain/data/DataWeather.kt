@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class DataWeather(
     var city: City? = null,
+    var time: String? = null,
     var temperature: Float? = null, //temp	Температура (°C).	Число
     var feelsLike: Float? = null,   //feels_like	Ощущаемая температура (°C).	Число
     var tempWater: Float? = null,   // temp_water	Температура воды (°C). Параметр возвращается для населенных пунктов, где данная информация актуальна.	Число
