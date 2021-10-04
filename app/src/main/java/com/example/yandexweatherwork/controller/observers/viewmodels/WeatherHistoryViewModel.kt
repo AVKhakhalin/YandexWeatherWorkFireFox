@@ -9,21 +9,22 @@ class WeatherHistoryViewModel (
     private val historyLiveDataToObserve: MutableLiveData<UpdateState> = MutableLiveData(),
     private val historyRepositoryImpl: RepositorySettingsImpl =
         RepositorySettingsImpl(MyApp.getHistoryDAO())
-) :
+):
     ViewModel() {
-//    fun getAllHistory() {
     fun getUniqueCitiesNames() {
         historyLiveDataToObserve.value = UpdateState.Loading
-//        historyLiveDataToObserve.postValue(UpdateState
-//        .SuccessWeatherHistory(historyRepositoryImpl.getAllHistory()))
-        historyLiveDataToObserve.postValue(UpdateState
-            .SuccessGetUniqueCitiesWithWeatherHistory(historyRepositoryImpl.getUniqueListCities()))
+        Thread {
+            historyLiveDataToObserve.postValue(UpdateState
+                .SuccessGetUniqueCitiesWithWeatherHistory(historyRepositoryImpl.getUniqueListCities()))
+        }.start()
     }
 
     fun getHistoryCityDataWeather(cityName: String) {
         historyLiveDataToObserve.value = UpdateState.Loading
-        historyLiveDataToObserve.postValue(UpdateState
-            .SuccessGetCityWeatherHistory(historyRepositoryImpl.getDataInHistory(cityName)))
+        Thread {
+            historyLiveDataToObserve.postValue(UpdateState
+                .SuccessGetCityWeatherHistory(historyRepositoryImpl.getDataInHistory(cityName)))
+        }.start()
     }
     fun getLiveData() = historyLiveDataToObserve
 }
