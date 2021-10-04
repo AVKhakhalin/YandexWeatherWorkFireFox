@@ -335,7 +335,6 @@ class MainChooser() : Parcelable {
 
     // Установить фактические данные о погоде
     fun setFact(fact: Fact?, lat: Double, lon: Double, error: Throwable?) {
-        isDataWeatherFromLocalBase = false
         this.fact = fact
         if (fact != null) {
             dataWeather?.let{

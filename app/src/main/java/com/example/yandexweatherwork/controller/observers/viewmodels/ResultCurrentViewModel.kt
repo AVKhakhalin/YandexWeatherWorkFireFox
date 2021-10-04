@@ -54,7 +54,7 @@ class ResultCurrentViewModel(
 
     fun getLiveData() = liveDataToObserve
 
-    fun getDataFromRemoteSource(dataWeather: DataWeather?, city: City?) {
+    fun getDataFromRemoteSource(dataWeather: DataWeather?, city: City?, doSaveResult: Boolean) {
         // Отслеживание состояния загрузки погодных данных
         with(liveDataToObserve) {
             // Отправка сообщения О ПРОЦЕССЕ ЗАГРУЗКИ
@@ -68,7 +68,9 @@ class ResultCurrentViewModel(
                     postValue(UpdateState.Success(dataWeather, city))
                     // Сохранение погодных данных в базу данных Room
                     dataWeather.city = city
-                    saveDataWeather(dataWeather)
+                    if (doSaveResult) {
+                        saveDataWeather(dataWeather)
+                    }
                 } else {
                     // Передача СООБЩЕНИЯ ОБ ОШИБКЕ при получении погодных данных с сервера Yandex
                     if (dataWeather != null) {

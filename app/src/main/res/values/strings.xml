@@ -82,4 +82,6 @@
     <string name="founded_city_button_cancel_text">Отмена</string>
     <string name="founded_city_title_text">Какое\nиз найденных мест\nВам интересно:</string>
     <string name="action_open_weather_history_text">История погоды</string>
+    <string name="result_weather_history_cancel_text">Отмена</string>
+    <string name="result_weather_history_title_text">Выберите место\nс погодными данными:</string>
 </resources>

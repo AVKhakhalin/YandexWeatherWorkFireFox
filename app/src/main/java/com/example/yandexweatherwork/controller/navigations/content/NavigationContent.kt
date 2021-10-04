@@ -20,12 +20,17 @@ class NavigationContent(
     fun getMainChooserGetter(): MainChooserGetter = mainChooserGetter
 
     // Отображение фрагмента с погодными результатами ResultCurrentFragment
-    fun showResultCurrentFragment(city: City, useBackStack: Boolean) {
+    fun showResultCurrentFragment(city: City, doSaveResult: Boolean, useBackStack: Boolean) {
+        if (doSaveResult) {
+            mainChooserSetter.setIsDataWeatherFromLocalBase(false)
+        } else {
+            mainChooserSetter.setIsDataWeatherFromLocalBase(true)
+        }
         // Открыть транзакцию
         fragmentManager?.let {
             val fragmentTransaction = it.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_result_weather_container,
-                ResultCurrentFragment.newInstance(city))
+                ResultCurrentFragment.newInstance(city, doSaveResult))
             if (useBackStack) {
                 fragmentTransaction.addToBackStack(null)
             }
@@ -35,7 +40,9 @@ class NavigationContent(
     }
 
     // Отображение фрагмента со списком мест ListCitiesFragment
-    fun showListCitiesFragment(isDataSetRusInitial: Boolean, useBackStack: Boolean) {
+    fun showListCitiesFragment(useBackStack: Boolean) {
+        val isDataSetRusInitial = mainChooserGetter
+            .getDefaultFilterCountry() == ConstantsController.FILTER_RUSSIA
         // Открыть транзакцию
         fragmentManager?.let {
             val fragmentTransaction = it.beginTransaction()

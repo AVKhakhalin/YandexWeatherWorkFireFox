@@ -76,7 +76,7 @@ class ResultWeatherHistoryFragmentAdapter(
                             navigationContent.getMainChooserSetter()
                                 .setDataWeather(weatherData[position])
                             navigationContent.showResultCurrentFragment(
-                                weatherData[position]!!.city!!,
+                                weatherData[position]!!.city!!, false,
                                 false
                             )
                         }

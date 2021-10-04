@@ -34,12 +34,13 @@ import com.google.android.material.snackbar.Snackbar
 class ResultCurrentFragment(
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     // Данные о месте (городе)
-    private var city: City
+    private var city: City,
+    private var doSaveResult: Boolean
 ): Fragment() {
 
     // Фабричный метод создания фрагмента
     companion object {
-        fun newInstance(city: City) = ResultCurrentFragment(city)
+        fun newInstance(city: City, doSaveResult: Boolean) = ResultCurrentFragment(city, doSaveResult)
     }
 
     // Ссылка на ResultCurrentViewModel
@@ -76,8 +77,9 @@ class ResultCurrentFragment(
                     // Отслеживание состояния загрузки погодных данных
                     dataWeather =
                         it.getParcelableExtra<DataWeather>(ConstantsRepository.WEATHER_DATA)
-                    resultCurrentViewModel.getDataFromRemoteSource(dataWeather, city)
+                    resultCurrentViewModel.getDataFromRemoteSource(dataWeather, city, doSaveResult)
             }
+            doSaveResult = false
         }
     }
 
@@ -128,8 +130,7 @@ class ResultCurrentFragment(
             }
             // Отображение фрагмента со списком мест (city) для выбора погоды по другому
             // интересующему месту
-            navigationContent?.let{it.showListCitiesFragment(city.country
-                    == ConstantsUi.FILTER_RUSSIA, false)}
+            navigationContent?.let{it.showListCitiesFragment(false)}
         })
 
         // Запуск сервиса GetDataFromInternetService для получения данных о погоде

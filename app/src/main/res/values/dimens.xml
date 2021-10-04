@@ -78,4 +78,7 @@
     <dimen name="founded_city_button_cancel_margin">10dp</dimen>
     <dimen name="founded_city_title_margin">10dp</dimen>
     <dimen name="founded_city_title_text_size">20sp</dimen>
+    <dimen name="result_weather_history_cancel_margin">10dp</dimen>
+    <dimen name="result_weather_history_title_margin_end">10dp</dimen>
+    <dimen name="result_weather_history_title_text_size">20sp</dimen>
 </resources>

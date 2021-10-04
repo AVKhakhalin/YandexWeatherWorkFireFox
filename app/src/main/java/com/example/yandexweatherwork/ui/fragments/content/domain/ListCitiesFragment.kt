@@ -120,7 +120,7 @@ class ListCitiesFragment(
 
     override fun onItemClick(city: City) {
         if (mainChooserGetter.getExistInternet()) {
-            navigationContent?.let { it.showResultCurrentFragment(city, false) }
+            navigationContent?.let { it.showResultCurrentFragment(city, true, false) }
         } else {
             Snackbar.make(requireView(), "${resources.getString(R.string.error)}: " +
                     "${resources.getString(R.string.error_no_connection)}",

@@ -82,12 +82,11 @@ class MainActivity:
             // Выбор
             if (mainChooserGetter.getPositionCurrentKnownCity() == -1)
                 // Отображение фрагмента со списком мест (city) для выбора интересующего места
-                navigationContent.showListCitiesFragment(mainChooserGetter
-                    .getDefaultFilterCountry() == ConstantsController.FILTER_RUSSIA, false)
+                navigationContent.showListCitiesFragment( false)
             else
                 // Отображение фрагмента с прогнозом погоды по выбранному ранее месту
                 navigationContent.showResultCurrentFragment(mainChooserGetter.getCurrentKnownCity()!!
-                    , false)
+                    , true, false)
         }
 
         // Установка AppBarMenu
