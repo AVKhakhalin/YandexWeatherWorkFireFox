@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.yandexweatherwork.R
-import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.controller.navigations.content.NavigationGetterContent
 import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
@@ -30,7 +29,6 @@ import com.example.yandexweatherwork.domain.facade.MainChooserSetterGetter
 import com.example.yandexweatherwork.repository.NetworkChangeBroadcastReceiver
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
-import com.example.yandexweatherwork.ui.fragments.content.result.ResultWeatherHistoryFragment
 import java.util.*
 
 
@@ -69,8 +67,6 @@ class MainActivity:
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d("mylogs", "MainChooserSetter name: ${mainChooserSetter}")
-
         // Подключение наблюдателей за domain к MainActivity
         publisherDomain.subscribe(this)
         listCitiesPublisherDomain.subscribe(this)
@@ -79,14 +75,14 @@ class MainActivity:
         if (savedInstanceState == null) {
             // Получение известных городов
             getKnownCities()
-            // Выбор
+            // Выбор места для поиска и отображения погодных данных
             if (mainChooserGetter.getPositionCurrentKnownCity() == -1)
                 // Отображение фрагмента со списком мест (city) для выбора интересующего места
                 navigationContent.showListCitiesFragment( false)
             else
                 // Отображение фрагмента с прогнозом погоды по выбранному ранее месту
-                navigationContent.showResultCurrentFragment(mainChooserGetter.getCurrentKnownCity()!!
-                    , true, false)
+                navigationContent.showResultCurrentFragment(mainChooserGetter
+                    .getCurrentKnownCity()!!, true, false)
         }
 
         // Установка AppBarMenu
@@ -102,26 +98,6 @@ class MainActivity:
 
         // Установка приёмника сообщения о получении нового места
         initNotificationChannel()
-
-/*        // Работа с сервисом
-        this?.let{
-            val intent = Intent(it, GetDataFromInternetService::class.java)
-            intent.putExtra(ConstantsUi.INTERNET_SERVICE_STRING_KEY,"привет сервис, я фрагмент")
-            it.startService(intent)
-        }*/
-
-/*
-        val repositoryGetCityInfo: RepositoryGetCityInfo = RepositoryGetCityInfo()
-        repositoryGetCityInfo.getCityInfo()
-*/
-
-/*
-        val repositoryGetCityCoordinates: RepositoryGetCityCoordinates = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
-        repositoryGetCityCoordinates.start()
-        Thread.sleep(2000)
-        Toast.makeText(this, "${mainChooser.getLat()}; ${mainChooser.getLon()}", Toast.LENGTH_LONG).show()
-*/
-
     }
 
     @SuppressLint("ServiceCast")
@@ -189,7 +165,7 @@ class MainActivity:
                 navigationDialogs.showAddCityDialogFragment(this)
                 return true
             }
-            R.id.action_open_weather_history -> {
+            R.id.action_app_menu_open_weather_history -> {
                 // Получить историю погодных данных из базы данных через Room
                 navigationContent.showResultWeatherHistoryFragment(false)
                 return true

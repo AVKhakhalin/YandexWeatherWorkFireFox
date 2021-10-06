@@ -32,7 +32,7 @@
     <string name="error_no_connection">Сеть Интернет недоступна</string>
     <string name="error_dataweather_null">Данные не загружены</string>
     <string name="try_another">Попробовать ещё</string>
-    <string name="app_menu_action_add_city_text">Добавить место</string>
+    <string name="app_menu_action_add_city_title_text">Добавить место</string>
     <string name="app_menu_action_delete_city_text">Удалить место</string>
     <string name="app_menu_action_show_card_city_text">Карточка места</string>
     <string name="app_bar_title"></string>
@@ -81,7 +81,8 @@
     <string name="cloudy_and_snow">Облачно и снег</string>
     <string name="founded_city_button_cancel_text">Отмена</string>
     <string name="founded_city_title_text">Какое\nиз найденных мест\nВам интересно:</string>
-    <string name="action_open_weather_history_text">История погоды</string>
+    <string name="app_menu_action_open_weather_history_title_text">История погоды</string>
     <string name="result_weather_history_cancel_text">Отмена</string>
     <string name="result_weather_history_title_text">Выберите место\nс погодными данными:</string>
+    <string name="app_menu_open_contacts_title_text">Получить контакты</string>
 </resources>
