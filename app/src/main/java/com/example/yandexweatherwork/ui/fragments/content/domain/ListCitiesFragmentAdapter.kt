@@ -1,9 +1,12 @@
 package com.example.yandexweatherwork.ui.fragments.content.domain
 
+import android.os.Build
 import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yandexweatherwork.R
@@ -61,24 +64,29 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
     }
 
     override fun onBindViewHolder(holder: MainFragmentViewHolder, position: Int) {
-        holder.render(weatherData[position])
+//        holder.render(weatherData[position], position)
+        holder.itemTextViewContainerForContextMenu?.let {it.text = weatherData[position].name}
     }
 
     override fun getItemCount() = weatherData.size
 
     inner class MainFragmentViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
-        init {
-            // Регистрация стартового элемента для контекстного меню
-            fragment?.registerForContextMenu(view.findViewById(R.id.recycler_item_text_view))
-            // Регистрация метода onCreateContextMenu
-            view.setOnCreateContextMenuListener(this)
-        }
+        var itemTextViewContainerForContextMenu: TextView? = null
 
-        fun render(city: City){
-            with(itemView) {
-                findViewById<TextView>(R.id.recycler_item_text_view).text = city.name
-                setOnClickListener{
-                    listener.onItemClick(city)
+        init {
+            itemTextViewContainerForContextMenu = view.findViewById(R.id.recycler_item_text_view)
+            // Регистрация стартового элемента для контекстного меню
+            itemTextViewContainerForContextMenu?.let {
+                fragment?.registerForContextMenu(it)
+            }
+
+            itemTextViewContainerForContextMenu?.let {
+                it.setOnClickListener{
+                    listener.onItemClick(weatherData[adapterPosition])
+                }
+                it.setOnLongClickListener {
+                    positionChoosedElement = adapterPosition
+                    false
                 }
             }
         }
@@ -88,7 +96,6 @@ class ListCitiesFragmentAdapter(fragment: Fragment): RecyclerView.Adapter<ListCi
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-//            Toast.makeText(v?.context, "${getLayoutPosition()} ${weatherData.get(getLayoutPosition()).name}", Toast.LENGTH_SHORT).show()
             setPositionChoosedElement(layoutPosition)
         }
     }

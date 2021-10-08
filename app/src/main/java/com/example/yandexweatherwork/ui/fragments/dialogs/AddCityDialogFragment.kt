@@ -19,7 +19,8 @@ import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
 class AddCityDialogFragment(
-    private val listCitiesFragment: ListCitiesFragment
+    private val listCitiesFragment: ListCitiesFragment,
+    private val defaultPlace: String?
 ): DialogFragment(), DialogInterface.OnClickListener {
     private var buttonYes: Button? = null
     private var buttonNo: Button? = null
@@ -43,6 +44,18 @@ class AddCityDialogFragment(
         addLatField = view.findViewById(R.id.add_city_info_lat_field)
         addLonField = view.findViewById(R.id.add_city_info_lon_field)
         addCountryField = view.findViewById(R.id.add_city_info_country_field)
+
+        // Установка заранее известного места (например, найденного в контактах)
+        defaultPlace?.let {
+            if ((addCityNameField != null) && (addLatField != null)
+                && (addLonField  != null) && (addCountryField != null)) {
+                addCityNameField!!.setText(it)
+                addLatField!!.setText("")
+                addLonField!!.setText("")
+                addCountryField!!.setText("")
+            }
+        }
+
         return view
     }
 

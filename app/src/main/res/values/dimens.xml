@@ -81,4 +81,24 @@
     <dimen name="result_weather_history_cancel_margin">10dp</dimen>
     <dimen name="result_weather_history_title_margin_end">10dp</dimen>
     <dimen name="result_weather_history_title_text_size">20sp</dimen>
+    <dimen name="fragment_container_for_contacts_padding">15dp</dimen>
+    <dimen name="fragment_contacts_request_title_margin">20dp</dimen>
+    <dimen name="fragment_contacts_request_title_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_family_title_margin_start">10dp</dimen>
+    <dimen name="fragment_contacts_request_family_title_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_family_field_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_family_field_margin_end">10dp</dimen>
+    <dimen name="fragment_contacts_request_name_title_margin_start">10dp</dimen>
+    <dimen name="fragment_contacts_request_name_title_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_name_field_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_name_field_margin_end">10dp</dimen>
+    <dimen name="fragment_contacts_request_family_field_comments_text_size">15sp</dimen>
+    <dimen name="fragment_contacts_request_patronymic_title_margin_left">10dp</dimen>
+    <dimen name="fragment_contacts_request_patronymic_title_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_patronymic_field_margin_end">10dp</dimen>
+    <dimen name="fragment_contacts_request_patronymic_field_text_size">20sp</dimen>
+    <dimen name="fragment_contacts_request_patronymiс_comments_text_size">15sp</dimen>
+    <dimen name="contact_founded_city_button_cancel_margin">10dp</dimen>
+    <dimen name="contact_founded_city_title_margin">10dp</dimen>
+    <dimen name="contact_founded_city_title_text_size">20sp</dimen>
 </resources>

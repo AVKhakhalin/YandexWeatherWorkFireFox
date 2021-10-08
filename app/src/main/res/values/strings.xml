@@ -7,16 +7,16 @@
     <string name="result_current_constraint_layout_temperature_value_example_text">+15</string>
     <string name="result_current_constraint_layout_feelslike_label_example_text">Ощущается как:</string>
     <string name="result_current_constraint_layout_feelslike_value_example_text">-23</string>
-    <string name="add_string_info_title_text">Введите данные о новом месте</string>
+    <string name="add_string_info_title_text">Введите или уточните\nданные о новом месте</string>
     <string name="add_city_info_button_cancel_text">Отмена</string>
     <string name="add_string_info_city_name_title_text">Название места</string>
-    <string name="add_string_info_city_field_example_text">Москва</string>
+    <string name="add_string_info_city_field_example_text"></string>
     <string name="add_city_info_lat_title">Широта (Latitude), в десятичных долях</string>
-    <string name="add_city_info_lat_field_example_text">55.7522</string>
+    <string name="add_city_info_lat_field_example_text"></string>
     <string name="add_city_info_lon_title">Долгота (Longitude), в десятичных долях</string>
-    <string name="add_city_info_lon_lon_field_example_text">37.6156</string>
+    <string name="add_city_info_lon_lon_field_example_text"></string>
     <string name="add_city_info_country_title">Страна</string>
-    <string name="add_city_info_country_field_text">Россия</string>
+    <string name="add_city_info_country_field_text"></string>
     <string name="add_city_info_button_ok_text">Сохранить</string>
     <string name="search_city_title_text">Найти место среди ранее заданных</string>
     <string name="search_city_name_field_example_text">Москва</string>
@@ -26,11 +26,6 @@
     <string name="search_city_button_ok_text">Найти место</string>
     <string name="recycler_item_text_view_example_text">Москва</string>
     <string name="result_current_down_help_text">Нажмите сюда для возврата к списку мест...</string>
-    <string name="error">ОШИБКА</string>
-    <string name="error_no_such_places">НЕТ КАРТОЧЕК ТАКИХ МЕСТ.\nДобавьте их через ВЕРХНЕЕ МЕНЮ</string>
-    <string name="success">Данные УСПЕШНО загружены</string>
-    <string name="error_no_connection">Сеть Интернет недоступна</string>
-    <string name="error_dataweather_null">Данные не загружены</string>
     <string name="try_another">Попробовать ещё</string>
     <string name="app_menu_action_add_city_title_text">Добавить место</string>
     <string name="app_menu_action_delete_city_text">Удалить место</string>
@@ -57,8 +52,17 @@
     <string name="card_city_lon_comments_text">(можно не заполнять)</string>
     <string name="input_city_lat_comments_text">(можно не заполнять)</string>
     <string name="result_current_constraint_layout_condition_label_example_text">Условия</string>
-    <string name="success_load_from_database">Данные из базы данных успешно загружены</string>
 
+    <!-- Сообщения об ошибках -->
+    <string name="error">ОШИБКА</string>
+    <string name="error_no_such_places">НЕТ КАРТОЧЕК ТАКИХ МЕСТ.\nДобавьте их через ВЕРХНЕЕ МЕНЮ</string>
+    <string name="error_no_connection">Сеть Интернет недоступна</string>
+    <string name="error_dataweather_null">Данные не загружены</string>
+    <string name="error_empty_name_in_contacts_request">Поле \"Имя\" не заполнено.</string>
+
+    <!-- Сообщения об успешных действиях -->
+    <string name="success">Данные УСПЕШНО загружены</string>
+    <string name="success_load_from_database">Данные из базы данных успешно загружены</string>
 
     <!-- Погодные условия -->
     <string name="clear">Ясно</string>
@@ -80,9 +84,22 @@
     <string name="overcast_and_light_snow">Пасмурно и лёгкий снег</string>
     <string name="cloudy_and_snow">Облачно и снег</string>
     <string name="founded_city_button_cancel_text">Отмена</string>
-    <string name="founded_city_title_text">Какое\nиз найденных мест\nВам интересно:</string>
+    <string name="founded_city_title_text">Выберите\nуточнённое\nместо:</string>
     <string name="app_menu_action_open_weather_history_title_text">История погоды</string>
     <string name="result_weather_history_cancel_text">Отмена</string>
     <string name="result_weather_history_title_text">Выберите место\nс погодными данными:</string>
     <string name="app_menu_open_contacts_title_text">Получить контакты</string>
+    <string name="fragment_contacts_request_title_text">Укажите ФИО человека\nв контактах с адресом места\nдля поиска погоды</string>
+    <string name="fragment_contacts_request_family_title_text">Фамилия:</string>
+    <string name="fragment_contacts_request_name_title_text">Имя:</string>
+    <string name="fragment_contacts_request_family_field_comments_text">(можно не заполнять)</string>
+    <string name="fragment_contacts_request_family_field_text" />
+    <string name="fragment_contacts_request_name_field_text" />
+    <string name="fragment_contacts_request_patronymic_title_text">Отчество:</string>
+    <string name="fragment_contacts_request_patronymic_field_text" />
+    <string name="fragment_contacts_request_patronymiс_comments_text">(можно не заполнять)</string>
+    <string name="fragment_contacts_request_button_cancel_text">Отмена</string>
+    <string name="fragment_contacts_request_button_ok_text">Получить данные</string>
+    <string name="contact_founded_city_button_cancel_text">Отмена</string>
+    <string name="contact_founded_city_title_text">Выберите\nодно из найденых\nв контактах мест:</string>
 </resources>

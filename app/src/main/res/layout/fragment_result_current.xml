@@ -2,141 +2,118 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background_app_menu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_app_menu">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/result_current_constraint_layout"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/results_image_header"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/result_image_header_height"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/result_current_constraint_layout_city_name_margin_top"
-            android:textSize="@dimen/result_current_constraint_layout_city_name_text_size"
-            android:textStyle="bold"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/results_image_header"
-            tools:text="@string/result_current_constraint_layout_city_example_name" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_city_coordinates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/result_current_constraint_layout_city_coordinates_margin_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_city_name"
-            tools:text="@string/result_current_constraint_layout_city_example_coordinates" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_temperature_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/result_current_constraint_layout_temperature_label_margin_top"
-            android:text="@string/result_current_constraint_layout_temperature_label_example_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_city_coordinates" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_temperature_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/result_current_constraint_layout_temperature_value_margin_top"
-            android:textSize="@dimen/result_current_constraint_layout_temperature_value_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_temperature_label"
-            tools:text="@string/result_current_constraint_layout_temperature_value_example_text" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/result_image_feels"
-            android:layout_width="@dimen/result_image_feels_width"
-            android:layout_height="@dimen/result_image_feels_height"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_temperature_value" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_condition_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/result_current_constraint_layout_condition_label_example_text"
-            android:textSize="@dimen/result_current_constraint_layout_condition_label_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_image_feels" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_feelslike_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/result_current_constraint_layout_feelslike_label_margin_top"
-            android:text="@string/result_current_constraint_layout_feelslike_label_example_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_condition_label" />
-
-        <TextView
-            android:id="@+id/result_current_constraint_layout_feelslike_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/result_current_constraint_layout_feelslike_value_margin_top"
-            android:textSize="@dimen/result_current_constraint_layout_feelslike_value_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_current_constraint_layout_feelslike_label"
-            tools:text="@string/result_current_constraint_layout_feelslike_value_example_text" />
-
-        <FrameLayout
-            android:id="@+id/result_current_constraint_layout_loading_layout"
+        <LinearLayout
+            android:id="@+id/result_current_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background_app_menu"
-            android:visibility="gone"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp"
-            tools:visibility="visible">
+            android:orientation="vertical"
+            android:gravity="center">
 
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/results_image_header"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/result_image_header_height"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/result_current_constraint_layout_city_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
+                android:layout_marginTop="@dimen/result_current_constraint_layout_city_name_margin_top"
+                android:gravity="center"
+                android:textSize="@dimen/result_current_constraint_layout_city_name_text_size"
+                android:textStyle="bold"
+                tools:text="@string/result_current_constraint_layout_city_example_name" />
 
-        <TextView
-            android:id="@+id/click_field_to_return_to_list_fragment"
-            android:text="@string/result_current_down_help_text"
-            android:textSize="@dimen/result_current_down_help_text_size"
-            android:layout_marginBottom="@dimen/result_current_down_help_margin_bottom"
-            android:textStyle="italic"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/click_field_toReturn_to_list_fragment_height"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/result_current_constraint_layout_city_coordinates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/result_current_constraint_layout_city_coordinates_margin_top"
+                tools:text="@string/result_current_constraint_layout_city_example_coordinates" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/result_current_constraint_layout_temperature_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/result_current_constraint_layout_temperature_label_margin_top"
+                android:text="@string/result_current_constraint_layout_temperature_label_example_text" />
+
+            <TextView
+                android:id="@+id/result_current_constraint_layout_temperature_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/result_current_constraint_layout_temperature_value_margin_top"
+                android:textSize="@dimen/result_current_constraint_layout_temperature_value_text_size"
+                android:textStyle="bold"
+                tools:text="@string/result_current_constraint_layout_temperature_value_example_text" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/result_image_feels"
+                android:layout_width="@dimen/result_image_feels_width"
+                android:layout_height="@dimen/result_image_feels_height"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/result_current_constraint_layout_condition_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_current_constraint_layout_condition_label_example_text"
+                android:textSize="@dimen/result_current_constraint_layout_condition_label_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/result_current_constraint_layout_feelslike_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/result_current_constraint_layout_feelslike_label_margin_top"
+                android:text="@string/result_current_constraint_layout_feelslike_label_example_text" />
+
+            <TextView
+                android:id="@+id/result_current_constraint_layout_feelslike_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/result_current_constraint_layout_feelslike_value_margin_top"
+                android:textSize="@dimen/result_current_constraint_layout_feelslike_value_text_size"
+                android:textStyle="bold"
+                tools:text="@string/result_current_constraint_layout_feelslike_value_example_text" />
+
+            <TextView
+                android:id="@+id/click_field_to_return_to_list_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/click_field_toReturn_to_list_fragment_height"
+                android:layout_marginBottom="@dimen/result_current_down_help_margin_bottom"
+                android:gravity="center_horizontal"
+                android:text="@string/result_current_down_help_text"
+                android:textSize="@dimen/result_current_down_help_text_size"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/result_current_constraint_layout_loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_app_menu"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:visibility="visible">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 </FrameLayout>

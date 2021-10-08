@@ -40,13 +40,13 @@ class ListFoundedCitiesDialogFragmentAdapter(
                 val country: String =
                     newCitiesInfoFiltred[position].display_name.subSequence(indexLastZapity,
                         newCitiesInfoFiltred[position].display_name.length) as String
-//                val indexFirstZapity: Int = newCitiesInfoFiltred[position]
-//                    .display_name.indexOf(",")
-//                val cityName: String = newCitiesInfoFiltred[position].display_name
-//                    .subSequence(0, indexFirstZapity) as String
-                val indexFirstZapity: Int = newCitiesInfoFiltred[position]
+                var indexFirstZapity: Int = newCitiesInfoFiltred[position]
                     .display_name.lastIndexOf(",")
-                val cityName: String = newCitiesInfoFiltred[position].display_name
+                // Проверка на отсутствие в поле названия места запятых
+                if (indexFirstZapity < 0) {
+                    indexFirstZapity = newCitiesInfoFiltred[position].display_name.length
+                }
+                val cityName = newCitiesInfoFiltred[position].display_name
                     .subSequence(0, indexFirstZapity) as String
 
                 listCitiesFragment.addCitiesAndUpdateList(

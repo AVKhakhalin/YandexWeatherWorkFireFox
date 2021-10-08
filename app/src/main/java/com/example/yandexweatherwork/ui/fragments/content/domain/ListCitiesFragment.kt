@@ -87,10 +87,11 @@ class ListCitiesFragment(
 
         binding.fragmentListCitiesRecyclerView.adapter = listCitiesFragmentAdapter
         listCitiesFragmentAdapter.setOnItemViewClickListener(this)
-        binding.fragmentListCitiesFAB.setOnClickListener(object: View.OnClickListener{
+        binding.fragmentListCitiesFAB.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
                 checkAndCorrectCountryState()
             }
+
         })
         listCitiesViewModel = ViewModelProvider(this).get(ListCitiesViewModel::class.java)
         listCitiesViewModel.getLiveData()

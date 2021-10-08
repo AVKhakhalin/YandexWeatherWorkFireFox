@@ -162,12 +162,17 @@ class MainActivity:
         when (item.itemId) {
             R.id.action_app_menu_action_add_city -> {
                 // Добавить место
-                navigationDialogs.showAddCityDialogFragment(this)
+                navigationDialogs.showAddCityDialogFragment(this, null)
                 return true
             }
             R.id.action_app_menu_open_weather_history -> {
                 // Получить историю погодных данных из базы данных через Room
                 navigationContent.showResultWeatherHistoryFragment(false)
+                return true
+            }
+            R.id.action_app_menu_open_contacts -> {
+                // Получить контакты
+                navigationContent.showContactsFragment(false)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

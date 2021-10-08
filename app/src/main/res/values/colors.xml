@@ -13,4 +13,5 @@
     <color name="background_text_color">#66D3FF24</color>
     <color name="background_app_menu">#ACC075</color>
     <color name="gray_text">#362F2F</color>
+    <color name="loading_layout_color">#80FFFFFF</color>
 </resources>
