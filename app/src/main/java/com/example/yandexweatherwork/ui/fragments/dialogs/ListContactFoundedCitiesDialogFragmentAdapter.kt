@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.CityDTO
@@ -16,6 +17,7 @@ import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragm
 class ListContactFoundedCitiesDialogFragmentAdapter(
     private val newContactCitiesInfoFiltred: MutableList<String>?,
     private val navigationDialogs: NavigationDialogs,
+    private val navigationContent: NavigationContent?,
     private val listContactFoundedCitiesDialogFragment: ListContactFoundedCitiesDialogFragment
 ): RecyclerView.Adapter<ListContactFoundedCitiesDialogFragmentAdapter.MyViewHolder>() {
 
@@ -40,10 +42,12 @@ class ListContactFoundedCitiesDialogFragmentAdapter(
         if (newContactCitiesInfoFiltred != null) {
             holder.newCitiesInfoFiltredView?.text = newContactCitiesInfoFiltred[position]
             holder.newCitiesInfoFiltredViewContainer?.setOnClickListener {
-                navigationDialogs.showAddCityDialogFragment(
+                navigationContent?.let { it.showListCitiesFragment(false) }
+                navigationDialogs?.let { it.showAddCityDialogFragment(
                     listContactFoundedCitiesDialogFragment.requireActivity(),
                     newContactCitiesInfoFiltred[position])
-                listContactFoundedCitiesDialogFragment.dismiss()
+                    listContactFoundedCitiesDialogFragment.dismiss()
+                }
             }
         }
     }
