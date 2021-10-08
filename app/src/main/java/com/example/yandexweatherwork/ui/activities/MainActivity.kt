@@ -316,4 +316,7 @@ class MainActivity:
         return mainChooserSetter
     }
     //endregion
+
+    override fun onBackPressed() {
+    }
 }
