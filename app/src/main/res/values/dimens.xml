@@ -101,4 +101,6 @@
     <dimen name="contact_founded_city_button_cancel_margin">10dp</dimen>
     <dimen name="contact_founded_city_title_margin">10dp</dimen>
     <dimen name="contact_founded_city_title_text_size">20sp</dimen>
+    <dimen name="fragment_location_f_a_b_margin">15dp</dimen>
+    <dimen name="fragment_location_f_a_b_max_image_size">56dp</dimen>
 </resources>
