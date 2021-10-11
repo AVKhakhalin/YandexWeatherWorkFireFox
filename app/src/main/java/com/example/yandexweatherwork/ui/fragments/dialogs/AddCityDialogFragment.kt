@@ -20,7 +20,9 @@ import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragm
 
 class AddCityDialogFragment(
     private val listCitiesFragment: ListCitiesFragment,
-    private val defaultPlace: String?
+    private val defaultPlace: String?,
+    private val defaultLatitude: Double?,
+    private val defaultLongitude: Double?
 ): DialogFragment(), DialogInterface.OnClickListener {
     private var buttonYes: Button? = null
     private var buttonNo: Button? = null
@@ -46,16 +48,32 @@ class AddCityDialogFragment(
         addCountryField = view.findViewById(R.id.add_city_info_country_field)
 
         // Установка заранее известного места (например, найденного в контактах)
-        defaultPlace?.let {
-            if ((addCityNameField != null) && (addLatField != null)
-                && (addLonField  != null) && (addCountryField != null)) {
-                addCityNameField!!.setText(it)
-                addLatField!!.setText("")
-                addLonField!!.setText("")
+        if ((addCityNameField != null) && (addLatField != null)
+            && (addLonField  != null) && (addCountryField != null)) {
+            if (defaultPlace != null) {
+                addCityNameField!!.setText(defaultPlace)
+                var positionOfLastZapitay: Int = defaultPlace.lastIndexOf(", ") + 2
+                if (positionOfLastZapitay > -1) {
+                    addCountryField!!.setText(defaultPlace.subSequence(positionOfLastZapitay,
+                        defaultPlace.length))
+                } else {
+                    addCountryField!!.setText("")
+                }
+            } else {
+                addCityNameField!!.setText("")
                 addCountryField!!.setText("")
             }
+            if (defaultLatitude != null) {
+                addLatField!!.setText(defaultLatitude.toString())
+            } else {
+                addLatField!!.setText("")
+            }
+            if (defaultLongitude != null) {
+                addLonField!!.setText(defaultLongitude.toString())
+            } else {
+                addLonField!!.setText("")
+            }
         }
-
         return view
     }
 

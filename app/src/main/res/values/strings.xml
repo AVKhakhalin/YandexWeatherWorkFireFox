@@ -102,4 +102,11 @@
     <string name="fragment_contacts_request_button_ok_text">Получить данные</string>
     <string name="contact_founded_city_button_cancel_text">Отмена</string>
     <string name="contact_founded_city_title_text">Выберите\nодно из найденых\nв контактах мест:</string>
+    <string name="geocoder_dialog_title">Доступ к геолокации</string>
+    <string name="geocoder_dialog_message">Для добавления в список мест Ваших текущих координат нужно предоставить доступ к геолокации</string>
+    <string name="geocoder_dialog_positive_answer">Предоставить доступ</string>
+    <string name="geocoder_dialog_negative_answer">Отказать в доступе</string>
+    <string name="geocoder_weather_dialog_title">Ваши координаты</string>
+    <string name="geocoder_weather_positive_answer">Сохранить</string>
+    <string name="geocoder_weather_negative_answer">Отмена</string>
 </resources>

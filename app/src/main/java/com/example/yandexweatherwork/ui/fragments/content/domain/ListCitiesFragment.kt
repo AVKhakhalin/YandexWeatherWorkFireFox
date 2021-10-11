@@ -1,9 +1,17 @@
 package com.example.yandexweatherwork.ui.fragments.content.domain
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -99,6 +107,11 @@ class ListCitiesFragment(
                 renderData(updateState)
             })
         listCitiesViewModel.getListCities()
+
+        // Установка событий при нажатии на кнопку вызова геолокации
+        binding.fragmentLocationFAB.setOnClickListener {
+            checkPermission()
+        }
     }
 
     private fun renderData(updateState: UpdateState) {
@@ -121,7 +134,10 @@ class ListCitiesFragment(
 
     override fun onItemClick(city: City) {
         if (mainChooserGetter.getExistInternet()) {
-            navigationContent?.let { it.showResultCurrentFragment(city, true, false) }
+            navigationContent?.let { it.showResultCurrentFragment(
+                city,
+                true,
+                false) }
         } else {
             Snackbar.make(requireView(), "${resources.getString(R.string.error)}: " +
                     "${resources.getString(R.string.error_no_connection)}",
@@ -369,4 +385,130 @@ class ListCitiesFragment(
     override fun getListCitiesFragment(): ListCitiesFragment {
         return this
     }
+
+    //region МЕТОДЫ ДЛЯ РАБОТЫ С ГЕОЛОКАЦИЕЙ
+    private fun checkPermission() {
+        context?.let {
+            if (ContextCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                getLocation()
+            } else if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                showRatio()
+            } else {
+                myRequestPermission()
+            }
+        }
+    }
+
+    private fun showRatio() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.geocoder_dialog_title)
+            .setMessage(R.string.geocoder_dialog_message)
+            .setPositiveButton(R.string.geocoder_dialog_positive_answer) { dialog, which ->
+                myRequestPermission()
+            }
+            .setNegativeButton(R.string.geocoder_dialog_negative_answer) { dialog, which ->
+                dialog.dismiss()
+            }
+            .create().show()
+    }
+
+    private val REQUEST_CODE = 999
+
+    private fun myRequestPermission() {
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                    getLocation()
+                } else {
+                    context?.let {
+                        showRatio()
+                    }
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private val onLocationChangeListener = object: LocationListener {
+        override fun onLocationChanged(location: Location) {
+            getAddressAsync(requireContext(),location)
+        }
+
+        override fun onProviderDisabled(provider: String) {
+            super.onProviderDisabled(provider)
+        }
+
+        override fun onProviderEnabled(provider: String) {
+            super.onProviderEnabled(provider)
+        }
+    }
+
+    private fun getAddressAsync(context: Context, location: Location) {
+        val geoCoder = Geocoder(context)
+        var address = geoCoder.getFromLocation(location.latitude,location.longitude,1)
+        showAddressDialog(address[0].getAddressLine(0),location)
+    }
+
+    private fun showAddressDialog(address: String, location: Location) {
+        activity?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it)
+                .setTitle(getString(R.string.geocoder_weather_dialog_title))
+                .setMessage(address)
+                .setPositiveButton(getString(R.string.geocoder_weather_positive_answer)) { _, _ ->
+                    navigationDialogs?.let { it.showAddCityDialogFragment(
+                        requireActivity(),
+                        address,
+                        location.latitude.toDouble(), location.longitude.toDouble())
+                    }
+                }
+                .setNegativeButton(getString(R.string.geocoder_weather_negative_answer)) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
+    }
+
+    fun getLocation() {
+        activity?.let {
+            if (ContextCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val locationManager = it.getSystemService(Context.LOCATION_SERVICE) as
+                        LocationManager
+                if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    val provider= locationManager.getProvider(LocationManager.GPS_PROVIDER)
+                    provider?.let{
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            ConstantsUi.REFRESH_PERIOD, ConstantsUi.MINIMAL_DISTANCE,
+                            onLocationChangeListener)
+                    }
+
+                } else{
+                    val location = locationManager.getLastKnownLocation(
+                        LocationManager.GPS_PROVIDER)
+                    location?.let{
+                        // Здесь можно запросить информацию о координатах и адресе
+                    }
+                }
+            } else {
+                showRatio()
+            }
+        }
+    }
+    //endregion
 }

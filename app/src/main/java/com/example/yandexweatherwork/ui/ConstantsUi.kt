@@ -44,5 +44,9 @@ class ConstantsUi {
         val MAIN_CHOOSER_GETTER: String = ConstantsController.MAIN_CHOOSER_GETTER
         @JvmField
         val MAIN_CHOOSER_SETTER: String = ConstantsController.MAIN_CHOOSER_SETTER
+        @JvmField
+        val REFRESH_PERIOD: Long = 10000L
+        @JvmField
+        val MINIMAL_DISTANCE: Float = 100f
     }
 }

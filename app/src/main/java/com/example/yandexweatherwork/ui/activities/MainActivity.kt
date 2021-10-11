@@ -162,7 +162,8 @@ class MainActivity:
         when (item.itemId) {
             R.id.action_app_menu_action_add_city -> {
                 // Добавить место
-                navigationDialogs.showAddCityDialogFragment(this, null)
+                navigationDialogs.showAddCityDialogFragment(this,
+                    null, null, null)
                 return true
             }
             R.id.action_app_menu_open_weather_history -> {

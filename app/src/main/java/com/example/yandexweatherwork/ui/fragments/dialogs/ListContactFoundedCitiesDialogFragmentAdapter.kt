@@ -45,7 +45,7 @@ class ListContactFoundedCitiesDialogFragmentAdapter(
                 navigationContent?.let { it.showListCitiesFragment(false) }
                 navigationDialogs?.let { it.showAddCityDialogFragment(
                     listContactFoundedCitiesDialogFragment.requireActivity(),
-                    newContactCitiesInfoFiltred[position])
+                    newContactCitiesInfoFiltred[position], null ,null)
                     listContactFoundedCitiesDialogFragment.dismiss()
                 }
             }

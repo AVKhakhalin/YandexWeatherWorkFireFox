@@ -41,11 +41,13 @@ class NavigationDialogs{
         this.listCitiesFragment = listCitiesFragment
     }
 
-    // Отображение диалога с карточкой места (города)
-    fun showAddCityDialogFragment(fragmentActivity: FragmentActivity, defaultPlace: String?) {
+    // Отображение диалога с добавлением нового места (города)
+    fun showAddCityDialogFragment(fragmentActivity: FragmentActivity, defaultPlace: String?,
+                                  defaultLatitude: Double?, defaultLongitude: Double?) {
         listCitiesFragment?.let {
             val addCityDialogFragment: AddCityDialogFragment
-            = AddCityDialogFragment(listCitiesFragment!!, defaultPlace)
+                    = AddCityDialogFragment(listCitiesFragment!!, defaultPlace,
+                defaultLatitude, defaultLongitude)
             addCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
         }
     }
