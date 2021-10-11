@@ -15,6 +15,12 @@
         android:icon="@drawable/get_weather_history" />
 
     <item
+        android:id="@+id/action_app_open_google_map"
+        android:title="@string/app_menu_open_google_map_title_text"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_dialog_map" />
+
+    <item
         android:id="@+id/action_app_menu_open_contacts"
         android:title="@string/app_menu_open_contacts_title_text"
         app:showAsAction="never"

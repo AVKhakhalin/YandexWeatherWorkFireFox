@@ -176,6 +176,11 @@ class MainActivity:
                 navigationContent.showContactsFragment(false)
                 return true
             }
+            R.id.action_app_open_google_map -> {
+                // Открыть фрагмент с Google map
+                navigationContent.showGoogleMapFragment(false)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

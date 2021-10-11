@@ -98,4 +98,7 @@ dependencies {
 
     // Добавление библиотеки для устранения ошибки компиляции
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.4"
+
+    // Добавление библиотеки для работы с Google map
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
 }

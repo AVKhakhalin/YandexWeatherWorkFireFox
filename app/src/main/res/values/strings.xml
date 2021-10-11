@@ -109,4 +109,5 @@
     <string name="geocoder_weather_dialog_title">Ваши координаты</string>
     <string name="geocoder_weather_positive_answer">Сохранить</string>
     <string name="geocoder_weather_negative_answer">Отмена</string>
+    <string name="app_menu_open_google_map_title_text">Открыть карту</string>
 </resources>
