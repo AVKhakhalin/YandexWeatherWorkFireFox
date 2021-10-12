@@ -386,6 +386,7 @@ class ListCitiesFragment(
         return this
     }
 
+
     //region МЕТОДЫ ДЛЯ РАБОТЫ С ГЕОЛОКАЦИЕЙ
     private fun checkPermission() {
         context?.let {
