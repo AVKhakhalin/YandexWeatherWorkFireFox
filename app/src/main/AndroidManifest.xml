@@ -11,9 +11,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Разрешаем приложению получить доступ к событию доступности сети -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Разрешаем выход приложению в Интернет -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Разрешаем получение контактов -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- Разрешаем позвонить -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Разрешаем выход приложению в Интернет -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Разрешаем получение контактов -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Разрешаем позвонить -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -42,7 +45,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

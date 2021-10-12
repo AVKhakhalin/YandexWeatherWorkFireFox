@@ -98,6 +98,10 @@ class MainActivity:
 
         // Установка приёмника сообщения о получении нового места
         initNotificationChannel()
+
+        // Установка навигаторов
+        navigationContent.setterNavigationDialogs(navigationDialogs)
+        navigationDialogs.setterNavigationContent(navigationContent)
     }
 
     @SuppressLint("ServiceCast")

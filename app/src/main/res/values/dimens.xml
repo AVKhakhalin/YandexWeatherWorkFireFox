@@ -103,4 +103,11 @@
     <dimen name="contact_founded_city_title_text_size">20sp</dimen>
     <dimen name="fragment_location_f_a_b_margin">15dp</dimen>
     <dimen name="fragment_location_f_a_b_max_image_size">56dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="fragment_maps_fragment_location_f_a_b_margin">15dp</dimen>
+    <dimen name="fragment_maps_fragment_location_f_a_b_image_size">56dp</dimen>
+    <dimen name="fragment_maps_fragment_list_cities_f_a_b_margin">15dp</dimen>
+    <dimen name="fragment_maps_fragment_list_cities_f_a_b_image_size">56dp</dimen>
+    <dimen name="fragment_maps_button_place_search_margin">5dp</dimen>
+    <dimen name="fragment_maps_button_place_search_and_save_margin">5dp</dimen>
 </resources>

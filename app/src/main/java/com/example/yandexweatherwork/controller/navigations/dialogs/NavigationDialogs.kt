@@ -1,13 +1,31 @@
 package com.example.yandexweatherwork.controller.navigations.dialogs
 
 import androidx.fragment.app.FragmentActivity
+import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.CityDTO
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
+import com.example.yandexweatherwork.ui.fragments.content.domain.MapsFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.*
 
 class NavigationDialogs{
     private var listCitiesFragment: ListCitiesFragment? = null
+    private var mapsFragment: MapsFragment? = null
+    private var navigationContent: NavigationContent? = null
+
+    fun setterNavigationContent(navigationContent: NavigationContent) {
+        this.navigationContent = navigationContent
+    }
+    fun getterNavigationContent(): NavigationContent? {
+        return navigationContent
+    }
+
+    fun setterMapsFragment(mapsFragment: MapsFragment?) {
+        this.mapsFragment = mapsFragment
+    }
+    fun getterMapsFragment(): MapsFragment? {
+        return mapsFragment
+    }
 
     // Установка класса ListCitiesFragment
     fun setListCitiesFragment(listCitiesFragment: ListCitiesFragment) {
@@ -57,7 +75,7 @@ class NavigationDialogs{
                                             fragmentActivity: FragmentActivity) {
         listCitiesFragment?.let {
             val listFoundedCitiesDialogFragment: ListFoundedCitiesDialogFragment
-            = ListFoundedCitiesDialogFragment(newCitiesInfoFiltred, listCitiesFragment!!)
+            = ListFoundedCitiesDialogFragment(newCitiesInfoFiltred, listCitiesFragment!!, this)
             listFoundedCitiesDialogFragment.show(fragmentActivity.supportFragmentManager, "")
         }
     }

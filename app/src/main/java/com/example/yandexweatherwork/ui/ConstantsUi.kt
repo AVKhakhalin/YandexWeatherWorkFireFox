@@ -48,5 +48,17 @@ class ConstantsUi {
         val REFRESH_PERIOD: Long = 10000L
         @JvmField
         val MINIMAL_DISTANCE: Float = 100f
+        @JvmField
+        val DELAY_MILISEC: Long = 1000L
+        @JvmField
+        val REQUEST_CODE: Int = 999
+        @JvmField
+        val START_POINT_NAME: String = "Start Point"
+        @JvmField
+        val START_POINT_LATITUDE: Double = ConstantsDomain.ERROR_CITY_LATIDUTE
+        @JvmField
+        val START_POINT_LONGITUDE: Double = ConstantsDomain.ERROR_CITY_LONGITUDE
+        @JvmField
+        val ZOOM_VALUE_TO_POSITION: Float = 3f
     }
 }

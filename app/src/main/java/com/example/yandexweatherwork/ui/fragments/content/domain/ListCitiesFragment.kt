@@ -235,7 +235,7 @@ class ListCitiesFragment(
                     it.lat = mainChooserGetter.getLat()
                     it.lon = mainChooserGetter.getLon()
                 }
-            },1000)
+            },ConstantsUi.DELAY_MILISEC)
         }
 
         if (weather!![positionChoosedElement].country.lowercase() == newCity.country.lowercase()) {
@@ -417,10 +417,9 @@ class ListCitiesFragment(
             .create().show()
     }
 
-    private val REQUEST_CODE = 999
-
     private fun myRequestPermission() {
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            ConstantsUi.REQUEST_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -429,7 +428,7 @@ class ListCitiesFragment(
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQUEST_CODE -> {
+            ConstantsUi.REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED) {
                     getLocation()

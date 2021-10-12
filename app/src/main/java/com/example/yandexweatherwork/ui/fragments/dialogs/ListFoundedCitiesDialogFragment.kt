@@ -10,12 +10,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
 import com.example.yandexweatherwork.domain.data.CityDTO
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
 class ListFoundedCitiesDialogFragment(
     private val newCitiesInfoFiltred: MutableList<CityDTO>?,
-    private val listCitiesFragment: ListCitiesFragment
+    private val listCitiesFragment: ListCitiesFragment,
+    private val navigationDialogs: NavigationDialogs
 ): DialogFragment(), DialogInterface.OnClickListener {
 
     private var buttonNo: Button? = null
@@ -31,7 +33,7 @@ class ListFoundedCitiesDialogFragment(
         recyclerView = view.findViewById(R.id.fragment_list_founded_cities_RecyclerView)
         recyclerView!!.layoutManager = LinearLayoutManager(requireActivity())
         recyclerView!!.adapter = ListFoundedCitiesDialogFragmentAdapter(newCitiesInfoFiltred,
-            listCitiesFragment, this)
+            listCitiesFragment, this, navigationDialogs)
 
         buttonNo = view.findViewById(R.id.founded_city_button_cancel)
         if (buttonNo != null) {

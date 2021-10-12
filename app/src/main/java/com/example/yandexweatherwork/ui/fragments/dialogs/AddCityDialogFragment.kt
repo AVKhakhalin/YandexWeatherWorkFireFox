@@ -15,6 +15,7 @@ import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDi
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.CityDTO
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityInfo
+import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 
@@ -52,8 +53,9 @@ class AddCityDialogFragment(
             && (addLonField  != null) && (addCountryField != null)) {
             if (defaultPlace != null) {
                 addCityNameField!!.setText(defaultPlace)
-                var positionOfLastZapitay: Int = defaultPlace.lastIndexOf(", ") + 2
+                var positionOfLastZapitay: Int = defaultPlace.lastIndexOf(", ")
                 if (positionOfLastZapitay > -1) {
+                    positionOfLastZapitay += 2
                     addCountryField!!.setText(defaultPlace.subSequence(positionOfLastZapitay,
                         defaultPlace.length))
                 } else {
@@ -102,25 +104,49 @@ class AddCityDialogFragment(
         if ((addCityNameField != null) && (addLatField != null)
             && (addLonField  != null) && (addCountryField != null))
                 if (addLatField!!.text.isNotEmpty() && addLonField!!.text.isNotEmpty()) {
-                    listCitiesFragment.addCitiesAndUpdateList(
-                        City("${addCityNameField!!.text}",
-                            "${addLatField!!.text}".toDouble(),
-                            "${addLonField!!.text}".toDouble(),
-                            "${addCountryField!!.text}"
-                        )
-                    )
+                    navigationDialogs?.let {
+                        if (it.getterMapsFragment() != null) {
+                            it.getterNavigationContent()?.let { navContent ->
+                                navContent.getMainChooserSetter().addKnownCities(City(
+                                    "${addCityNameField!!.text}",
+                                    "${addLatField!!.text}".toDouble(),
+                                    "${addLonField!!.text}".toDouble(),
+                                    "${addCountryField!!.text}"
+                                ))
+                                // Установка обновлённого фильтра страны по-умолчанию
+                                if ("${addCountryField!!.text}".lowercase() ==
+                                    ConstantsUi.FILTER_RUSSIA.lowercase()) {
+                                    navContent.getMainChooserSetter().setDefaultFilterCountry(
+                                        ConstantsUi.FILTER_RUSSIA)
+                                } else {
+                                    navContent.getMainChooserSetter().setDefaultFilterCountry(
+                                        ConstantsUi.FILTER_NOT_RUSSIA)
+                                }
+                            }
+                            it.getterMapsFragment()!!.mapUpdate()
+                        } else {
+                            listCitiesFragment.addCitiesAndUpdateList(
+                                City(
+                                    "${addCityNameField!!.text}",
+                                    "${addLatField!!.text}".toDouble(),
+                                    "${addLonField!!.text}".toDouble(),
+                                    "${addCountryField!!.text}"
+                                )
+                            )
+                        }
+                    }
                 } else {
                     val repositoryGetCityInfo: RepositoryGetCityInfo = RepositoryGetCityInfo()
                     val newCitiesInfoFiltred: MutableList<CityDTO>? = repositoryGetCityInfo
                         .getCityInfo(addCityNameField!!.text.toString(),
                             addCountryField!!.text.toString())
-                    Toast.makeText(context, "${newCitiesInfoFiltred!!.size}",
-                        Toast.LENGTH_LONG).show()
                     navigationDialogs?.let {
                         it.showListFoundedCitiesDialogFragment(newCitiesInfoFiltred,
                             requireActivity())
                     }
                 }
+
+        // Закрытие текущего диалогового фрагмента
         dismiss()
     }
 

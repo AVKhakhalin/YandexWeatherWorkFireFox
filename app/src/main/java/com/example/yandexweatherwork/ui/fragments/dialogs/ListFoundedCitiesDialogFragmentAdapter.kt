@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.CityDTO
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
@@ -13,7 +14,8 @@ import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragm
 class ListFoundedCitiesDialogFragmentAdapter(
     private val newCitiesInfoFiltred: MutableList<CityDTO>?,
     private val listCitiesFragment: ListCitiesFragment,
-    private val listFoundedCitiesDialogFragment: ListFoundedCitiesDialogFragment
+    private val listFoundedCitiesDialogFragment: ListFoundedCitiesDialogFragment,
+    private val navigationDialogs: NavigationDialogs
 ): RecyclerView.Adapter<ListFoundedCitiesDialogFragmentAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -56,6 +58,15 @@ class ListFoundedCitiesDialogFragmentAdapter(
                         "$country"
                     )
                 )
+
+                // Обновление карты на фрагменте MapsFragment
+                navigationDialogs?.let {
+                    it.getterMapsFragment()?.let { mapFragment ->
+                        mapFragment.mapUpdate()
+                    }
+                }
+
+                // Закрытие текущего фрагмента
                 listFoundedCitiesDialogFragment.dismiss()
             }
         }

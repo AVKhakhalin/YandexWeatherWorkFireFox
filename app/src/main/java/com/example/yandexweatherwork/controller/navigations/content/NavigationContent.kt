@@ -3,6 +3,7 @@ package com.example.yandexweatherwork.controller.navigations.content
 import androidx.fragment.app.FragmentManager
 import com.example.yandexweatherwork.R
 import com.example.yandexweatherwork.controller.ConstantsController
+import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
@@ -17,6 +18,22 @@ class NavigationContent(
     private val mainChooserSetter: MainChooserSetter,
     private val mainChooserGetter: MainChooserGetter
 ) {
+    var mapsFragment: MapsFragment? = null
+    var navigationDialogs: NavigationDialogs? = null
+
+    fun setterNavigationDialogs(navigationDialogs: NavigationDialogs) {
+        this.navigationDialogs = navigationDialogs
+    }
+    fun getterNavigationDialogs(): NavigationDialogs? {
+        return navigationDialogs
+    }
+
+    fun setterMapsFragment(mapsFragment: MapsFragment?) {
+        this.mapsFragment = mapsFragment
+    }
+    fun gettergMapsFragment(): MapsFragment? {
+        return mapsFragment
+    }
     // Установка геттеров для MainChooserSetter и MainChooserGetter
     fun getMainChooserSetter(): MainChooserSetter = mainChooserSetter
     fun getMainChooserGetter(): MainChooserGetter = mainChooserGetter
@@ -91,11 +108,12 @@ class NavigationContent(
 
     // Отображение фрагмента с Google map
     fun showGoogleMapFragment(useBackStack: Boolean) {
+        setterMapsFragment(mapsFragment)
         // Открыть транзакцию
         fragmentManager?.let{
             val fragmentTransaction = it.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_result_weather_container,
-                MapsFragment())
+                MapsFragment.newInstance(mainChooserGetter, mainChooserSetter, this))
             if (useBackStack) {
                 fragmentTransaction.addToBackStack(null)
             }

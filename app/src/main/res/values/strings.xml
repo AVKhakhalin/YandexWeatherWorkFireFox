@@ -58,7 +58,9 @@
     <string name="error_no_such_places">НЕТ КАРТОЧЕК ТАКИХ МЕСТ.\nДобавьте их через ВЕРХНЕЕ МЕНЮ</string>
     <string name="error_no_connection">Сеть Интернет недоступна</string>
     <string name="error_dataweather_null">Данные не загружены</string>
-    <string name="error_empty_name_in_contacts_request">Поле \"Имя\" не заполнено.</string>
+    <string name="error_empty_name_in_contacts_request">Поле \"Имя\" не заполнено</string>
+    <string name="error_maps_search_address">Пустой поисковый запрос.\nВведите сначала адрес</string>
+    <string name="error_maps_search_address_not_success">По Вашему адресу место не найдено</string>
 
     <!-- Сообщения об успешных действиях -->
     <string name="success">Данные УСПЕШНО загружены</string>
@@ -110,4 +112,8 @@
     <string name="geocoder_weather_positive_answer">Сохранить</string>
     <string name="geocoder_weather_negative_answer">Отмена</string>
     <string name="app_menu_open_google_map_title_text">Открыть карту</string>
+    <string name="fragment_maps_button_place_search_text">Найти</string>
+    <string name="fragment_maps_search_address_field_text" />
+    <string name="fragment_maps_address_help_text">Введите адрес места:</string>
+    <string name="fragment_maps_button_place_search_and_save_text">Найти и сохранить</string>
 </resources>
