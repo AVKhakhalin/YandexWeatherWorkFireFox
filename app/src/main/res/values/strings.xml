@@ -116,4 +116,5 @@
     <string name="fragment_maps_search_address_field_text" />
     <string name="fragment_maps_address_help_text">Введите адрес места:</string>
     <string name="fragment_maps_button_place_search_and_save_text">Найти и сохранить</string>
+    <string name="firebase_dialog_message_title">Открыть приложение</string>
 </resources>

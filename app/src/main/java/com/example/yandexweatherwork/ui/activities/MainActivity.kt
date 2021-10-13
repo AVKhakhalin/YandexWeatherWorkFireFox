@@ -29,8 +29,7 @@ import com.example.yandexweatherwork.domain.facade.MainChooserSetterGetter
 import com.example.yandexweatherwork.repository.NetworkChangeBroadcastReceiver
 import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoordinates
 import com.example.yandexweatherwork.ui.ConstantsUi
-import java.util.*
-
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity:
     AppCompatActivity(),
@@ -102,6 +101,13 @@ class MainActivity:
         // Установка навигаторов
         navigationContent.setterNavigationDialogs(navigationDialogs)
         navigationDialogs.setterNavigationContent(navigationContent)
+
+        // Установка слушателя push-уведомления от Firebase
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { it->
+            if(it.isSuccessful){
+                Log.d("mylogs",it.result.toString())
+            }
+        }
     }
 
     @SuppressLint("ServiceCast")
@@ -115,7 +121,6 @@ class MainActivity:
             notificationManager.createNotificationChannel(channel)
         }
     }
-
 
     override fun onResume() {
         super.onResume()
