@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480739614114",
+    "project_id": "yandexweatherworkkotlin",
+    "storage_bucket": "yandexweatherworkkotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480739614114:android:4a9864bed182fa0169e6fb",
+        "android_client_info": {
+          "package_name": "com.example.yandexweatherwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480739614114-r9hrjm2s2og86ck1ppnja3vbmot013k7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf328GYl2yifFtrsyvi30u2BEs0fmqh0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480739614114-r9hrjm2s2og86ck1ppnja3vbmot013k7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
