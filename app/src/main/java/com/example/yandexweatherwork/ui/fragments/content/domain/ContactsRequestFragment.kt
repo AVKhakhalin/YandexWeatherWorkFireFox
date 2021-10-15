@@ -424,6 +424,12 @@ class ContactsRequestFragment: Fragment() {
     }
 
     private fun addNewAdressToFoundedCities() {
+        // Проверка новых элементов на наличие в них только "+", "(", ")" и цифр
+        streetMaxLenght = if(isPosOrNegNumber(streetMaxLenght)) "" else streetMaxLenght
+        cityMaxLenght = if(isPosOrNegNumber(cityMaxLenght)) "" else cityMaxLenght
+        stateMaxLenght = if(isPosOrNegNumber(stateMaxLenght)) "" else stateMaxLenght
+        countryMaxLenght = if(isPosOrNegNumber(countryMaxLenght)) "" else countryMaxLenght
+
         var lenStreet: Int = streetMaxLenght?.length ?: 0
         var lenCity: Int = cityMaxLenght?.length ?: 0
         var lenState: Int = stateMaxLenght?.length ?: 0
@@ -500,5 +506,13 @@ class ContactsRequestFragment: Fragment() {
                 if (isOriginalNewData) foundedCity.add(countryMaxLenght)
             }
         }
+    }
+
+    // Проверка на наличие в строке символа "+", "(", ")" и цифр
+    fun isPosOrNegNumber(inputedString: String?): Boolean {
+//        val regex = """^(-)?[0-9]{0,}((\.){1}[0-9]{1,}){0,1}$""".toRegex()
+        val regex = """^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}${'$'}""".toRegex()
+        return if (inputedString.isNullOrEmpty()) false
+        else regex.matches(inputedString)
     }
 }

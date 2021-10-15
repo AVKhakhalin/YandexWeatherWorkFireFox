@@ -180,14 +180,14 @@ class MainActivity:
                 navigationContent.showResultWeatherHistoryFragment(false)
                 return true
             }
-            R.id.action_app_menu_open_contacts -> {
-                // Получить контакты
-                navigationContent.showContactsFragment(false)
-                return true
-            }
             R.id.action_app_open_google_map -> {
                 // Открыть фрагмент с Google map
                 navigationContent.showGoogleMapFragment(false)
+                return true
+            }
+            R.id.action_app_menu_open_contacts -> {
+                // Получить контакты
+                navigationContent.showContactsFragment(false)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
