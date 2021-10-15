@@ -1,6 +1,7 @@
 package com.example.yandexweatherwork.controller.navigations.dialogs
 
 import androidx.fragment.app.FragmentActivity
+import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.CityDTO
@@ -9,23 +10,35 @@ import com.example.yandexweatherwork.ui.fragments.content.domain.MapsFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.*
 
 class NavigationDialogs{
+    //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var listCitiesFragment: ListCitiesFragment? = null
     private var mapsFragment: MapsFragment? = null
     private var navigationContent: NavigationContent? = null
+    private var navigationSteps: ConstantsController.Companion.NavigationSteps? = null
+    //endregion
 
-    fun setterNavigationContent(navigationContent: NavigationContent) {
-        this.navigationContent = navigationContent
+    // Метод получения навигационной метки
+    fun getNavigationSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationSteps
     }
+
+    //region МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ И УСТАНОВКИ КЛАССА NAVIGATIONCONTENT
     fun getterNavigationContent(): NavigationContent? {
         return navigationContent
     }
-
-    fun setterMapsFragment(mapsFragment: MapsFragment?) {
-        this.mapsFragment = mapsFragment
+    fun setterNavigationContent(navigationContent: NavigationContent) {
+        this.navigationContent = navigationContent
     }
+    //endregion
+
+    //region МЕТОДЫ ПОЛУЧЕНИЯ И УСТАНОВКИ КЛАССА MAPSFRAGMENT
     fun getterMapsFragment(): MapsFragment? {
         return mapsFragment
     }
+    fun setterMapsFragment(mapsFragment: MapsFragment?) {
+        this.mapsFragment = mapsFragment
+    }
+    //endregion
 
     // Установка класса ListCitiesFragment
     fun setListCitiesFragment(listCitiesFragment: ListCitiesFragment) {
@@ -44,6 +57,9 @@ class NavigationDialogs{
         deleteConformationDialogFragment.show(fragmentActivity.supportFragmentManager, "")
         // Сохранение класса listCitiesFragment
         this.listCitiesFragment = listCitiesFragment
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps
+            .DELETE_CONFORMATION_DIALOG_FRAGMENT
     }
 
     // Отображение диалога с карточкой места (города)
@@ -57,6 +73,8 @@ class NavigationDialogs{
         cardCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
         // Сохранение класса listCitiesFragment
         this.listCitiesFragment = listCitiesFragment
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps.CARD_CITY_DIALOG_FRAGMENT
     }
 
     // Отображение диалога с добавлением нового места (города)
@@ -68,6 +86,8 @@ class NavigationDialogs{
                 defaultLatitude, defaultLongitude)
             addCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps.ADD_CITY_DIALOG_FRAGMENT
     }
 
     // Отображение диалога со списком найденных новых мест (городов)
@@ -78,6 +98,9 @@ class NavigationDialogs{
             = ListFoundedCitiesDialogFragment(newCitiesInfoFiltred, listCitiesFragment!!, this)
             listFoundedCitiesDialogFragment.show(fragmentActivity.supportFragmentManager, "")
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps
+            .LIST_FOUNDED_CITIES_DIALOG_FRAGMENT
     }
 
     // Отображение диалога со списком найденных в контактах новых мест
@@ -100,5 +123,8 @@ class NavigationDialogs{
             listContactFoundedCitiesDialogFragment.show(
                 fragmentActivity.supportFragmentManager, "")
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps
+            .LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT
     }
 }

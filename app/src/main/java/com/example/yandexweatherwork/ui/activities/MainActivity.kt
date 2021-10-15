@@ -332,6 +332,7 @@ class MainActivity:
     }
     //endregion
 
+    // Настройка кнопки "Back"
     override fun onBackPressed() {
     }
 }

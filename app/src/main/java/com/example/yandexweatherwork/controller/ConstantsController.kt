@@ -43,5 +43,22 @@ class ConstantsController {
         val CHANNEL_BASE_NAME: String = "Name"
         @JvmField
         val CHANNEL_BASE_DESCRIPTION: String = "Description"
+
+        enum class NavigationSteps {
+            // Content-фрагменты
+            RESULT_CURRENT_FRAGMENT,
+            LIST_CITIES_FRAGMENT,
+            RESULT_WEATHER_HISTORY_FRAGMENT,
+            CONTACTS_FRAGMENT,
+            GOOGLE_MAP_FRAGMENT,
+
+            // Dialog-фрагменты
+            DELETE_CONFORMATION_DIALOG_FRAGMENT,
+            CARD_CITY_DIALOG_FRAGMENT,
+            ADD_CITY_DIALOG_FRAGMENT,
+            LIST_FOUNDED_CITIES_DIALOG_FRAGMENT,
+            LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT
+        }
     }
 }
+

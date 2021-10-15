@@ -18,22 +18,35 @@ class NavigationContent(
     private val mainChooserSetter: MainChooserSetter,
     private val mainChooserGetter: MainChooserGetter
 ) {
-    var mapsFragment: MapsFragment? = null
-    var navigationDialogs: NavigationDialogs? = null
+    //region ЗАДАНИЕ ПЕРЕМЕННЫХ
+    private var mapsFragment: MapsFragment? = null
+    private var navigationDialogs: NavigationDialogs? = null
+    private var navigationSteps: ConstantsController.Companion.NavigationSteps? = null
+    //endregion
 
-    fun setterNavigationDialogs(navigationDialogs: NavigationDialogs) {
-        this.navigationDialogs = navigationDialogs
+    // Метод получения навигационной метки
+    fun getNavigationSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationSteps
     }
+
+    //region МЕТОДЫ ПОЛУЧЕНИЯ И УСТАНОВКИ КЛАССА NAVIGATIONDIALOGS
     fun getterNavigationDialogs(): NavigationDialogs? {
         return navigationDialogs
     }
-
-    fun setterMapsFragment(mapsFragment: MapsFragment?) {
-        this.mapsFragment = mapsFragment
+    fun setterNavigationDialogs(navigationDialogs: NavigationDialogs) {
+        this.navigationDialogs = navigationDialogs
     }
+    //endregion
+
+    //region МЕТОДЫ ПОЛУЧЕНИЯ И УСТАНОВКИ КЛАССА MAPSFRAGMENT
     fun gettergMapsFragment(): MapsFragment? {
         return mapsFragment
     }
+    fun setterMapsFragment(mapsFragment: MapsFragment?) {
+        this.mapsFragment = mapsFragment
+    }
+    //endregion
+
     // Установка геттеров для MainChooserSetter и MainChooserGetter
     fun getMainChooserSetter(): MainChooserSetter = mainChooserSetter
     fun getMainChooserGetter(): MainChooserGetter = mainChooserGetter
@@ -56,6 +69,8 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT
     }
 
     // Отображение фрагмента со списком мест ListCitiesFragment
@@ -74,6 +89,8 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT
     }
 
     // Отображение фрагмента с историей погодных данных ResultWeatherHistoryFragment
@@ -89,6 +106,9 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps
+            .RESULT_WEATHER_HISTORY_FRAGMENT
     }
 
     // Отображение фрагмента с контактами
@@ -104,6 +124,8 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT
     }
 
     // Отображение фрагмента с Google map
@@ -120,5 +142,7 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
+        //Установка навигационной метки
+        navigationSteps = ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT
     }
 }
