@@ -8,8 +8,8 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.support.annotation.NonNull
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -30,7 +30,7 @@ import com.example.yandexweatherwork.repository.facadeuser.RepositoryGetCityCoor
 import com.example.yandexweatherwork.ui.ConstantsUi
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
-import java.lang.Exception
+
 
 class ListCitiesFragment(
     private var isDataSetRusInitial: Boolean,
@@ -171,8 +171,6 @@ class ListCitiesFragment(
                 }
             }
             R.id.context_menu_action_show_card -> {
-                Toast.makeText(context, "Показать карточку места ${listCitiesFragmentAdapter
-                    .getPositionChoosedElement()}", Toast.LENGTH_SHORT).show()
                 // Отображение диалогового фрагмента CardCity
                 // для редаткирования информации о месте (городе)
                 weather?.let{
@@ -445,22 +443,28 @@ class ListCitiesFragment(
 
     private val onLocationChangeListener = object: LocationListener {
         override fun onLocationChanged(location: Location) {
-            getAddressAsync(requireContext(),location)
+            getAddressAsync(requireContext(), location)
         }
-
-        override fun onProviderDisabled(provider: String) {
+// В комментариях в данном методе приведены 3 шага по устранению ошибки
+// java.lang.AbstractMethodError: abstract method
+// "void android.location.LocationListener.onStatusChanged(java.lang.String, int, android.os.Bundle)"
+// 1. Замена override fun onProviderDisabled(provider: String) { на:
+        override fun onProviderDisabled(@NonNull provider: String) {
             super.onProviderDisabled(provider)
         }
 
-        override fun onProviderEnabled(provider: String) {
+// 2. Замена: override fun onProviderEnabled(provider: String) { на:
+        override fun onProviderEnabled(@NonNull provider: String) {
             super.onProviderEnabled(provider)
         }
+// 3. Добавлен метод:
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
     }
 
     private fun getAddressAsync(context: Context, location: Location) {
         val geoCoder = Geocoder(context)
         var address = geoCoder.getFromLocation(location.latitude,location.longitude,1)
-        showAddressDialog(address[0].getAddressLine(0),location)
+        showAddressDialog(address[0].getAddressLine(0), location)
     }
 
     private fun showAddressDialog(address: String, location: Location) {
@@ -469,10 +473,12 @@ class ListCitiesFragment(
                 .setTitle(getString(R.string.geocoder_weather_dialog_title))
                 .setMessage(address)
                 .setPositiveButton(getString(R.string.geocoder_weather_positive_answer)) { _, _ ->
-                    navigationDialogs?.let { it.showAddCityDialogFragment(
-                        requireActivity(),
-                        address,
-                        location.latitude.toDouble(), location.longitude.toDouble())
+                    navigationDialogs?.let {
+                        it.showAddCityDialogFragment(
+                            requireActivity(),
+                            address,
+                            location.latitude.toDouble(), location.longitude.toDouble()
+                        )
                     }
                 }
                 .setNegativeButton(getString(R.string.geocoder_weather_negative_answer)) { dialog, _ -> dialog.dismiss() }
@@ -482,7 +488,7 @@ class ListCitiesFragment(
     }
 
     fun getLocation() {
-        activity?.let {
+        requireActivity()?.let {
             if (ContextCompat.checkSelfPermission(
                     it,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -490,15 +496,18 @@ class ListCitiesFragment(
             ) {
                 val locationManager = it.getSystemService(Context.LOCATION_SERVICE) as
                         LocationManager
-                if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                    val provider= locationManager.getProvider(LocationManager.GPS_PROVIDER)
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    var provider = locationManager.getProvider(LocationManager.GPS_PROVIDER)
+                    if (provider == null) {
+                        provider = locationManager.getProvider(LocationManager.GPS_PROVIDER)
+                    }
                     provider?.let{
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                             ConstantsUi.REFRESH_PERIOD, ConstantsUi.MINIMAL_DISTANCE,
                             onLocationChangeListener)
                     }
 
-                } else{
+                } else {
                     val location = locationManager.getLastKnownLocation(
                         LocationManager.GPS_PROVIDER)
                     location?.let{
