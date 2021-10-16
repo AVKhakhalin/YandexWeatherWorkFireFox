@@ -25,6 +25,7 @@ class AddCityDialogFragment(
     private val defaultLatitude: Double?,
     private val defaultLongitude: Double?
 ): DialogFragment(), DialogInterface.OnClickListener {
+    //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var buttonYes: Button? = null
     private var buttonNo: Button? = null
     private var addCityNameField: EditText? = null
@@ -41,6 +42,7 @@ class AddCityDialogFragment(
             InputType.TYPE_NUMBER_FLAG_SIGNED // разрешить ввод положительных и отрицательных чисел
 
     private var navigationDialogs: NavigationDialogs? = null
+    //endregion
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

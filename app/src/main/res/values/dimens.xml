@@ -115,4 +115,8 @@
     <dimen name="add_city_info_country_russian_button_height">40dp</dimen>
     <dimen name="add_city_info_country_notrussian_button_width">40dp</dimen>
     <dimen name="add_city_info_country_notrussian_button_height">40dp</dimen>
+    <dimen name="card_city_info_country_russian_button_width">40dp</dimen>
+    <dimen name="card_city_info_country_russian_button_height">40dp</dimen>
+    <dimen name="card_city_info_country_notrussian_button_width">40dp</dimen>
+    <dimen name="card_city_info_country_notrussian_button_height">40dp</dimen>
 </resources>
