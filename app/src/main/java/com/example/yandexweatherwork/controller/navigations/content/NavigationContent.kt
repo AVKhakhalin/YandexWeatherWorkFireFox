@@ -21,13 +21,18 @@ class NavigationContent(
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var mapsFragment: MapsFragment? = null
     private var navigationDialogs: NavigationDialogs? = null
-    private var navigationSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? = null
     //endregion
 
-    // Метод получения навигационной метки
-    fun getNavigationSteps(): ConstantsController.Companion.NavigationSteps? {
-        return navigationSteps
+    //region Методы получения навигационной метки
+    fun getNavigationCurSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationCurSteps
     }
+    fun getNavigationPrevSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationPrevSteps
+    }
+    //endregion
 
     //region МЕТОДЫ ПОЛУЧЕНИЯ И УСТАНОВКИ КЛАССА NAVIGATIONDIALOGS
     fun getterNavigationDialogs(): NavigationDialogs? {
@@ -70,7 +75,8 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT
     }
 
     // Отображение фрагмента со списком мест ListCitiesFragment
@@ -90,7 +96,8 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT
     }
 
     // Отображение фрагмента с историей погодных данных ResultWeatherHistoryFragment
@@ -107,7 +114,8 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .RESULT_WEATHER_HISTORY_FRAGMENT
     }
 
@@ -125,7 +133,8 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT
     }
 
     // Отображение фрагмента с Google map
@@ -143,6 +152,7 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT
     }
 }

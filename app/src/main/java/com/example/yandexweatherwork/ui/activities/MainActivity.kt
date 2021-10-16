@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.yandexweatherwork.R
+import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.controller.navigations.content.NavigationGetterContent
 import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDialogs
@@ -334,5 +335,48 @@ class MainActivity:
 
     // Настройка кнопки "Back"
     override fun onBackPressed() {
+//        // Content-фрагменты
+//        RESULT_CURRENT_FRAGMENT,
+//        LIST_CITIES_FRAGMENT,
+//        RESULT_WEATHER_HISTORY_FRAGMENT,
+//        CONTACTS_FRAGMENT,
+//        GOOGLE_MAP_FRAGMENT,
+//
+//        // Dialog-фрагменты
+//        DELETE_CONFORMATION_DIALOG_FRAGMENT,
+//        CARD_CITY_DIALOG_FRAGMENT,
+//        ADD_CITY_DIALOG_FRAGMENT,
+//        LIST_FOUNDED_CITIES_DIALOG_FRAGMENT,
+//        LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT
+        when(navigationDialogs.getNavigationCurSteps()) {
+            null ->
+                return
+            ConstantsController.Companion.NavigationSteps.DELETE_CONFORMATION_DIALOG_FRAGMENT ->
+                navigationDialogs.getDeleteConformationDialogFragment()?.let{ it.dismiss()}
+            ConstantsController.Companion.NavigationSteps.CARD_CITY_DIALOG_FRAGMENT ->
+                navigationDialogs.getCardCityDialogFragment()?.let{ it.dismiss()}
+            ConstantsController.Companion.NavigationSteps.ADD_CITY_DIALOG_FRAGMENT ->
+                navigationDialogs.getAddCityDialogFragment()?.let { it.dismiss() }
+            ConstantsController.Companion.NavigationSteps.LIST_FOUNDED_CITIES_DIALOG_FRAGMENT ->
+                navigationDialogs.getListFoundedCitiesDialogFragment()?.let { it.dismiss() }
+            ConstantsController.Companion.NavigationSteps
+                .LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT ->
+                navigationDialogs.getListContactFoundedCitiesDialogFragment()?.let { it.dismiss() }
+        }
+
+        when(navigationContent.getNavigationPrevSteps()) {
+            null ->
+                return
+            ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT ->
+                return
+            ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT ->
+                return
+            ConstantsController.Companion.NavigationSteps.RESULT_WEATHER_HISTORY_FRAGMENT ->
+                return
+            ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT ->
+                return
+            ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT ->
+                return
+        }
     }
 }

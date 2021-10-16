@@ -14,13 +14,44 @@ class NavigationDialogs{
     private var listCitiesFragment: ListCitiesFragment? = null
     private var mapsFragment: MapsFragment? = null
     private var navigationContent: NavigationContent? = null
-    private var navigationSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? = null
+
+    // Диалоговые фрагменты
+    private var deleteConformationDialogFragment: DeleteConformationDialogFragment? = null
+    private var cardCityDialogFragment: CardCityDialogFragment? = null
+    private var addCityDialogFragment: AddCityDialogFragment? = null
+    private var listFoundedCitiesDialogFragment: ListFoundedCitiesDialogFragment? = null
+    private var listContactFoundedCitiesDialogFragment:
+            ListContactFoundedCitiesDialogFragment? = null
     //endregion
 
-    // Метод получения навигационной метки
-    fun getNavigationSteps(): ConstantsController.Companion.NavigationSteps? {
-        return navigationSteps
+    //region Методы получения диалоговых фрагментов
+    fun getDeleteConformationDialogFragment(): DeleteConformationDialogFragment? {
+        return deleteConformationDialogFragment
     }
+    fun getCardCityDialogFragment(): CardCityDialogFragment? {
+        return cardCityDialogFragment
+    }
+    fun getAddCityDialogFragment(): AddCityDialogFragment? {
+        return addCityDialogFragment
+    }
+    fun getListFoundedCitiesDialogFragment(): ListFoundedCitiesDialogFragment? {
+        return listFoundedCitiesDialogFragment
+    }
+    fun getListContactFoundedCitiesDialogFragment(): ListContactFoundedCitiesDialogFragment? {
+        return listContactFoundedCitiesDialogFragment
+    }
+    //endregion
+
+    //region Методы получения навигационной метки
+    fun getNavigationCurSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationCurSteps
+    }
+    fun getNavigationPrevSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationPrevSteps
+    }
+    //endregion
 
     //region МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ И УСТАНОВКИ КЛАССА NAVIGATIONCONTENT
     fun getterNavigationContent(): NavigationContent? {
@@ -51,14 +82,16 @@ class NavigationDialogs{
                                              filterCountry: String,
                                              listCitiesFragment: ListCitiesFragment,
                                              fragmentActivity: FragmentActivity) {
-        val deleteConformationDialogFragment: DeleteConformationDialogFragment
-                = DeleteConformationDialogFragment(positionChoosedElement,
+        deleteConformationDialogFragment = DeleteConformationDialogFragment(positionChoosedElement,
             filterCity, filterCountry, listCitiesFragment)
-        deleteConformationDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+        deleteConformationDialogFragment?.let{
+            it.show(fragmentActivity.supportFragmentManager, "")
+        }
         // Сохранение класса listCitiesFragment
         this.listCitiesFragment = listCitiesFragment
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .DELETE_CONFORMATION_DIALOG_FRAGMENT
     }
 
@@ -67,39 +100,42 @@ class NavigationDialogs{
                                    city: City,
                                    listCitiesFragment: ListCitiesFragment,
                                    fragmentActivity: FragmentActivity) {
-        val cardCityDialogFragment: CardCityDialogFragment
-                = CardCityDialogFragment(positionChoosedElement,
+        cardCityDialogFragment = CardCityDialogFragment(positionChoosedElement,
             city, listCitiesFragment)
-        cardCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+        cardCityDialogFragment?.let{ it.show(fragmentActivity.supportFragmentManager, "") }
         // Сохранение класса listCitiesFragment
         this.listCitiesFragment = listCitiesFragment
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps.CARD_CITY_DIALOG_FRAGMENT
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.CARD_CITY_DIALOG_FRAGMENT
     }
 
     // Отображение диалога с добавлением нового места (города)
     fun showAddCityDialogFragment(fragmentActivity: FragmentActivity, defaultPlace: String?,
                                   defaultLatitude: Double?, defaultLongitude: Double?) {
         listCitiesFragment?.let {
-            val addCityDialogFragment: AddCityDialogFragment
-                    = AddCityDialogFragment(listCitiesFragment!!, defaultPlace,
+            addCityDialogFragment = AddCityDialogFragment(listCitiesFragment!!, defaultPlace,
                 defaultLatitude, defaultLongitude)
-            addCityDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+            addCityDialogFragment?.let{ it.show(fragmentActivity.supportFragmentManager, "") }
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps.ADD_CITY_DIALOG_FRAGMENT
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.ADD_CITY_DIALOG_FRAGMENT
     }
 
     // Отображение диалога со списком найденных новых мест (городов)
     fun showListFoundedCitiesDialogFragment(newCitiesInfoFiltred: MutableList<CityDTO>?,
                                             fragmentActivity: FragmentActivity) {
         listCitiesFragment?.let {
-            val listFoundedCitiesDialogFragment: ListFoundedCitiesDialogFragment
-            = ListFoundedCitiesDialogFragment(newCitiesInfoFiltred, listCitiesFragment!!, this)
-            listFoundedCitiesDialogFragment.show(fragmentActivity.supportFragmentManager, "")
+            listFoundedCitiesDialogFragment = ListFoundedCitiesDialogFragment(
+                newCitiesInfoFiltred, listCitiesFragment!!, this)
+            listFoundedCitiesDialogFragment?.let{
+                it.show(fragmentActivity.supportFragmentManager, "")
+            }
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .LIST_FOUNDED_CITIES_DIALOG_FRAGMENT
     }
 
@@ -117,14 +153,16 @@ class NavigationDialogs{
         }
         // Создание фрагмента для вывода полученных мест из базы контактов
         listCitiesFragment?.let {
-            val listContactFoundedCitiesDialogFragment: ListContactFoundedCitiesDialogFragment
-                    = ListContactFoundedCitiesDialogFragment(contactCitiesInfoFiltredToSend,
+            listContactFoundedCitiesDialogFragment =
+                ListContactFoundedCitiesDialogFragment(contactCitiesInfoFiltredToSend,
                 this)
-            listContactFoundedCitiesDialogFragment.show(
-                fragmentActivity.supportFragmentManager, "")
+            listContactFoundedCitiesDialogFragment?.let{
+                it.show(fragmentActivity.supportFragmentManager, "")
+            }
         }
         //Установка навигационной метки
-        navigationSteps = ConstantsController.Companion.NavigationSteps
+        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT
     }
 }
