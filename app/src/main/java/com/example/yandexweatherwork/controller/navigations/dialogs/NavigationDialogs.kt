@@ -5,17 +5,22 @@ import com.example.yandexweatherwork.controller.ConstantsController
 import com.example.yandexweatherwork.controller.navigations.content.NavigationContent
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.data.CityDTO
+import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.content.domain.MapsFragment
 import com.example.yandexweatherwork.ui.fragments.dialogs.*
 
-class NavigationDialogs{
+class NavigationDialogs(
+    private val mainActivity: MainActivity
+    ) {
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var listCitiesFragment: ListCitiesFragment? = null
     private var mapsFragment: MapsFragment? = null
     private var navigationContent: NavigationContent? = null
-    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? = null
-    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? =
+        mainActivity.getNavigationCurSteps()
+    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? =
+        mainActivity.getNavigationPrevSteps()
 
     // Диалоговые фрагменты
     private var deleteConformationDialogFragment: DeleteConformationDialogFragment? = null
@@ -26,7 +31,7 @@ class NavigationDialogs{
             ListContactFoundedCitiesDialogFragment? = null
     //endregion
 
-    //region Методы получения диалоговых фрагментов
+    //region МЕТОДЫ ПОЛУЧЕНИЯ ДИАЛОГОВЫХ ФРАГМЕНТОВ
     fun getDeleteConformationDialogFragment(): DeleteConformationDialogFragment? {
         return deleteConformationDialogFragment
     }
@@ -44,9 +49,12 @@ class NavigationDialogs{
     }
     //endregion
 
-    //region Методы получения навигационной метки
+    //region МЕТОДЫ ПОЛУЧЕНИЯ И УСТАНОВКИ НАВИГАЦИОННОЙ МЕТКИ
     fun getNavigationCurSteps(): ConstantsController.Companion.NavigationSteps? {
         return navigationCurSteps
+    }
+    fun setNavigationCurSteps(navigationCurSteps: ConstantsController.Companion.NavigationSteps?) {
+        this.navigationCurSteps = navigationCurSteps
     }
     fun getNavigationPrevSteps(): ConstantsController.Companion.NavigationSteps? {
         return navigationPrevSteps
@@ -93,6 +101,12 @@ class NavigationDialogs{
         navigationPrevSteps = navigationCurSteps
         navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .DELETE_CONFORMATION_DIALOG_FRAGMENT
+        // Обнуление других диалоговых фрагментов
+//        deleteConformationDialogFragment = null
+        cardCityDialogFragment = null
+        addCityDialogFragment = null
+        listFoundedCitiesDialogFragment = null
+        listContactFoundedCitiesDialogFragment = null
     }
 
     // Отображение диалога с карточкой места (города)

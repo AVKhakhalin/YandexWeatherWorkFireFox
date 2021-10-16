@@ -53,14 +53,17 @@ class MainActivity:
     private val mainChooserSetter: MainChooserSetter = MainChooserSetter(mainChooser)
     private val mainChooserGetter: MainChooserGetter = MainChooserGetter(mainChooser)
     private val navigationContent: NavigationContent = NavigationContent(supportFragmentManager,
-        mainChooserSetter, mainChooserGetter)
-    private val navigationDialogs: NavigationDialogs = NavigationDialogs()
+        mainChooserSetter, mainChooserGetter, this)
+    private val navigationDialogs: NavigationDialogs = NavigationDialogs(this)
     private val repositoryGetCityCoordinates: RepositoryGetCityCoordinates
     = RepositoryGetCityCoordinates("Москва", mainChooserSetter)
     // Регистрация переменных для анализа связи (CONNECTIVITY_ACTION)
     // СПОСОБ №2:
     private var intentFilter = IntentFilter(ConstantsUi.BROADCAST_ACTION)
     private var receiver: NetworkChangeBroadcastReceiver = NetworkChangeBroadcastReceiver()
+    // Задание навигационной метки для навигации между фрагментами
+    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? = null
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -348,35 +351,83 @@ class MainActivity:
 //        ADD_CITY_DIALOG_FRAGMENT,
 //        LIST_FOUNDED_CITIES_DIALOG_FRAGMENT,
 //        LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT
-        when(navigationDialogs.getNavigationCurSteps()) {
-            null ->
-                return
+
+        // Закрытие открытых диалоговых фрагментов
+        when(navigationCurSteps) {
             ConstantsController.Companion.NavigationSteps.DELETE_CONFORMATION_DIALOG_FRAGMENT ->
-                navigationDialogs.getDeleteConformationDialogFragment()?.let{ it.dismiss()}
+                navigationDialogs.getDeleteConformationDialogFragment()?.let{
+                    it.dismiss()
+                    navigationDialogs.setNavigationCurSteps(null)
+                    return
+                }
             ConstantsController.Companion.NavigationSteps.CARD_CITY_DIALOG_FRAGMENT ->
-                navigationDialogs.getCardCityDialogFragment()?.let{ it.dismiss()}
+                navigationDialogs.getCardCityDialogFragment()?.let{
+                    it.dismiss()
+                    navigationDialogs.setNavigationCurSteps(null)
+                    return
+                }
             ConstantsController.Companion.NavigationSteps.ADD_CITY_DIALOG_FRAGMENT ->
-                navigationDialogs.getAddCityDialogFragment()?.let { it.dismiss() }
+                navigationDialogs.getAddCityDialogFragment()?.let {
+                    it.dismiss()
+                    navigationDialogs.setNavigationCurSteps(null)
+                    return
+                }
             ConstantsController.Companion.NavigationSteps.LIST_FOUNDED_CITIES_DIALOG_FRAGMENT ->
-                navigationDialogs.getListFoundedCitiesDialogFragment()?.let { it.dismiss() }
+                navigationDialogs.getListFoundedCitiesDialogFragment()?.let {
+                    it.dismiss()
+                    navigationDialogs.setNavigationCurSteps(null)
+                    return
+                }
             ConstantsController.Companion.NavigationSteps
                 .LIST_CONTACT_FOUNDED_CITIES_DIALOG_FRAGMENT ->
-                navigationDialogs.getListContactFoundedCitiesDialogFragment()?.let { it.dismiss() }
+                navigationDialogs.getListContactFoundedCitiesDialogFragment()?.let {
+                    it.dismiss()
+                    navigationDialogs.setNavigationCurSteps(null)
+                    return
+                }
         }
 
-        when(navigationContent.getNavigationPrevSteps()) {
-            null ->
-                return
-            ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT ->
-                return
-            ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT ->
-                return
-            ConstantsController.Companion.NavigationSteps.RESULT_WEATHER_HISTORY_FRAGMENT ->
-                return
-            ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT ->
-                return
-            ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT ->
-                return
+        // Действия в основных фрагментах
+        when(navigationPrevSteps) {
+            null -> {
+                goToListCitiesFragment()
+            }
+            ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT -> {
+                goToListCitiesFragment()
+            }
+            ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT -> {
+                goToListCitiesFragment()
+            }
+            ConstantsController.Companion.NavigationSteps.RESULT_WEATHER_HISTORY_FRAGMENT -> {
+                goToListCitiesFragment()
+            }
+            ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT -> {
+                goToListCitiesFragment()
+            }
+            ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT -> {
+                goToListCitiesFragment()
+            }
+            else -> {
+                goToListCitiesFragment()
+            }
         }
     }
+
+    // Загрузить фрагмент с текущим списком мест (городов)
+    private fun goToListCitiesFragment() {
+        navigationContent.showListCitiesFragment(false)
+        navigationContent.setNavigationCurSteps(
+            ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT
+        )
+        navigationContent.setNavigationPrevSteps(null)
+    }
+
+    //region МЕТОДЫ ДЛЯ ПОЛУЧЕНИЯ ССЫЛКИ НА НАВИГАЦИОННЫЕ МЕТКИ
+    fun getNavigationCurSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationCurSteps
+    }
+    fun getNavigationPrevSteps(): ConstantsController.Companion.NavigationSteps? {
+        return navigationPrevSteps
+    }
+    //endregion
 }

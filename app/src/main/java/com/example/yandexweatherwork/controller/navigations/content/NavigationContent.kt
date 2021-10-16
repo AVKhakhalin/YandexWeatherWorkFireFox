@@ -7,6 +7,7 @@ import com.example.yandexweatherwork.controller.navigations.dialogs.NavigationDi
 import com.example.yandexweatherwork.domain.data.City
 import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
+import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ContactsRequestFragment
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.content.domain.MapsFragment
@@ -16,21 +17,32 @@ import com.example.yandexweatherwork.ui.fragments.content.result.ResultWeatherHi
 class NavigationContent(
     private val fragmentManager: FragmentManager,
     private val mainChooserSetter: MainChooserSetter,
-    private val mainChooserGetter: MainChooserGetter
+    private val mainChooserGetter: MainChooserGetter,
+    private val mainActivity: MainActivity
 ) {
     //region ЗАДАНИЕ ПЕРЕМЕННЫХ
     private var mapsFragment: MapsFragment? = null
     private var navigationDialogs: NavigationDialogs? = null
-    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? = null
-    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? = null
+    private var navigationCurSteps: ConstantsController.Companion.NavigationSteps? =
+        mainActivity.getNavigationCurSteps()
+    private var navigationPrevSteps: ConstantsController.Companion.NavigationSteps? =
+        mainActivity.getNavigationPrevSteps()
     //endregion
 
-    //region Методы получения навигационной метки
+    //region МЕТОДЫ ПОЛУЧЕНИЯ НАВИГАЦИОННОЙ МЕТКИ
     fun getNavigationCurSteps(): ConstantsController.Companion.NavigationSteps? {
         return navigationCurSteps
     }
+    fun setNavigationCurSteps(
+        navigationCurSteps: ConstantsController.Companion.NavigationSteps?) {
+        this.navigationCurSteps = navigationCurSteps
+    }
     fun getNavigationPrevSteps(): ConstantsController.Companion.NavigationSteps? {
         return navigationPrevSteps
+    }
+    fun setNavigationPrevSteps(
+        navigationPrevSteps: ConstantsController.Companion.NavigationSteps?) {
+        this.navigationPrevSteps = navigationPrevSteps
     }
     //endregion
 
@@ -75,7 +87,7 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT
     }
 
@@ -96,7 +108,7 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT
     }
 
@@ -114,7 +126,7 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .RESULT_WEATHER_HISTORY_FRAGMENT
     }
@@ -133,7 +145,7 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT
     }
 
@@ -152,7 +164,7 @@ class NavigationContent(
             fragmentTransaction.commit()
         }
         //Установка навигационной метки
-        navigationPrevSteps = navigationCurSteps
+        navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT
     }
 }
