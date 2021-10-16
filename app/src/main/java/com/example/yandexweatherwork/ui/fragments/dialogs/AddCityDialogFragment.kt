@@ -130,6 +130,32 @@ class AddCityDialogFragment(
                 }
             }
         }
+
+        // Установка события нажатия на логотип "Россия"
+        if ((imageRussia != null) && (switchRusNotRus != null)) {
+            imageRussia!!.setOnClickListener {
+                if (switchRusNotRus!!.isChecked) {
+                    imageRussia!!.setImageResource(R.drawable.ic_russia)
+                    imageNotRussia!!.setImageResource(R.drawable.ic_earth_gray)
+                    checkAndSaveNotRussianCountryName()
+                    addCountryField!!.setText(ConstantsUi.FILTER_RUSSIA)
+                    switchRusNotRus!!.isChecked = false
+                }
+            }
+        }
+
+        // Установка события нажатия на логотип "Не России"
+        if ((imageNotRussia != null) && (switchRusNotRus != null)) {
+            imageNotRussia!!.setOnClickListener {
+                if (!switchRusNotRus!!.isChecked) {
+                    imageRussia!!.setImageResource(R.drawable.ic_russia_gray)
+                    imageNotRussia!!.setImageResource(R.drawable.ic_earth)
+                    checkAndSaveNotRussianCountryName()
+                    addCountryField!!.setText(countryName)
+                    switchRusNotRus!!.isChecked = true
+                }
+            }
+        }
     }
 
     // Проверка и сохранение введённого названия иностранной страны

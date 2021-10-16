@@ -110,6 +110,32 @@ class CardCityDialogFragment(
             imageNotRussia?.let { it.setImageResource(R.drawable.ic_earth) }
             switchRusNotRus?.let { it.isChecked = true }
         }
+
+        // Установка события нажатия на логотип "Россия"
+        if ((imageRussia != null) && (switchRusNotRus != null)) {
+            imageRussia!!.setOnClickListener {
+                if (switchRusNotRus!!.isChecked) {
+                    imageRussia!!.setImageResource(R.drawable.ic_russia)
+                    imageNotRussia!!.setImageResource(R.drawable.ic_earth_gray)
+                    checkAndSaveNotRussianCountryName()
+                    cardCountryField!!.setText(ConstantsUi.FILTER_RUSSIA)
+                    switchRusNotRus!!.isChecked = false
+                }
+            }
+        }
+
+        // Установка события нажатия на логотип "Не России"
+        if ((imageNotRussia != null) && (switchRusNotRus != null)) {
+            imageNotRussia!!.setOnClickListener {
+                if (!switchRusNotRus!!.isChecked) {
+                    imageRussia!!.setImageResource(R.drawable.ic_russia_gray)
+                    imageNotRussia!!.setImageResource(R.drawable.ic_earth)
+                    checkAndSaveNotRussianCountryName()
+                    cardCountryField!!.setText(countryName)
+                    switchRusNotRus!!.isChecked = true
+                }
+            }
+        }
     }
 
     // Проверка и сохранение введённого названия иностранной страны
