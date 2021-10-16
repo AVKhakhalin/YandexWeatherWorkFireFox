@@ -16,7 +16,7 @@
     <string name="add_city_info_lon_title">Долгота (Longitude), в десятичных долях</string>
     <string name="add_city_info_lon_lon_field_example_text"></string>
     <string name="add_city_info_country_title">Страна</string>
-    <string name="add_city_info_country_field_text"></string>
+    <string name="add_city_info_country_field_text">Россия</string>
     <string name="add_city_info_button_ok_text">Сохранить</string>
     <string name="search_city_title_text">Найти место среди ранее заданных</string>
     <string name="search_city_name_field_example_text">Москва</string>

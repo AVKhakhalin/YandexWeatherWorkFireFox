@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background_text_color"
@@ -9,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
         android:layout_margin="@dimen/add_city_info_title_margin"
+        android:gravity="center"
         android:text="@string/add_string_info_title_text"
         android:textColor="@color/gray_text"
         android:textSize="@dimen/add_city_info_title_text_size" />
@@ -35,13 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/input_string_info_city_field_margin_end"
             android:cursorVisible="true"
             android:ems="8"
             android:inputType="text"
             android:text="@string/add_string_info_city_field_example_text"
             android:textColor="@color/gray_text"
-            android:textSize="@dimen/add_string_info_city_field_text_size"
-            android:layout_marginEnd="@dimen/input_string_info_city_field_margin_end"/>
+            android:textSize="@dimen/add_string_info_city_field_text_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,28 +64,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/add_city_info_lat_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/input_city_info_lat_field_example_margin_end"
                 android:cursorVisible="true"
                 android:ems="8"
                 android:inputType="numberDecimal"
                 android:text="@string/add_city_info_lat_field_example_text"
                 android:textColor="@color/gray_text"
-                android:textSize="@dimen/add_city_info_lat_field_example_text_size"
-                android:layout_marginEnd="@dimen/input_city_info_lat_field_example_margin_end"/>
+                android:textSize="@dimen/add_city_info_lat_field_example_text_size" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/input_city_lat_comments_text"
-                android:textSize="@dimen/input_city_lan_comments_text_size"/>
+                android:textSize="@dimen/input_city_lan_comments_text_size" />
         </LinearLayout>
     </LinearLayout>
 
@@ -105,21 +108,21 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/add_city_info_lon_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/input_city_info_lon_lon_field_example_margin_end"
                 android:cursorVisible="true"
                 android:ems="8"
                 android:inputType="numberDecimal"
                 android:text="@string/add_city_info_lon_lon_field_example_text"
                 android:textColor="@color/gray_text"
-                android:textSize="@dimen/add_city_info_lon_lon_field_example_text_size"
-                android:layout_marginEnd="@dimen/input_city_info_lon_lon_field_example_margin_end"/>
+                android:textSize="@dimen/add_city_info_lon_lon_field_example_text_size" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,7 +130,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/input_city_lat_comments_text"
-                android:textSize="@dimen/input_city_lan_comments_text_size"/>
+                android:textSize="@dimen/input_city_lan_comments_text_size" />
         </LinearLayout>
     </LinearLayout>
 
@@ -139,25 +142,56 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="@dimen/add_city_info_country_margin_start"
+            android:layout_marginTop="@dimen/add_city_info_country_margin_top"
             android:ems="7"
             android:text="@string/add_city_info_country_title"
             android:textColor="@color/gray_text"
             android:textSize="@dimen/add_city_info_country_title_text_size" />
 
-        <EditText
-            android:id="@+id/add_city_info_country_field"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:cursorVisible="true"
-            android:ems="8"
-            android:inputType="text"
-            android:text="@string/add_city_info_country_field_text"
-            android:textColor="@color/gray_text"
-            android:textSize="@dimen/add_city_info_country_field_text_size"
-            android:layout_marginEnd="@dimen/input_city_info_country_field_margin_end"/>
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/add_city_info_country_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/input_city_info_country_field_margin_end"
+                android:cursorVisible="true"
+                android:ems="8"
+                android:inputType="text"
+                android:text="@string/add_city_info_country_field_text"
+                android:textColor="@color/gray_text"
+                android:textSize="@dimen/add_city_info_country_field_text_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/add_city_info_country_russian_button"
+                    android:layout_width="@dimen/add_city_info_country_russian_button_width"
+                    android:layout_height="@dimen/add_city_info_country_russian_button_height"
+                    android:background="@drawable/ic_russia" />
+
+                <Switch
+                    android:id="@+id/add_city_info_country_rus_notrus_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/add_city_info_country_notrussian_button"
+                    android:layout_width="@dimen/add_city_info_country_notrussian_button_width"
+                    android:layout_height="@dimen/add_city_info_country_notrussian_button_height"
+                    android:background="@drawable/ic_earth_gray" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
