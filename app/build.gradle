@@ -29,8 +29,32 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Подписывание приложения по ключу каждый раз
+    signingConfigs{
+        Properties properties = new Properties()
+        properties.load(rootProject.file("pass.properties").newDataInputStream())
+        def password = properties.getProperty("password", "")
+        release {
+            storeFile file("sign_pog_key.jks")
+            storePassword = password
+            keyAlias "alias_pog_key"
+            keyPassword = password
+        }
+    }
+
     buildTypes {
         release {
+            // Настройка подписи приложения
+            signingConfig signingConfigs.release
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        finalRelease {
+            // Настройка подписи приложения
+            signingConfig signingConfigs.release
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
