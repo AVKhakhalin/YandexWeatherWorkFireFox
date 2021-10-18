@@ -9,6 +9,7 @@ import com.example.yandexweatherwork.domain.facade.MainChooserGetter
 import com.example.yandexweatherwork.domain.facade.MainChooserSetter
 import com.example.yandexweatherwork.ui.activities.MainActivity
 import com.example.yandexweatherwork.ui.fragments.content.domain.ContactsRequestFragment
+import com.example.yandexweatherwork.ui.fragments.content.domain.HelpFragment
 import com.example.yandexweatherwork.ui.fragments.content.domain.ListCitiesFragment
 import com.example.yandexweatherwork.ui.fragments.content.domain.MapsFragment
 import com.example.yandexweatherwork.ui.fragments.content.result.ResultCurrentFragment
@@ -86,7 +87,7 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
-        //Установка навигационной метки
+        // Установка навигационной метки
         navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.RESULT_CURRENT_FRAGMENT
     }
@@ -107,7 +108,7 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
-        //Установка навигационной метки
+        // Установка навигационной метки
         navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.LIST_CITIES_FRAGMENT
     }
@@ -125,7 +126,7 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
-        //Установка навигационной метки
+        // Установка навигационной метки
         navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps
             .RESULT_WEATHER_HISTORY_FRAGMENT
@@ -144,7 +145,7 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
-        //Установка навигационной метки
+        // Установка навигационной метки
         navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.CONTACTS_FRAGMENT
     }
@@ -163,8 +164,26 @@ class NavigationContent(
             // Закрыть транзакцию
             fragmentTransaction.commit()
         }
-        //Установка навигационной метки
+        // Установка навигационной метки
         navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
         navigationCurSteps = ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT
+    }
+
+    // Отображение фрагмента с информацией о приложении HelpFragment
+    fun showHelpFragment(useBackStack: Boolean) {
+        // Открыть транзакцию
+        fragmentManager?.let {
+            val fragmentTransaction = it.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_result_weather_container,
+                HelpFragment.newInstance(this))
+            if (useBackStack) {
+                fragmentTransaction.addToBackStack(null)
+            }
+            // Закрыть транзакцию
+            fragmentTransaction.commit()
+        }
+        // Установка навигационной метки
+        navigationCurSteps?.let { navigationPrevSteps = navigationCurSteps }
+        navigationCurSteps = ConstantsController.Companion.NavigationSteps.HELP_FRAGMENT
     }
 }

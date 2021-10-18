@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_app_menu_action_help"
+        android:title="@string/app_menu_action_help"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_help" />
+
+    <item
         android:id="@+id/action_app_menu_action_add_city"
         android:title="@string/app_menu_action_add_city_title_text"
         app:showAsAction="always"

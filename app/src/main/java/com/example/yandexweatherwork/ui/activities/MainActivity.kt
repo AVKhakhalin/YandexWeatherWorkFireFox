@@ -150,11 +150,11 @@ class MainActivity:
         }
     }
     fun onConnectionLost() {
-        Toast.makeText(this, "СПОСОБ №1: Связь ПОТЕРЯНА (но есть ли Интернет неизвестно)", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "СПОСОБ №1: Связь ПОТЕРЯНА (но есть ли Интернет неизвестно)", Toast.LENGTH_LONG).show()
         Log.d("mylogs", "СПОСОБ №1: Связь ПОТЕРЯНА (но есть ли Интернет неизвестно)")
     }
     fun onConnectionFound() {
-        Toast.makeText(this, "СПОСОБ №1: Связь ЕСТЬ (но есть ли Интернет неизвестно)", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "СПОСОБ №1: Связь ЕСТЬ (но есть ли Интернет неизвестно)", Toast.LENGTH_LONG).show()
         Log.d("mylogs", "СПОСОБ №1: Связь ЕСТЬ (но есть ли Интернет неизвестно)")
     }
     //endregion
@@ -173,8 +173,13 @@ class MainActivity:
     // Установка слушателя на меню AppBarMenu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_app_menu_action_help -> {
+                // Получить информацию о приложении
+                navigationContent.showHelpFragment(false)
+                return true
+            }
             R.id.action_app_menu_action_add_city -> {
-                // Добавить место
+                // Добавить новое место
                 navigationDialogs.showAddCityDialogFragment(this,
                     null, null, null)
                 return true
@@ -405,6 +410,9 @@ class MainActivity:
                 goToListCitiesFragment()
             }
             ConstantsController.Companion.NavigationSteps.GOOGLE_MAP_FRAGMENT -> {
+                goToListCitiesFragment()
+            }
+            ConstantsController.Companion.NavigationSteps.HELP_FRAGMENT -> {
                 goToListCitiesFragment()
             }
             else -> {

@@ -50,22 +50,22 @@ class NetworkChangeBroadcastReceiver: BroadcastReceiver() {
                         pingGoogleCite()
                         sleep(1000)
                         if (existConnection) {
-                            Toast.makeText(context, "СПОСОБ №2: Связь и Интернет ЕСТЬ",
-                                Toast.LENGTH_LONG).show()
+//                            Toast.makeText(context, "СПОСОБ №2: Связь и Интернет ЕСТЬ",
+//                                Toast.LENGTH_LONG).show()
                             Log.d("mylogs", "СПОСОБ №2: Связь и Интернет ЕСТЬ")
                             existConnection = false
                             // Установка признака наличия интернета в ядро приложения (MainChooser)
                             mainChooserSetter?.let{it.setExistInternet(true)}
                         } else {
-                            Toast.makeText(context, "СПОСОБ №2: Связь есть, Интернета НЕТ",
-                                Toast.LENGTH_LONG).show()
+//                            Toast.makeText(context, "СПОСОБ №2: Связь есть, Интернета НЕТ",
+//                                Toast.LENGTH_LONG).show()
                             Log.d("mylogs", "СПОСОБ №2: Связь есть, Интернета НЕТ")
                             // Установка признака наличия интернета в ядро приложения (MainChooser)
                             mainChooserSetter?.let{it.setExistInternet(false)}
                         }
                     } else {
-                        Toast.makeText(context, "СПОСОБ №2: Связи и Интернета НЕТ",
-                            Toast.LENGTH_LONG).show()
+//                        Toast.makeText(context, "СПОСОБ №2: Связи и Интернета НЕТ",
+//                            Toast.LENGTH_LONG).show()
                         Log.d("mylogs", "СПОСОБ №2: Связи и Интернета НЕТ")
                         // Установка признака наличия интернета в ядро приложения (MainChooser)
                         mainChooserSetter?.let{it.setExistInternet(false)}

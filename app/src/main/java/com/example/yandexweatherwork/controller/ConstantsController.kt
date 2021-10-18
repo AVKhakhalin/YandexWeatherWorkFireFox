@@ -51,6 +51,7 @@ class ConstantsController {
             RESULT_WEATHER_HISTORY_FRAGMENT,
             CONTACTS_FRAGMENT,
             GOOGLE_MAP_FRAGMENT,
+            HELP_FRAGMENT,
 
             // Dialog-фрагменты
             DELETE_CONFORMATION_DIALOG_FRAGMENT,
