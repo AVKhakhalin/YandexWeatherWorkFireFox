@@ -204,4 +204,5 @@
     <string name="fragment_help_text_my_location_text">Моё место - </string>
     <string name="fragment_help_text_more_vert_text">"More options" - </string>
     <string name="fragment_help_text_get_contacts_text">Получить контакты - </string>
+    <string name="google_maps_key">AIzaSyAgfNm6L2vn5VM-GAnziz5Vcoc-BqqgmqU</string>
 </resources>

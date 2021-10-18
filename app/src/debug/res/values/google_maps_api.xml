@@ -4,6 +4,9 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
+    finalRelease
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C5:9D:20:86:4D:49:C1:89:E9:3F:DD:4D:A8:5D:88:C9:BF:44:35:E9%3Bcom.example.yandexweatherwork.ui.fragments.content.domain
+    DEBUG
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=D5:5C:62:E9:19:3B:8C:0B:38:94:6F:D6:17:4F:A1:FC:0B:EF:74:01%3Bcom.example.yandexweatherwork.ui.fragments.content.domain
 
     You can also add your credentials to an existing key, using these values:
@@ -11,7 +14,10 @@
     Package name:
     com.example.yandexweatherwork.ui.fragments.content.domain
 
-    SHA-1 certificate fingerprint:
+    SHA-1 certificate fingerprint (finalRelease):
+    C5:9D:20:86:4D:49:C1:89:E9:3F:DD:4D:A8:5D:88:C9:BF:44:35:E9
+
+    SHA-1 certificate fingerprint (DEBUG):
     D5:5C:62:E9:19:3B:8C:0B:38:94:6F:D6:17:4F:A1:FC:0B:EF:74:01
 
     Alternatively, follow the directions here:
@@ -20,5 +26,12 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
+    <!--finalRelease-->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAgfNm6L2vn5VM-GAnziz5Vcoc-BqqgmqU</string>
+    <!--DEBUG
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCn7V61R6KbuALvIShPkZtEFlBOtUAt_Kk</string>
+    -->
+
+
+
 </resources>
